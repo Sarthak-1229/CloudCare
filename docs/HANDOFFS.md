@@ -100,3 +100,21 @@ This document tracks the formal connection points defined in the [CloudCare Team
 - **Verification evidence**: `aws ec2 describe-instances` confirms instance `i-054768b5baf83e81e` is in `running` state with public IP `43.205.194.94`.
 - **Status**: **VERIFIED**
 - **Blocker and owner**: None.
+
+---
+
+### H6 | Phase 2: MySQL Schema, Seed Data & Application Readiness
+- **From → To**: Sarthak → Anushka + Shreya
+- **Timestamp / AWS Region**: 2026-11-21 23:10 IST / `ap-south-1` (Mumbai)
+- **Resource / exact ID**:
+  - RDS MySQL DB Name: `cloudcare`
+  - Tables Initialized (6): `appointments`, `doctors`, `documents`, `patients`, `prescriptions`, `users`
+  - Seed Records: 5 users, 2 doctors, 2 patients, 2 appointments, 2 prescriptions
+  - Verified Queries: `SHOW TABLES;` (6 tables) and `SELECT COUNT(*) FROM appointments;` (2 total)
+  - Application Readiness Endpoint: `http://43.205.194.94:3000/api/ready` -> `{"status":"ready"}` (HTTP 200)
+- **What recipient must do**: 
+  - Anushka: Execute end-to-end test validation (TC01–TC19) against `http://43.205.194.94:3000`.
+  - Shreya: Confirm RDS MySQL queries and CPU/connection metrics in CloudWatch.
+- **Verification evidence**: MySQL output confirmed via SSM from EC2; `/api/ready` confirmed HTTP 200 from external internet.
+- **Status**: **VERIFIED**
+- **Blocker and owner**: None.
