@@ -40,7 +40,7 @@ test('GET /api/ready reports unavailable database readiness', async () => {
 });
 
 test('unavailable API routes return a JSON 404', async () => {
-  const response = await fetch(`${baseUrl}/api/auth/login`, { method: 'POST' });
+  const response = await fetch(`${baseUrl}/api/nonexistent`, { method: 'POST' });
 
   assert.equal(response.status, 404);
   assert.deepEqual(await response.json(), {
