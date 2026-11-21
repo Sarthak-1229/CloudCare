@@ -1,0 +1,22 @@
+[Unit]
+Description=CloudCare Express backend
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=cloudcare
+Group=cloudcare
+WorkingDirectory=/opt/cloudcare/current
+Environment=NODE_ENV=production HOST=0.0.0.0 PORT=3000
+EnvironmentFile=/etc/cloudcare/cloudcare.env
+ExecStart=/usr/bin/node backend/server.js
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

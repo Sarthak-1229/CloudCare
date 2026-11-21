@@ -1,0 +1,86 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudCare v3.0 Phase 2 single EC2 application host
+
+Parameters:
+  FoundationStackName:
+    Type: String
+    Default: cloudcare-network
+    AllowedPattern: '^[a-zA-Z][a-zA-Z0-9-]*$'
+  AmazonLinuxAmi:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64
+  DemoIngressCidr:
+    Type: String
+    Default: ''
+    AllowedPattern: '^$|^(?:[0-9]{1,3}\.){3}[0-9]{1,3}/(?:[0-9]|[12][0-9]|3[0-2])$'
+    Description: Approved temporary IPv4 CIDR for port 3000. Leave empty for SSM-only access.
+
+Conditions:
+  EnableDemoIngress: !Not [!Equals [!Ref DemoIngressCidr, '']]
+
+Resources:
+  AppInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref AmazonLinuxAmi
+      InstanceType: t3.micro
+      CreditSpecification: {CPUCredits: standard}
+      Monitoring: false
+      MetadataOptions:
+        HttpEndpoint: enabled
+        HttpTokens: required
+        HttpPutResponseHopLimit: 1
+      IamInstanceProfile:
+        Fn::ImportValue: !Sub '${FoundationStackName}-AppInstanceProfileName'
+      NetworkInterfaces:
+        - DeviceIndex: '0'
+          AssociatePublicIpAddress: true
+          DeleteOnTermination: true
+          SubnetId:
+            Fn::ImportValue: !Sub '${FoundationStackName}-PublicSubnetId'
+          GroupSet:
+            - Fn::ImportValue: !Sub '${FoundationStackName}-AppSecurityGroupId'
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            DeleteOnTermination: true
+            Encrypted: true
+            VolumeSize: 8
+            VolumeType: gp3
+      Tags: [{Key: Name, Value: cloudcare-app}]
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash
+          set -euo pipefail
+          dnf install -y nodejs24 nodejs24-npm awscli-2
+          alternatives --set node /usr/bin/node-24
+          node --version
+          npm --version
+          if ! id cloudcare >/dev/null 2>&1; then
+            useradd --system --user-group --no-create-home --shell /sbin/nologin cloudcare
+          fi
+          install -d -m 0755 /opt/cloudcare/releases
+          install -d -m 0750 /etc/cloudcare
+          if [[ ! -e /etc/cloudcare/cloudcare.env ]]; then
+            install -m 0600 /dev/null /etc/cloudcare/cloudcare.env
+          fi
+
+  DemoIngress:
+    Type: AWS::EC2::SecurityGroupIngress
+    Condition: EnableDemoIngress
+    Properties:
+      Description: Temporary HTTP access for the CloudCare classroom demo
+      GroupId:
+        Fn::ImportValue: !Sub '${FoundationStackName}-AppSecurityGroupId'
+      IpProtocol: tcp
+      FromPort: 3000
+      ToPort: 3000
+      CidrIp: !Ref DemoIngressCidr
+
+Outputs:
+  InstanceId:
+    Value: !Ref AppInstance
+  PublicIp:
+    Value: !GetAtt AppInstance.PublicIp
+  PrivateIp:
+    Value: !GetAtt AppInstance.PrivateIp

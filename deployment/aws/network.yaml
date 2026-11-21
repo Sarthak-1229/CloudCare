@@ -1,0 +1,183 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudCare v3.0 Phase 1 network and EC2 instance role
+
+Parameters:
+  PublicAvailabilityZone:
+    Type: AWS::EC2::AvailabilityZone::Name
+  SecondPrivateAvailabilityZone:
+    Type: AWS::EC2::AvailabilityZone::Name
+  BucketName:
+    Type: String
+    Default: ''
+    AllowedPattern: '^$|^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$'
+    Description: Existing private bucket approved by Anushka. An empty value grants no S3 access.
+
+Rules:
+  DistinctDatabaseZones:
+    Assertions:
+      - Assert: !Not [!Equals [!Ref PublicAvailabilityZone, !Ref SecondPrivateAvailabilityZone]]
+        AssertDescription: Select two different Availability Zones for the database subnets.
+
+Conditions:
+  HasBucket: !Not [!Equals [!Ref BucketName, '']]
+
+Resources:
+  Vpc:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.20.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags: [{Key: Name, Value: cloudcare-vpc}]
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags: [{Key: Name, Value: cloudcare-igw}]
+
+  GatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref InternetGateway
+      VpcId: !Ref Vpc
+
+  PublicSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref Vpc
+      AvailabilityZone: !Ref PublicAvailabilityZone
+      CidrBlock: 10.20.1.0/24
+      MapPublicIpOnLaunch: false
+      Tags: [{Key: Name, Value: cloudcare-public-a}]
+
+  PrivateSubnetA:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref Vpc
+      AvailabilityZone: !Ref PublicAvailabilityZone
+      CidrBlock: 10.20.11.0/24
+      MapPublicIpOnLaunch: false
+      Tags: [{Key: Name, Value: cloudcare-private-a}]
+
+  PrivateSubnetB:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref Vpc
+      AvailabilityZone: !Ref SecondPrivateAvailabilityZone
+      CidrBlock: 10.20.12.0/24
+      MapPublicIpOnLaunch: false
+      Tags: [{Key: Name, Value: cloudcare-private-b}]
+
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref Vpc
+      Tags: [{Key: Name, Value: cloudcare-public-rt}]
+
+  PublicDefaultRoute:
+    Type: AWS::EC2::Route
+    DependsOn: GatewayAttachment
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+  PublicRouteAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet
+      RouteTableId: !Ref PublicRouteTable
+
+  PrivateRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref Vpc
+      Tags: [{Key: Name, Value: cloudcare-private-rt}]
+
+  PrivateRouteAssociationA:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PrivateSubnetA
+      RouteTableId: !Ref PrivateRouteTable
+
+  PrivateRouteAssociationB:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PrivateSubnetB
+      RouteTableId: !Ref PrivateRouteTable
+
+  AppSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: CloudCare EC2 with optional classroom HTTP ingress managed by the app stack
+      VpcId: !Ref Vpc
+      Tags: [{Key: Name, Value: cloudcare-app-sg}]
+
+  DbSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: CloudCare MySQL from the app security group only
+      VpcId: !Ref Vpc
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          SourceSecurityGroupId: !GetAtt AppSecurityGroup.GroupId
+      Tags: [{Key: Name, Value: cloudcare-db-sg}]
+
+  AppRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal: {Service: ec2.amazonaws.com}
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - !Sub arn:${AWS::Partition}:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Policies:
+        - !If
+          - HasBucket
+          - PolicyName: CloudCarePrivateBucketAccess
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: Allow
+                  Action: [s3:GetObject, s3:PutObject]
+                  Resource: !Sub arn:${AWS::Partition}:s3:::${BucketName}/reports/*
+                - Effect: Allow
+                  Action: s3:GetObject
+                  Resource: !Sub arn:${AWS::Partition}:s3:::${BucketName}/deployment/cloudcare/*
+          - !Ref AWS::NoValue
+      Tags: [{Key: Name, Value: cloudcare-ec2-role}]
+
+  AppInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles: [!Ref AppRole]
+
+Outputs:
+  VpcId:
+    Value: !Ref Vpc
+  PublicSubnetId:
+    Value: !Ref PublicSubnet
+    Export: {Name: !Sub '${AWS::StackName}-PublicSubnetId'}
+  PrivateSubnetAId:
+    Value: !Ref PrivateSubnetA
+  PrivateSubnetBId:
+    Value: !Ref PrivateSubnetB
+  PublicRouteTableId:
+    Value: !Ref PublicRouteTable
+  PrivateRouteTableId:
+    Value: !Ref PrivateRouteTable
+  AppSecurityGroupId:
+    Value: !GetAtt AppSecurityGroup.GroupId
+    Export: {Name: !Sub '${AWS::StackName}-AppSecurityGroupId'}
+  DbSecurityGroupId:
+    Value: !GetAtt DbSecurityGroup.GroupId
+  AppRoleArn:
+    Value: !GetAtt AppRole.Arn
+  AppInstanceProfileName:
+    Value: !Ref AppInstanceProfile
+    Export: {Name: !Sub '${AWS::StackName}-AppInstanceProfileName'}

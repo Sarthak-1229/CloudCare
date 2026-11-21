@@ -1,5 +1,7 @@
 # AWS foundation for the CloudCare demo
 
+For the proposed CloudFormation stacks, AWS CLI checks and Mumbai estimate, see the [deployment runbook](aws/README.md). It uses Session Manager and grants the app role access to the S3 object prefixes it needs.
+
 The v3.0 topology is one public EC2 subnet and two private RDS subnets in different Availability Zones. Verify the chosen AWS Region, account eligibility, credits and costs with the team before provisioning. The manuals propose `ap-south-1`.
 
 | Item | Plan and verification evidence |
