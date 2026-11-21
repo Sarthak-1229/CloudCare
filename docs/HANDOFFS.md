@@ -79,3 +79,24 @@ This document tracks the formal connection points defined in the [CloudCare Team
 - **Verification evidence**: `aws rds describe-db-instances` confirms instance status `available`, `PubliclyAccessible: false`, and `SecurityGroups: ["sg-01015310dd6f20bec"]`.
 - **Status**: **VERIFIED**
 - **Blocker and owner**: Master credentials to be shared out-of-band via team private channel before Phase 2.
+
+---
+
+### H5 | Phase 2: EC2 Instance Deployment & Testing Handoff
+- **From → To**: Sarthak → Anushka + Shreya
+- **Timestamp / AWS Region**: 2026-11-21 22:10 IST / `ap-south-1` (Mumbai)
+- **Resource / exact ID**:
+  - EC2 Instance ID: `i-054768b5baf83e81e`
+  - EC2 Public IPv4: `43.205.194.94`
+  - EC2 Private IPv4: `10.20.1.72`
+  - Subnet ID: `subnet-088918b18c8e71b90` (`cloudcare-public-a`)
+  - App Security Group: `sg-075ff8633ab726994` (`cloudcare-app-sg`)
+  - DB Security Group: `sg-01015310dd6f20bec` (`cloudcare-db-sg`)
+  - Inbound 3306 Confirmation: MySQL port 3306 on `cloudcare-db-sg` is authorized strictly from `sg-075ff8633ab726994`.
+  - Application URL: `http://43.205.194.94:3000`
+- **What recipient must do**: 
+  - Anushka: Use EC2 Public IP (`43.205.194.94`) for test verification (TC01–TC19).
+  - Shreya: Confirm EC2 Private IP (`10.20.1.72`) / App SG (`sg-075ff8633ab726994`) connectivity to RDS MySQL `cloudcare-db`.
+- **Verification evidence**: `aws ec2 describe-instances` confirms instance `i-054768b5baf83e81e` is in `running` state with public IP `43.205.194.94`.
+- **Status**: **VERIFIED**
+- **Blocker and owner**: None.
