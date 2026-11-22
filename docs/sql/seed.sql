@@ -9,7 +9,16 @@ USE cloudcare;
 --   Patients: Patient@123
 -- ============================================================================
 
--- 1. Seed Users (1 Admin, 5 Doctors, 5 Patients)
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE prescriptions;
+TRUNCATE TABLE documents;
+TRUNCATE TABLE appointments;
+TRUNCATE TABLE patients;
+TRUNCATE TABLE doctors;
+TRUNCATE TABLE users;
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- 1. Seed Users (1 Admin, 5 Doctors, 7 Patients)
 INSERT INTO users (id, name, email, password_hash, role)
 VALUES
 -- Administrator
@@ -27,8 +36,9 @@ VALUES
 (8, 'Sneha Joshi', 'sneha@cloudcare.test', '$2b$10$gS7JVjzJmxTGVM1DFdaScezMGV1qzpceEw6XKXT8g/iErgR0ltR3m', 'PATIENT'),
 (9, 'Vikram Malhotra', 'vikram@cloudcare.test', '$2b$10$gS7JVjzJmxTGVM1DFdaScezMGV1qzpceEw6XKXT8g/iErgR0ltR3m', 'PATIENT'),
 (10, 'Ananya Deshmukh', 'ananya@cloudcare.test', '$2b$10$gS7JVjzJmxTGVM1DFdaScezMGV1qzpceEw6XKXT8g/iErgR0ltR3m', 'PATIENT'),
-(11, 'Rohan Kulkarni', 'rohan@cloudcare.test', '$2b$10$gS7JVjzJmxTGVM1DFdaScezMGV1qzpceEw6XKXT8g/iErgR0ltR3m', 'PATIENT')
-ON DUPLICATE KEY UPDATE name=VALUES(name), password_hash=VALUES(password_hash);
+(11, 'Rohan Kulkarni', 'rohan@cloudcare.test', '$2b$10$gS7JVjzJmxTGVM1DFdaScezMGV1qzpceEw6XKXT8g/iErgR0ltR3m', 'PATIENT'),
+(12, 'Anushka R.', 'romananushka@gamil.com', '$2b$10$gS7JVjzJmxTGVM1DFdaScezMGV1qzpceEw6XKXT8g/iErgR0ltR3m', 'PATIENT'),
+(13, 'Sarthak B.', 'sarthak.b.1204@gmail.com', '$2b$10$gS7JVjzJmxTGVM1DFdaScezMGV1qzpceEw6XKXT8g/iErgR0ltR3m', 'PATIENT');
 
 -- 2. Seed Doctor Profiles (5 Specialties)
 INSERT INTO doctors (id, user_id, specialization)
@@ -37,8 +47,7 @@ VALUES
 (2, 3, 'Dermatology & Clinical Cosmetology'),
 (3, 4, 'Orthopedic & Joint Replacement'),
 (4, 5, 'Pediatrics & Child Wellness'),
-(5, 6, 'Neurology & Cognitive Health')
-ON DUPLICATE KEY UPDATE specialization=VALUES(specialization);
+(5, 6, 'Neurology & Cognitive Health');
 
 -- 3. Seed Patient Profiles
 INSERT INTO patients (id, user_id)
@@ -47,8 +56,9 @@ VALUES
 (2, 8),
 (3, 9),
 (4, 10),
-(5, 11)
-ON DUPLICATE KEY UPDATE user_id=VALUES(user_id);
+(5, 11),
+(6, 12),
+(7, 13);
 
 -- 4. Seed Demonstrative Appointments (Across statuses)
 INSERT INTO appointments (id, patient_id, doctor_id, visit_date, slot, status)
@@ -62,8 +72,9 @@ VALUES
 (7, 2, 4, '2027-03-05', '16:00:00', 'CONFIRMED'),
 (8, 3, 1, '2027-03-12', '11:00:00', 'CANCELLED'),
 (9, 4, 2, '2027-03-20', '15:30:00', 'PENDING'),
-(10, 5, 3, '2027-03-25', '10:00:00', 'CONFIRMED')
-ON DUPLICATE KEY UPDATE status=VALUES(status);
+(10, 5, 3, '2027-03-25', '10:00:00', 'CONFIRMED'),
+(11, 6, 1, '2027-03-28', '11:30:00', 'CONFIRMED'),
+(12, 7, 2, '2027-03-29', '14:30:00', 'PENDING');
 
 -- 5. Seed Demonstrative Prescriptions
 INSERT INTO prescriptions (id, appointment_id, notes, medicines)
@@ -71,5 +82,4 @@ VALUES
 (1, 1, 'Resting ECG normal. Recommended low-sodium diet and 30-minute daily cardio.', 'Atorvastatin 10mg OD (Night), Aspirin 75mg OD (Post Lunch)'),
 (2, 2, 'Mild seasonal eczema on left forearm. Avoid perfumed soaps and hot water.', 'Hydrocortisone cream 1% topical, Cetirizine 10mg OD as needed'),
 (3, 3, 'Post-arthroscopy recovery review. Range of motion improved by 25%.', 'Calcium Citrate + Vitamin D3 OD, Paracetamol 650mg SOS'),
-(4, 4, 'Routine pediatric booster vaccination administered. Growth percentiles normal.', 'Multivitamin pediatric syrup 5ml OD for 30 days')
-ON DUPLICATE KEY UPDATE notes=VALUES(notes), medicines=VALUES(medicines);
+(4, 4, 'Routine pediatric booster vaccination administered. Growth percentiles normal.', 'Multivitamin pediatric syrup 5ml OD for 30 days');
