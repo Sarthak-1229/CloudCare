@@ -235,19 +235,12 @@ The interface was redesigned into an **ultra-clean, editorial, luxury-minimalist
    - **Live Status Indicator**: Minimalist monochrome pill with a glowing Emerald live pulse dot (`#10B981`).
 3. **Tactile Linear-Style Segmented Control (`SegmentedControl.jsx`)**:
    - Recessed pill switcher (`#F3F1ED`, `p-1`, `rounded-full`) where the active role slides smoothly into a crisp white pill (`#FFFFFF`) with a subtle `1px` border and crisp dark text.
-4. **Refined Demo Persona Selector (`Login.jsx`)**:
-   - Subtle hairline dividers (`#ECE9E2`) replacing heavy background boxes. Active persona pills in Warm Obsidian (`#1C1917`) with white text; inactive in crisp white with `#ECE9E2` border.
-5. **Tactile Form Inputs (`Input.jsx`, `Select.jsx`)**:
-   - Soft Stone fill (`#F3F1ED`), `h-11 sm:h-12` height, `rounded-xl`, with focus ring transition to `focus:ring-2 focus:ring-[#C85A32]/20 focus:border-[#C85A32] focus:bg-white`.
-3. **Frosted Glass Cards (`bg-white/80 backdrop-blur-xl border border-white/60`)**:
-   - Translucent card containers casting soft ambient shadows (`shadow-sm hover:shadow-md transition-all`).
-   - Multi-color gradient icon backgrounds (Emerald, Purple, Amber, Sky) replacing uniform flat blue icons.
-4. **Interactive Badging & Micro-Interactions (`StatusBadge.jsx`, `Button.jsx`)**:
-   - Ring borders with semantic color tokens.
-   - Breathing pulse animation (`animate-ping`) on `PENDING` appointments.
-   - Tactile active press states (`active:scale-95 transition-transform duration-150`).
-5. **One-Click Demonstration Persona Selectors (`Login.jsx`)**:
-   - Quick-fill pill buttons allowing evaluators to populate credentials for any role (Admin, 5 Doctors, 7 Patients) in a single click.
+4. **Hardened Public Authentication (`Login.jsx`, `AuthLayout.jsx`)**:
+   - Public authentication routes stripped of all raw infrastructure leaks (AWS region pills, port footnotes) and pre-filled credentials.
+   - Clean, professional login interface with soft stone inputs (`#F3F1ED`), rounded corners (`rounded-xl`), and copper focus states (`#C85A32`).
+5. **Admin-Exclusive Identity Directory & Deployment Console (`AdminDashboard.jsx`)**:
+   - All system demonstration credentials ("ID Passes") for Admin, 5 Medical Specialists, and 5 Synthetic Patients are strictly isolated within the authenticated Administrator Enclave.
+   - Includes interactive password visibility toggles (`Eye` / `EyeOff`), copy actions, and full network topology documentation (VPC, EC2, RDS, S3, IAM) visible solely to authorized administrators.
 
 ---
 
