@@ -196,23 +196,24 @@ The project was executed across three sequential phases, adhering strictly to ve
 
 ---
 
-## 5. Dynamic iOS 16 UI Design System & Branding
+## 5. Luxury-Minimalist UI Design System & Branding ("Warm Obsidian & Alabaster")
 
-The frontend was overhauled using an **iOS 16 Glassmorphism Design System** in React 19, Tailwind CSS, and Lucide React:
+The interface was redesigned into an **ultra-clean, editorial, luxury-minimalist interface** inspired by Apple Pro apps, Linear, and Arc—blending warm tactile sophistication with high-contrast modern precision:
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│  [ClinicLogo] CloudCare        [AWS ap-south-1 | API & DB Live 200 OK] │
+│  [■] CloudCare PRO  [REGION: ap-south-1] [⏺ 200 OK | RDS LIVE]         │
 ├────────────────────────────────────────────────────────────────────────┤
-│  Ambient Background: Soft Lavender & Mint Mesh Glows                   │
+│  Canvas: Warm Porcelain (#F9F8F6) with Ultra-Faint Warm Ambient Radial │
 │                                                                        │
 │  ┌───────────────────────┐  ┌───────────────────────┐                  │
-│  │ 👥 Total Patients: 7  │  │ 👨‍⚕️ Active Doctors: 5 │                  │
-│  │ (Emerald Glow Badge)  │  │ (Purple Glow Badge)   │                  │
+│  │ TOTAL PATIENTS        │  │ ACTIVE SPECIALISTS    │                  │
+│  │ 7                     │  │ 5                     │                  │
+│  │ (Hairline Ivory Card) │  │ (Hairline Ivory Card) │                  │
 │  └───────────────────────┘  └───────────────────────┘                  │
 │                                                                        │
 │  ┌──────────────────────────────────────────────────┐                  │
-│  │ 📅 Clinical Appointment Schedule                 │                  │
+│  │ CLINICAL APPOINTMENT SCHEDULE                    │                  │
 │  │ • Dr. Rahul Sharma (Cardiology)  — [COMPLETED]   │                  │
 │  │ • Dr. Priya Mehta (Dermatology) — [CONFIRMED]   │                  │
 │  │ • Dr. Arjun Reddy (Orthopedics)  — [PENDING ⏺]   │                  │
@@ -221,13 +222,23 @@ The frontend was overhauled using an **iOS 16 Glassmorphism Design System** in R
 ```
 
 ### Key Visual & Component Upgrades
-1. **Vector `ClinicLogo` (`ClinicLogo.jsx`)**:
-   - Custom SVG featuring an Apple continuous-curvature squircle with an indigo/blue gradient background (`from-blue-600 to-indigo-600`).
-   - Pure white clinical cross centered with an integrated cardiogram pulse wave vector.
-   - Vibrant emerald spark at the top-right apex symbolizing active clinical operations.
-   - Scalable variants (`sm`, `md`, `lg`, `xl`) for application headers, login dialogs, and browser favicons.
-2. **Atmospheric Mesh Glows (`AppLayout.jsx`, `AuthLayout.jsx`)**:
-   - Dynamic, organic blurred gradients placed in fixed background layers (`indigo-300/25`, `teal-200/25`, `rose-200/20`, and `amber-100/30`) delivering visual warmth while maintaining high text contrast.
+1. **Brand Mark (`ClinicLogo.jsx`)**:
+   - Sleek minimal squircle (`44px x 44px`, `rounded-xl`) in **Warm Obsidian (`#1C1917`)** with a thin metallic copper inner ring (`ring-1 ring-[#C85A32]/35`).
+   - Clean white ECG pulse line paired with a precision **signature copper spark (`#C85A32`)**.
+   - Geometric heading typography in `Plus Jakarta Sans` with tight tracking (`-0.03em`), paired with monospace `font-mono` badges.
+2. **Warm Obsidian & Alabaster Color System**:
+   - **Canvas Background**: Warm Porcelain / Off-White (`#F9F8F6`) with an ultra-faint ambient radial gradient (`radial-gradient(circle at 50% 0%, #EFECE6 0%, #F9F8F6 70%)`).
+   - **Primary Surfaces**: Crisp Ivory White (`#FFFFFF`) with hair-thin borders (`1px solid rgba(28, 25, 23, 0.08)`) and multi-layer ambient shadows (`0 1px 2px rgba(0,0,0,0.03), 0 24px 48px -12px rgba(28, 25, 23, 0.06)`).
+   - **Primary CTA**: Deep Warm Charcoal / Obsidian (`#1C1917`), giving an executive, ultra-sleek Apple/Stripe feel.
+   - **Secondary Surfaces**: Soft Stone (`#F3F1ED`) for inputs and segmented control tracks.
+   - **Typography**: Ink Charcoal (`#18181B`) for headings, Warm Slate (`#6E6A63`) for subtitles, and Muted Stone (`#9C968E`) for micro-labels.
+   - **Live Status Indicator**: Minimalist monochrome pill with a glowing Emerald live pulse dot (`#10B981`).
+3. **Tactile Linear-Style Segmented Control (`SegmentedControl.jsx`)**:
+   - Recessed pill switcher (`#F3F1ED`, `p-1`, `rounded-full`) where the active role slides smoothly into a crisp white pill (`#FFFFFF`) with a subtle `1px` border and crisp dark text.
+4. **Refined Demo Persona Selector (`Login.jsx`)**:
+   - Subtle hairline dividers (`#ECE9E2`) replacing heavy background boxes. Active persona pills in Warm Obsidian (`#1C1917`) with white text; inactive in crisp white with `#ECE9E2` border.
+5. **Tactile Form Inputs (`Input.jsx`, `Select.jsx`)**:
+   - Soft Stone fill (`#F3F1ED`), `h-11 sm:h-12` height, `rounded-xl`, with focus ring transition to `focus:ring-2 focus:ring-[#C85A32]/20 focus:border-[#C85A32] focus:bg-white`.
 3. **Frosted Glass Cards (`bg-white/80 backdrop-blur-xl border border-white/60`)**:
    - Translucent card containers casting soft ambient shadows (`shadow-sm hover:shadow-md transition-all`).
    - Multi-color gradient icon backgrounds (Emerald, Purple, Amber, Sky) replacing uniform flat blue icons.
