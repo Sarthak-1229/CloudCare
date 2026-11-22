@@ -177,7 +177,7 @@ const PatientDashboard = () => {
               Hello, {user?.name || 'Aarav Patil'}
             </h1>
             <p className="text-[#9C968E] text-xs sm:text-sm mt-1 max-w-xl font-normal leading-relaxed">
-              Manage clinical consultations, view attending specialist schedules, and securely download diagnostic records from AWS S3.
+              Manage clinical consultations, view attending specialist schedules, and securely download diagnostic records.
             </p>
           </div>
 
@@ -208,7 +208,7 @@ const PatientDashboard = () => {
           icon={CalendarCheck}
         />
         <StatCard
-          title="S3 Documents"
+          title="Diagnostic Reports"
           value={documentsCount}
           subtitle="Encrypted medical PDFs"
           icon={FileText}
@@ -391,14 +391,14 @@ const PatientDashboard = () => {
           )}
         </div>
 
-        {/* Private S3 Documents */}
+        {/* Private Medical Documents */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-bold text-ios-gray-900">
-              S3 Diagnostic Reports
+            <h3 className="text-lg font-bold text-[#18181B]">
+              Diagnostic Reports
             </h3>
-            <span className="text-xs font-semibold text-ios-gray-400">
-              Private Bucket
+            <span className="text-xs font-semibold text-[#9C968E]">
+              Encrypted Archive
             </span>
           </div>
 

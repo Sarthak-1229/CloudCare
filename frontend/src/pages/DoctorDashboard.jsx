@@ -150,7 +150,7 @@ const DoctorDashboard = () => {
         doctorName: user?.name,
       });
 
-      setUploadSuccess('Report uploaded to private S3 bucket successfully.');
+      setUploadSuccess('Diagnostic report uploaded successfully.');
       setTimeout(() => {
         setIsUploadModalOpen(false);
       }, 1200);
@@ -345,7 +345,7 @@ const DoctorDashboard = () => {
                           icon={Upload}
                           onClick={() => openUploadModal(appt)}
                         >
-                          Upload S3 PDF
+                          Upload Report
                         </Button>
                         <Button
                           variant="primary"
@@ -451,12 +451,12 @@ const DoctorDashboard = () => {
         )}
       </Modal>
 
-      {/* S3 Report Upload Modal */}
+      {/* Diagnostic Report Upload Modal */}
       <Modal
         isOpen={isUploadModalOpen}
         onClose={() => setIsUploadModalOpen(false)}
-        title="Upload Diagnostic Report to S3"
-        subtitle={`Patient: ${activeApptForUpload?.patientName} • Private bucket storage`}
+        title="Upload Diagnostic Report"
+        subtitle={`Patient: ${activeApptForUpload?.patientName} • Encrypted Clinical Archive`}
       >
         {uploadSuccess ? (
           <div className="text-center py-6">
@@ -487,8 +487,8 @@ const DoctorDashboard = () => {
                   onChange={(e) => setSelectedFile(e.target.files[0])}
                   className="text-xs text-[#7A7267] file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-[#FDF2F0] file:text-[#E06D53] hover:file:bg-[#FAD8D2] cursor-pointer"
                 />
-                <p className="text-[11px] text-[#7A7267] mt-2">
-                  Synthetic test PDF only (max 5 MiB). Stored in private S3 bucket via EC2 IAM role.
+                <p className="text-[11px] text-[#6E6A63] mt-2">
+                  Synthetic test PDF only (max 5 MiB). Encrypted medical document storage.
                 </p>
               </div>
             </div>

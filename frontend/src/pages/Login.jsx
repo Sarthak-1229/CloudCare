@@ -5,31 +5,21 @@ import AuthLayout from '../layouts/AuthLayout';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import SegmentedControl from '../components/common/SegmentedControl';
-import { Mail, Lock, UserCheck, AlertCircle, Compass } from 'lucide-react';
+import { Mail, Lock, UserCheck, AlertCircle, Shield } from 'lucide-react';
 
 const Login = () => {
   const { login, isLoading } = useAuth();
   const navigate = useNavigate();
 
   const [roleTab, setRoleTab] = useState('PATIENT');
-  const [email, setEmail] = useState('aarav@cloudcare.test');
-  const [password, setPassword] = useState('Patient@123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  // Quick switch between roles and prefill demo accounts
+  // Switch between portal roles without exposing or injecting passwords
   const handleRoleTabChange = (newRole) => {
     setRoleTab(newRole);
     setError('');
-    if (newRole === 'PATIENT') {
-      setEmail('aarav@cloudcare.test');
-      setPassword('Patient@123');
-    } else if (newRole === 'DOCTOR') {
-      setEmail('rahul@cloudcare.test');
-      setPassword('Doctor@123');
-    } else if (newRole === 'ADMIN') {
-      setEmail('admin@cloudcare.test');
-      setPassword('Admin@123');
-    }
   };
 
   const handleSubmit = async (e) => {
@@ -52,8 +42,8 @@ const Login = () => {
 
   return (
     <AuthLayout
-      title="Welcome Back"
-      subtitle="Select a workspace or choose a seeded demonstration persona"
+      title="Clinical Portal Sign In"
+      subtitle="Enter your verified credentials to access your clinical dashboard"
     >
       {/* Role Picker Segmented Control */}
       <div className="flex justify-center mb-6">
@@ -66,126 +56,6 @@ const Login = () => {
           value={roleTab}
           onChange={handleRoleTabChange}
         />
-      </div>
-
-      {/* Demo Persona Quick Select — Refined Editorial Inset */}
-      <div className="mb-6 pb-5 border-b border-[#ECE9E2]">
-        <div className="flex items-center justify-between mb-2.5">
-          <span className="font-mono text-[10px] uppercase tracking-wider text-[#9C968E] font-medium flex items-center gap-1.5">
-            <Compass className="w-3.5 h-3.5 text-[#C85A32]" />
-            Quick Demo Personas
-          </span>
-          <span className="font-mono text-[10px] text-[#9C968E]">ONE-CLICK</span>
-        </div>
-
-        <div className="flex flex-wrap gap-1.5">
-          {roleTab === 'PATIENT' && (
-            <>
-              <button
-                type="button"
-                onClick={() => {
-                  setEmail('aarav@cloudcare.test');
-                  setPassword('Patient@123');
-                }}
-                className={`text-xs font-semibold px-3 py-1 rounded-lg border transition-all duration-150 btn-press ${
-                  email === 'aarav@cloudcare.test'
-                    ? 'bg-[#1C1917] text-white border-[#1C1917] shadow-xs'
-                    : 'bg-white hover:bg-[#F3F1ED] text-[#18181B] border-[#ECE9E2]'
-                }`}
-              >
-                Aarav Patil
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setEmail('sneha@cloudcare.test');
-                  setPassword('Patient@123');
-                }}
-                className={`text-xs font-semibold px-3 py-1 rounded-lg border transition-all duration-150 btn-press ${
-                  email === 'sneha@cloudcare.test'
-                    ? 'bg-[#1C1917] text-white border-[#1C1917] shadow-xs'
-                    : 'bg-white hover:bg-[#F3F1ED] text-[#18181B] border-[#ECE9E2]'
-                }`}
-              >
-                Sneha Joshi
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setEmail('vikram@cloudcare.test');
-                  setPassword('Patient@123');
-                }}
-                className={`text-xs font-semibold px-3 py-1 rounded-lg border transition-all duration-150 btn-press ${
-                  email === 'vikram@cloudcare.test'
-                    ? 'bg-[#1C1917] text-white border-[#1C1917] shadow-xs'
-                    : 'bg-white hover:bg-[#F3F1ED] text-[#18181B] border-[#ECE9E2]'
-                }`}
-              >
-                Vikram Malhotra
-              </button>
-            </>
-          )}
-
-          {roleTab === 'DOCTOR' && (
-            <>
-              <button
-                type="button"
-                onClick={() => {
-                  setEmail('rahul@cloudcare.test');
-                  setPassword('Doctor@123');
-                }}
-                className={`text-xs font-semibold px-3 py-1 rounded-lg border transition-all duration-150 btn-press ${
-                  email === 'rahul@cloudcare.test'
-                    ? 'bg-[#1C1917] text-white border-[#1C1917] shadow-xs'
-                    : 'bg-white hover:bg-[#F3F1ED] text-[#18181B] border-[#ECE9E2]'
-                }`}
-              >
-                Dr. Rahul (Cardiology)
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setEmail('priya@cloudcare.test');
-                  setPassword('Doctor@123');
-                }}
-                className={`text-xs font-semibold px-3 py-1 rounded-lg border transition-all duration-150 btn-press ${
-                  email === 'priya@cloudcare.test'
-                    ? 'bg-[#1C1917] text-white border-[#1C1917] shadow-xs'
-                    : 'bg-white hover:bg-[#F3F1ED] text-[#18181B] border-[#ECE9E2]'
-                }`}
-              >
-                Dr. Priya (Dermatology)
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setEmail('arjun@cloudcare.test');
-                  setPassword('Doctor@123');
-                }}
-                className={`text-xs font-semibold px-3 py-1 rounded-lg border transition-all duration-150 btn-press ${
-                  email === 'arjun@cloudcare.test'
-                    ? 'bg-[#1C1917] text-white border-[#1C1917] shadow-xs'
-                    : 'bg-white hover:bg-[#F3F1ED] text-[#18181B] border-[#ECE9E2]'
-                }`}
-              >
-                Dr. Arjun (Orthopedics)
-              </button>
-            </>
-          )}
-
-          {roleTab === 'ADMIN' && (
-            <button
-              type="button"
-              onClick={() => {
-                setEmail('admin@cloudcare.test');
-                setPassword('Admin@123');
-              }}
-              className="text-xs font-semibold px-3.5 py-1 rounded-lg bg-[#1C1917] text-white border border-[#1C1917] shadow-xs btn-press"
-            >
-              System Administrator
-            </button>
-          )}
-        </div>
       </div>
 
       {error && (
@@ -204,7 +74,13 @@ const Login = () => {
           icon={Mail}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="name@cloudcare.test"
+          placeholder={
+            roleTab === 'ADMIN'
+              ? 'admin@hospital.com'
+              : roleTab === 'DOCTOR'
+              ? 'doctor@hospital.com'
+              : 'patient@hospital.com'
+          }
         />
 
         <Input
@@ -230,8 +106,8 @@ const Login = () => {
         </Button>
       </form>
 
-      {/* Footer link for patient registration */}
-      {roleTab === 'PATIENT' && (
+      {/* Role-specific contextual footer */}
+      {roleTab === 'PATIENT' ? (
         <div className="mt-6 text-center text-xs text-[#6E6A63]">
           <span>New patient? </span>
           <Link
@@ -240,6 +116,11 @@ const Login = () => {
           >
             Create an Account
           </Link>
+        </div>
+      ) : (
+        <div className="mt-6 p-3 rounded-xl bg-[#F3F1ED] border border-[#ECE9E2] flex items-center justify-center gap-2 text-center text-[11px] text-[#6E6A63] font-mono">
+          <Shield className="w-3.5 h-3.5 text-[#5B8A72]" />
+          <span>Restricted {roleTab === 'ADMIN' ? 'Administrative' : 'Physician'} Access</span>
         </div>
       )}
     </AuthLayout>

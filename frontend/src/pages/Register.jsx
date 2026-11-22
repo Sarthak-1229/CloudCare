@@ -94,9 +94,9 @@ const Register = () => {
 
         {/* Informative Box */}
         <div className="p-3.5 rounded-xl bg-[#F3F1ED] border border-[#ECE9E2] text-xs text-[#6E6A63] flex items-start gap-2.5">
-          <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5 text-[#C85A32]" />
+          <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5 text-[#5B8A72]" />
           <span className="leading-relaxed">
-            Registered patients can book doctor consultations across 5 specialties and securely download diagnostic clinical records from AWS S3.
+            Registered patients can book doctor consultations across 5 specialties and securely access diagnostic clinical records.
           </span>
         </div>
 

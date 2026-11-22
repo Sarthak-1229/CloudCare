@@ -89,23 +89,36 @@ const AppLayout = ({ children }) => {
             <ClinicLogo size="md" showText={true} />
 
             <div className="hidden lg:flex items-center gap-2 pl-5 border-l border-[#ECE9E2]">
-              {/* Region Pill */}
-              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#F3F1ED] border border-[#ECE9E2] text-[11px] font-mono text-[#18181B]">
-                <Cloud className="w-3.5 h-3.5 text-[#C85A32]" />
-                <span className="text-[#6E6A63]">AWS:</span>
-                <span className="font-semibold">ap-south-1</span>
-              </div>
+              {user?.role === 'ADMIN' ? (
+                <>
+                  {/* Region Pill */}
+                  <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#F3F1ED] border border-[#ECE9E2] text-[11px] font-mono text-[#18181B]">
+                    <Cloud className="w-3.5 h-3.5 text-[#C85A32]" />
+                    <span className="text-[#6E6A63]">AWS:</span>
+                    <span className="font-semibold">ap-south-1</span>
+                  </div>
 
-              {/* API Health Pill with glowing Emerald dot */}
-              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#ECE9E2] text-[11px] font-mono text-[#18181B] shadow-2xs">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10B981]" />
-                </span>
-                <span className="font-semibold">200 OK</span>
-                <span className="text-[#9C968E]">|</span>
-                <span className="text-[#6E6A63]">RDS LIVE</span>
-              </div>
+                  {/* API Health Pill with glowing Emerald dot */}
+                  <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#ECE9E2] text-[11px] font-mono text-[#18181B] shadow-2xs">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75" />
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10B981]" />
+                    </span>
+                    <span className="font-semibold">200 OK</span>
+                    <span className="text-[#9C968E]">|</span>
+                    <span className="text-[#6E6A63]">RDS LIVE</span>
+                  </div>
+                </>
+              ) : (
+                <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#ECE9E2] text-[11px] font-mono text-[#18181B] shadow-2xs">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10B981]" />
+                  </span>
+                  <span className="text-[#6E6A63]">SYSTEM STATUS:</span>
+                  <span className="font-semibold text-[#065F46]">OPERATIONAL</span>
+                </div>
+              )}
             </div>
           </div>
 
@@ -165,33 +178,47 @@ const AppLayout = ({ children }) => {
               })}
             </nav>
 
-            {/* Quick System Architecture Info Pill */}
-            <div className="mt-6 p-4 rounded-xl bg-[#F3F1ED] border border-[#ECE9E2]">
-              <div className="flex items-center gap-2 text-[#18181B] font-bold text-xs mb-1.5">
-                <div className="w-4 h-4 rounded bg-[#1C1917] flex items-center justify-center text-white">
-                  <Server className="w-2.5 h-2.5" />
+            {/* Context Widget: Architecture for Admin; Security & Confidentiality for Patients/Doctors */}
+            {user?.role === 'ADMIN' ? (
+              <div className="mt-6 p-4 rounded-xl bg-[#F3F1ED] border border-[#ECE9E2]">
+                <div className="flex items-center gap-2 text-[#18181B] font-bold text-xs mb-1.5">
+                  <div className="w-4 h-4 rounded bg-[#1C1917] flex items-center justify-center text-white">
+                    <Server className="w-2.5 h-2.5" />
+                  </div>
+                  <span className="font-mono text-[11px] uppercase tracking-wider">AWS ARCHITECTURE</span>
                 </div>
-                <span className="font-mono text-[11px] uppercase tracking-wider">AWS ARCHITECTURE</span>
+                <ul className="font-mono text-[10px] text-[#6E6A63] space-y-1.5 mt-2">
+                  <li className="flex items-center justify-between">
+                    <span>VPC</span>
+                    <span className="font-semibold text-[#18181B]">10.20.0.0/16</span>
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <span>PUBLIC EC2</span>
+                    <span className="font-semibold text-[#18181B]">:3000</span>
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <span>PRIVATE RDS</span>
+                    <span className="font-semibold text-[#18181B]">:3306</span>
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <span>STORAGE</span>
+                    <span className="font-semibold text-[#10B981]">S3 PRIVATE</span>
+                  </li>
+                </ul>
               </div>
-              <ul className="font-mono text-[10px] text-[#6E6A63] space-y-1.5 mt-2">
-                <li className="flex items-center justify-between">
-                  <span>VPC</span>
-                  <span className="font-semibold text-[#18181B]">10.20.0.0/16</span>
-                </li>
-                <li className="flex items-center justify-between">
-                  <span>PUBLIC EC2</span>
-                  <span className="font-semibold text-[#18181B]">:3000</span>
-                </li>
-                <li className="flex items-center justify-between">
-                  <span>PRIVATE RDS</span>
-                  <span className="font-semibold text-[#18181B]">:3306</span>
-                </li>
-                <li className="flex items-center justify-between">
-                  <span>STORAGE</span>
-                  <span className="font-semibold text-[#10B981]">S3 PRIVATE</span>
-                </li>
-              </ul>
-            </div>
+            ) : (
+              <div className="mt-6 p-4 rounded-xl bg-[#F3F1ED] border border-[#ECE9E2]">
+                <div className="flex items-center gap-2 text-[#18181B] font-bold text-xs mb-1.5">
+                  <div className="w-4 h-4 rounded bg-[#1C1917] flex items-center justify-center text-white">
+                    <Shield className="w-2.5 h-2.5" />
+                  </div>
+                  <span className="font-mono text-[11px] uppercase tracking-wider">SECURE DATA ENCLAVE</span>
+                </div>
+                <p className="font-mono text-[10px] text-[#6E6A63] leading-relaxed mt-2">
+                  End-to-end encrypted clinical session and verified patient-doctor confidentiality.
+                </p>
+              </div>
+            )}
           </div>
         </aside>
 

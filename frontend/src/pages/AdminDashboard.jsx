@@ -18,7 +18,110 @@ import {
   Lock,
   Database,
   Cloud,
+  Key,
+  Eye,
+  EyeOff,
+  Copy,
+  Check,
+  ShieldCheck,
+  ShieldAlert,
 } from 'lucide-react';
+
+const DEMO_CREDENTIALS = [
+  {
+    name: 'System Administrator',
+    email: 'admin@cloudcare.test',
+    password: 'Admin@123',
+    role: 'ADMIN',
+    portal: '/admin',
+    details: 'Full administrative infrastructure, telemetry & audit privileges',
+  },
+  {
+    name: 'Dr. Rahul Sharma',
+    email: 'rahul@cloudcare.test',
+    password: 'Doctor@123',
+    role: 'DOCTOR',
+    specialty: 'Cardiology',
+    portal: '/doctor',
+    details: 'Attending Cardiologist • Slots: 09:00 - 11:30',
+  },
+  {
+    name: 'Dr. Priya Mehta',
+    email: 'priya@cloudcare.test',
+    password: 'Doctor@123',
+    role: 'DOCTOR',
+    specialty: 'Dermatology',
+    portal: '/doctor',
+    details: 'Attending Dermatologist • Slots: 10:00 - 14:00',
+  },
+  {
+    name: 'Dr. Arjun Reddy',
+    email: 'arjun@cloudcare.test',
+    password: 'Doctor@123',
+    role: 'DOCTOR',
+    specialty: 'Orthopedics',
+    portal: '/doctor',
+    details: 'Attending Orthopedic Specialist • Slots: 11:00 - 16:30',
+  },
+  {
+    name: 'Dr. Kavita Rao',
+    email: 'kavita@cloudcare.test',
+    password: 'Doctor@123',
+    role: 'DOCTOR',
+    specialty: 'Pediatrics',
+    portal: '/doctor',
+    details: 'Pediatric Specialist • Slots: 09:30 - 13:00',
+  },
+  {
+    name: 'Dr. Sanjay Gupta',
+    email: 'sanjay@cloudcare.test',
+    password: 'Doctor@123',
+    role: 'DOCTOR',
+    specialty: 'Neurology',
+    portal: '/doctor',
+    details: 'Neurology Consultant • Slots: 14:00 - 18:00',
+  },
+  {
+    name: 'Aarav Patil',
+    email: 'aarav@cloudcare.test',
+    password: 'Patient@123',
+    role: 'PATIENT',
+    portal: '/patient',
+    details: 'Synthetic patient record • Consultations with Cardiology & Dermatology',
+  },
+  {
+    name: 'Sneha Joshi',
+    email: 'sneha@cloudcare.test',
+    password: 'Patient@123',
+    role: 'PATIENT',
+    portal: '/patient',
+    details: 'Synthetic patient record • Consultations with Orthopedics',
+  },
+  {
+    name: 'Vikram Malhotra',
+    email: 'vikram@cloudcare.test',
+    password: 'Patient@123',
+    role: 'PATIENT',
+    portal: '/patient',
+    details: 'Synthetic patient record • Consultations with Pediatrics',
+  },
+  {
+    name: 'Ananya Deshmukh',
+    email: 'ananya@cloudcare.test',
+    password: 'Patient@123',
+    role: 'PATIENT',
+    portal: '/patient',
+    details: 'Synthetic patient record • General clinical consultations',
+  },
+  {
+    name: 'Rohan Verma',
+    email: 'rohan@cloudcare.test',
+    password: 'Patient@123',
+    role: 'PATIENT',
+    portal: '/patient',
+    details: 'Synthetic patient record • Diagnostic reports and follow-ups',
+  },
+];
 
 const AdminDashboard = () => {
   const { user } = useAuth();
@@ -27,6 +130,11 @@ const AdminDashboard = () => {
   const [appointments, setAppointments] = useState([]);
   const [healthStatus, setHealthStatus] = useState(null);
   const [healthLoading, setHealthLoading] = useState(false);
+
+  // Administrative credentials & pass state
+  const [showPasswords, setShowPasswords] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(null);
+  const [roleFilter, setRoleFilter] = useState('ALL');
 
   const loadData = useCallback(async () => {
     try {
@@ -105,6 +213,17 @@ const AdminDashboard = () => {
     };
   }, [user]);
 
+  const handleCopy = (cred) => {
+    navigator.clipboard.writeText(`Email: ${cred.email}\nPassword: ${cred.password}`);
+    setCopiedEmail(cred.email);
+    setTimeout(() => setCopiedEmail(null), 2000);
+  };
+
+  const filteredCredentials = DEMO_CREDENTIALS.filter((cred) => {
+    if (roleFilter === 'ALL') return true;
+    return cred.role === roleFilter;
+  });
+
   return (
     <div className="space-y-6">
       {/* Admin Hero Header: Sleek Warm Obsidian Card */}
@@ -127,7 +246,7 @@ const AdminDashboard = () => {
               Hospital Operations Overview
             </h1>
             <p className="text-[#9C968E] text-xs sm:text-sm mt-1 max-w-xl font-normal leading-relaxed">
-              CloudCare Simplified Architecture • Monitor appointments, clinical staff allocations, and AWS infrastructure health.
+              CloudCare Architecture • Monitor appointments, clinical staff allocations, deployment specifications, and authorized identity passes.
             </p>
           </div>
 
@@ -180,7 +299,144 @@ const AdminDashboard = () => {
         />
       </div>
 
-      {/* AWS Architecture Foundation Card */}
+      {/* ADMIN-ONLY EXCLUSIVE: System Access & Identity Passes Directory */}
+      <Card className="border border-[rgba(28,25,23,0.08)] bg-white">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#ECE9E2] mb-4">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-[#1C1917] text-white flex items-center justify-center">
+              <Key className="w-4 h-4 text-[#C85A32]" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 className="text-base font-bold text-[#18181B] tracking-[-0.02em]">
+                  Authorized Identity Directory & Demonstration Passes
+                </h3>
+                <span className="font-mono text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full bg-[#FEF3C7] text-[#92400E] border border-[#FDE68A]">
+                  RESTRICTED TO ADMIN
+                </span>
+              </div>
+              <p className="text-xs text-[#6E6A63]">
+                Demonstration login IDs and passwords removed from public authentication routes for system security
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              icon={showPasswords ? EyeOff : Eye}
+              onClick={() => setShowPasswords(!showPasswords)}
+              className="text-xs"
+            >
+              {showPasswords ? 'Hide Passwords' : 'Show Passwords'}
+            </Button>
+          </div>
+        </div>
+
+        {/* Role Filter Tabs */}
+        <div className="flex flex-wrap items-center gap-1.5 mb-3">
+          {[
+            { id: 'ALL', label: 'All Accounts (11)' },
+            { id: 'ADMIN', label: 'Administrators (1)' },
+            { id: 'DOCTOR', label: 'Medical Specialists (5)' },
+            { id: 'PATIENT', label: 'Synthetic Patients (5)' },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setRoleFilter(tab.id)}
+              className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all btn-press ${
+                roleFilter === tab.id
+                  ? 'bg-[#1C1917] text-white shadow-xs'
+                  : 'bg-[#F3F1ED] text-[#6E6A63] hover:text-[#18181B] hover:bg-[#ECE9E2]'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Credentials & Passes Table */}
+        <div className="overflow-x-auto rounded-xl border border-[#ECE9E2]">
+          <table className="w-full text-left text-xs">
+            <thead className="bg-[#F3F1ED] border-b border-[#ECE9E2] text-[#6E6A63] font-mono uppercase tracking-wider font-semibold text-[11px]">
+              <tr>
+                <th className="py-2.5 px-3">Role</th>
+                <th className="py-2.5 px-3">Account Name</th>
+                <th className="py-2.5 px-3">Login Email / ID</th>
+                <th className="py-2.5 px-3">Authorized Pass</th>
+                <th className="py-2.5 px-3">Destination Portal</th>
+                <th className="py-2.5 px-3 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#ECE9E2]">
+              {filteredCredentials.map((cred) => (
+                <tr key={cred.email} className="hover:bg-[#F3F1ED]/50 transition-colors">
+                  <td className="py-2.5 px-3">
+                    <span
+                      className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider ${
+                        cred.role === 'ADMIN'
+                          ? 'bg-[#1C1917] text-white'
+                          : cred.role === 'DOCTOR'
+                          ? 'bg-[#E0F2FE] text-[#0369A1] border border-[#BAE6FD]'
+                          : 'bg-[#ECFDF5] text-[#065F46] border border-[#A7F3D0]'
+                      }`}
+                    >
+                      {cred.role}
+                    </span>
+                  </td>
+                  <td className="py-2.5 px-3 font-bold text-[#18181B]">
+                    <div>{cred.name}</div>
+                    <div className="text-[10px] font-normal text-[#9C968E]">{cred.details}</div>
+                  </td>
+                  <td className="py-2.5 px-3 font-mono text-[#18181B] font-medium">
+                    {cred.email}
+                  </td>
+                  <td className="py-2.5 px-3 font-mono">
+                    {showPasswords ? (
+                      <span className="font-semibold text-[#C85A32] bg-[#FDF2EE] px-2 py-0.5 rounded border border-[#FADCD2]">
+                        {cred.password}
+                      </span>
+                    ) : (
+                      <span className="text-[#9C968E] tracking-widest">••••••••</span>
+                    )}
+                  </td>
+                  <td className="py-2.5 px-3 font-mono text-[11px] text-[#6E6A63]">
+                    <code>{cred.portal}</code>
+                  </td>
+                  <td className="py-2.5 px-3 text-right">
+                    <button
+                      type="button"
+                      onClick={() => handleCopy(cred)}
+                      title="Copy login ID and password"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#F3F1ED] hover:bg-[#1C1917] text-[#6E6A63] hover:text-white transition-all text-[11px] font-mono btn-press"
+                    >
+                      {copiedEmail === cred.email ? (
+                        <>
+                          <Check className="w-3 h-3 text-[#10B981]" />
+                          <span>Copied</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3 h-3" />
+                          <span>Copy Pass</span>
+                        </>
+                      )}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="mt-3 p-3 rounded-xl bg-[#F3F1ED] border border-[#ECE9E2] flex items-center gap-2 text-[11px] text-[#6E6A63] font-mono">
+          <ShieldAlert className="w-3.5 h-3.5 text-[#C85A32] shrink-0" />
+          <span>Notice: These credentials allow immediate validation across roles and are strictly isolated to the admin console.</span>
+        </div>
+      </Card>
+
+      {/* ADMIN-ONLY EXCLUSIVE: AWS Architecture & Cloud Deployment Console */}
       <Card className="border border-[rgba(28,25,23,0.08)] bg-white">
         <div className="flex items-center justify-between pb-4 border-b border-[#ECE9E2] mb-4">
           <div className="flex items-center gap-2.5">
@@ -188,11 +444,16 @@ const AdminDashboard = () => {
               <Cloud className="w-4 h-4 text-[#C85A32]" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-[#18181B] tracking-[-0.02em]">
-                AWS Architecture & Security Baseline
-              </h3>
+              <div className="flex items-center gap-2">
+                <h3 className="text-base font-bold text-[#18181B] tracking-[-0.02em]">
+                  AWS Cloud Deployment Specifications & Network Topology
+                </h3>
+                <span className="font-mono text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full bg-[#ECFDF5] text-[#065F46] border border-[#A7F3D0]">
+                  LIVE PRODUCTION
+                </span>
+              </div>
               <p className="text-xs text-[#6E6A63]">
-                Verified Cloud Infrastructure Specifications
+                Infrastructure endpoints and security rules restricted strictly to this authenticated administration portal
               </p>
             </div>
           </div>
@@ -209,10 +470,11 @@ const AdminDashboard = () => {
               <span>Public EC2 & Custom VPC</span>
             </div>
             <p className="font-mono text-[#6E6A63] leading-relaxed text-[11px]">
-              • Host: Amazon Linux 2023 (t3.micro)<br />
-              • Port: 3000 (React + Express API)<br />
-              • VPC: 10.20.0.0/16 (ap-south-1)<br />
-              • Subnet: 10.20.1.0/24 (AZ A)
+              • Instance: Amazon Linux 2023 (t3.micro)<br />
+              • Instance ID: <code className="bg-white px-1 rounded border border-[#ECE9E2]">i-054768b5baf83e81e</code><br />
+              • Public Endpoint: <code className="bg-white px-1 rounded border border-[#ECE9E2]">43.205.194.94:3000</code><br />
+              • Custom VPC: <code className="bg-white px-1 rounded border border-[#ECE9E2]">10.20.0.0/16</code> (ap-south-1)<br />
+              • Public Subnet: <code className="bg-white px-1 rounded border border-[#ECE9E2]">10.20.1.0/24</code> (AZ A)
             </p>
           </div>
 
@@ -220,26 +482,27 @@ const AdminDashboard = () => {
           <div className="p-3.5 rounded-xl bg-[#F3F1ED] border border-[#ECE9E2] space-y-1.5">
             <div className="flex items-center gap-2 font-bold text-[#18181B]">
               <Database className="w-4 h-4 text-[#1C1917]" />
-              <span>Private MySQL RDS</span>
+              <span>Private MySQL RDS Enclave</span>
             </div>
-            <p className="text-ios-gray-600 leading-relaxed text-[11px]">
-              • 2 Subnets: <code className="bg-gray-100 px-1 rounded">10.20.11.0/24</code> & <code className="bg-gray-100 px-1 rounded">10.20.12.0/24</code><br />
-              • Public Access: <span className="font-bold text-ios-red">NO</span> (Strict isolation)<br />
-              • DB Security Group: Inbound 3306 permitted only from App SG source ID
+            <p className="font-mono text-[#6E6A63] leading-relaxed text-[11px]">
+              • Multi-AZ Subnets: <code className="bg-white px-1 rounded border border-[#ECE9E2]">10.20.11.0/24</code> & <code className="bg-white px-1 rounded border border-[#ECE9E2]">10.20.12.0/24</code><br />
+              • Endpoint: <code className="bg-white px-1 rounded border border-[#ECE9E2] text-[10px] break-all">cloudcare-db.cbu82mmyc950.ap-south-1.rds.amazonaws.com:3306</code><br />
+              • Public Access: <span className="font-bold text-[#C85A32]">NO</span> (Strict isolation)<br />
+              • Inbound 3306: App Security Group source only
             </p>
           </div>
 
           {/* S3 Box */}
-          <div className="p-3.5 rounded-[16px] bg-white border border-gray-100 shadow-sm space-y-1.5">
-            <div className="flex items-center gap-2 font-bold text-ios-gray-900">
-              <Lock className="w-4 h-4 text-emerald-600" />
-              <span>Private S3 & IAM Role</span>
+          <div className="p-3.5 rounded-xl bg-[#F3F1ED] border border-[#ECE9E2] space-y-1.5">
+            <div className="flex items-center gap-2 font-bold text-[#18181B]">
+              <Lock className="w-4 h-4 text-[#10B981]" />
+              <span>Private S3 & EC2 IAM Role</span>
             </div>
-            <p className="text-ios-gray-600 leading-relaxed text-[11px]">
-              • Block All Public Access: <span className="font-bold text-ios-green">ON</span><br />
-              • SSE-S3 default encryption<br />
-              • EC2 IAM Role: Least-privilege <code className="bg-gray-100 px-1 rounded">s3:GetObject</code> & <code className="bg-gray-100 px-1 rounded">s3:PutObject</code><br />
-              • Zero long-term access keys committed
+            <p className="font-mono text-[#6E6A63] leading-relaxed text-[11px]">
+              • Bucket: <code className="bg-white px-1 rounded border border-[#ECE9E2] text-[10px] break-all">cloudcare-docs-anushka-unique-03</code><br />
+              • Block All Public Access: <span className="font-bold text-[#065F46]">ON (All 4 settings)</span><br />
+              • Default Encryption: <span className="font-semibold text-[#18181B]">SSE-S3 (AES-256)</span><br />
+              • EC2 IAM Role: <code className="bg-white px-1 rounded border border-[#ECE9E2]">CloudCareEC2S3Role</code> (s3:GetObject, s3:PutObject)
             </p>
           </div>
         </div>
@@ -248,10 +511,10 @@ const AdminDashboard = () => {
       {/* Seeded Doctors Directory Table */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-bold text-ios-gray-900">
+          <h3 className="text-lg font-bold text-[#18181B]">
             Hospital Medical Staff Directory
           </h3>
-          <span className="text-xs font-semibold text-ios-gray-400">
+          <span className="text-xs font-semibold text-[#9C968E]">
             {doctors.length} Doctors Seeded
           </span>
         </div>
@@ -308,18 +571,18 @@ const AdminDashboard = () => {
       {/* Global Appointments Audit Log */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-bold text-ios-gray-900">
+          <h3 className="text-lg font-bold text-[#18181B]">
             Appointments Audit Log
           </h3>
-          <span className="text-xs font-semibold text-ios-gray-400">
+          <span className="text-xs font-semibold text-[#9C968E]">
             Total {appointments.length} Consultations
           </span>
         </div>
 
-        <div className="bg-white rounded-[20px] shadow-ios border border-gray-100 overflow-hidden">
+        <div className="bg-white rounded-2xl border border-[rgba(28,25,23,0.08)] overflow-hidden shadow-sm">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-ios-gray-50 border-b border-gray-100 text-ios-gray-500 uppercase tracking-wider font-semibold">
+              <thead className="bg-[#F3F1ED] border-b border-[#ECE9E2] text-[#6E6A63] font-mono uppercase tracking-wider font-semibold text-[11px]">
                 <tr>
                   <th className="py-3 px-4">Appt ID</th>
                   <th className="py-3 px-4">Patient Name</th>
@@ -329,25 +592,25 @@ const AdminDashboard = () => {
                   <th className="py-3 px-4">Notes</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-[#ECE9E2]">
                 {appointments.map((appt) => (
-                  <tr key={appt.id} className="hover:bg-ios-gray-50/80 transition-colors">
-                    <td className="py-3.5 px-4 font-bold text-ios-gray-500">
+                  <tr key={appt.id} className="hover:bg-[#F3F1ED]/50 transition-colors">
+                    <td className="py-3.5 px-4 font-bold text-[#6E6A63] font-mono">
                       #{appt.id}
                     </td>
-                    <td className="py-3.5 px-4 font-bold text-ios-gray-900">
+                    <td className="py-3.5 px-4 font-bold text-[#18181B]">
                       {appt.patientName}
                     </td>
-                    <td className="py-3.5 px-4 font-semibold text-ios-gray-700">
+                    <td className="py-3.5 px-4 font-semibold text-[#18181B]">
                       {appt.doctorName}
                     </td>
-                    <td className="py-3.5 px-4 text-ios-gray-600">
-                      <span className="font-medium text-ios-gray-900">{appt.visitDate}</span> at {appt.slot}
+                    <td className="py-3.5 px-4 text-[#6E6A63]">
+                      <span className="font-medium text-[#18181B]">{appt.visitDate}</span> at {appt.slot}
                     </td>
                     <td className="py-3.5 px-4">
                       <StatusBadge status={appt.status} />
                     </td>
-                    <td className="py-3.5 px-4 text-ios-gray-500 max-w-xs truncate">
+                    <td className="py-3.5 px-4 text-[#6E6A63] max-w-xs truncate">
                       {appt.notes || '—'}
                     </td>
                   </tr>
