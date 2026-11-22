@@ -2,7 +2,7 @@ import React from 'react';
 
 const Button = ({
   children,
-  variant = 'primary', // 'primary' | 'secondary' | 'emerald' | 'purple' | 'outline' | 'ghost' | 'destructive' | 'tint'
+  variant = 'primary', // 'primary' | 'secondary' | 'sage' | 'amber' | 'outline' | 'ghost' | 'destructive' | 'tint'
   size = 'md', // 'sm' | 'md' | 'lg'
   icon: Icon,
   iconPosition = 'left',
@@ -18,30 +18,30 @@ const Button = ({
     'inline-flex items-center justify-center font-semibold transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none active:scale-[0.98]';
 
   const sizeStyles = {
-    sm: 'text-xs px-3.5 py-1.5 rounded-full gap-1.5',
-    md: 'text-sm px-4.5 py-2.5 rounded-full gap-2',
-    lg: 'text-base px-6 py-3 rounded-full gap-2.5',
+    sm: 'text-xs px-3.5 py-1.5 rounded-xl gap-1.5',
+    md: 'text-sm px-4.5 py-2.5 rounded-2xl gap-2',
+    lg: 'text-base px-6 h-12 rounded-2xl gap-2.5',
   };
 
   const variantStyles = {
     primary:
-      'bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-700 hover:to-indigo-800 text-white shadow-sm shadow-indigo-500/25 ring-1 ring-white/20',
-    emerald:
-      'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white shadow-sm shadow-emerald-500/25 ring-1 ring-white/20',
-    purple:
-      'bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white shadow-sm shadow-purple-500/25 ring-1 ring-white/20',
+      'bg-[#E06D53] hover:bg-[#C85A40] text-white shadow-md shadow-[#E06D53]/25 ring-1 ring-white/20 relative overflow-hidden',
+    sage:
+      'bg-[#5B8A72] hover:bg-[#4D7761] text-white shadow-md shadow-[#5B8A72]/25 ring-1 ring-white/20',
+    amber:
+      'bg-[#D98A3C] hover:bg-[#C0772E] text-white shadow-md shadow-[#D98A3C]/25 ring-1 ring-white/20',
     secondary:
-      'bg-slate-100/90 hover:bg-slate-200/90 text-slate-800 border border-slate-200/70 shadow-xs',
+      'bg-[#F5F0E6] hover:bg-[#EFEAE1] text-[#231F20] border border-[#E8E0D5] shadow-xs',
     tint:
-      'bg-blue-50 text-blue-700 hover:bg-blue-100/80 border border-blue-200/60',
+      'bg-[#FDF2F0] text-[#E06D53] hover:bg-[#FAD8D2]/60 border border-[#FAD8D2]',
     outline:
-      'border border-slate-300 bg-white/80 hover:bg-white text-slate-800 shadow-xs',
+      'border border-[#E8E0D5] bg-white/90 hover:bg-white text-[#231F20] shadow-xs',
     ghost:
-      'text-blue-600 hover:bg-blue-50/70 bg-transparent',
+      'text-[#E06D53] hover:bg-[#FDF2F0] bg-transparent',
     destructive:
-      'bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-700 hover:to-red-700 text-white shadow-sm shadow-rose-500/25',
+      'bg-[#D34538] hover:bg-[#B9382C] text-white shadow-md shadow-[#D34538]/25 ring-1 ring-white/20',
     destructiveTint:
-      'bg-rose-50 text-rose-700 hover:bg-rose-100/80 border border-rose-200/60',
+      'bg-[#FDF2F0] text-[#D34538] hover:bg-[#FAD8D2] border border-[#FAD8D2]',
   };
 
   return (
@@ -58,7 +58,7 @@ const Button = ({
       `}
       {...props}
     >
-      {loading ? (
+      {loading && (
         <svg
           className="animate-spin -ml-1 mr-2 h-4 w-4 text-current"
           xmlns="http://www.w3.org/2000/svg"
@@ -79,11 +79,17 @@ const Button = ({
             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
           />
         </svg>
-      ) : (
-        Icon && iconPosition === 'left' && <Icon className="w-4 h-4 shrink-0" />
       )}
+
+      {!loading && Icon && iconPosition === 'left' && (
+        <Icon className={size === 'sm' ? 'w-3.5 h-3.5' : 'w-4 h-4'} />
+      )}
+
       <span>{children}</span>
-      {!loading && Icon && iconPosition === 'right' && <Icon className="w-4 h-4 shrink-0" />}
+
+      {!loading && Icon && iconPosition === 'right' && (
+        <Icon className={size === 'sm' ? 'w-3.5 h-3.5' : 'w-4 h-4'} />
+      )}
     </button>
   );
 };

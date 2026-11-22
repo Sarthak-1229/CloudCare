@@ -157,18 +157,24 @@ const PatientDashboard = () => {
 
   return (
     <div className="space-y-6">
-      {/* Welcome Banner */}
-      <div className="relative overflow-hidden rounded-[24px] bg-gradient-to-r from-ios-blue via-blue-600 to-indigo-600 text-white p-6 sm:p-8 shadow-ios-md">
+      {/* Welcome Banner in Warm Terracotta */}
+      <div
+        className="relative overflow-hidden rounded-[28px] text-white p-6 sm:p-8"
+        style={{
+          background: 'linear-gradient(135deg, #E06D53 0%, #D95D43 50%, #C85A40 100%)',
+          boxShadow: '0 12px 32px -8px rgba(224, 109, 83, 0.35)',
+        }}
+      >
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-semibold mb-2">
-              <Sparkles className="w-3.5 h-3.5" />
+              <Sparkles className="w-3.5 h-3.5 text-white" />
               <span>Patient Health Portal</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-              Hello, {user?.name || 'Rahul Sharma'}
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+              Hello, {user?.name || 'Aarav Patil'}
             </h1>
-            <p className="text-blue-100 text-xs sm:text-sm mt-1 max-w-xl">
+            <p className="text-[#FDE8D7] text-xs sm:text-sm mt-1 max-w-xl">
               Manage your clinical consultations, view assigned specialist schedules, and securely download diagnostic records from AWS S3.
             </p>
           </div>
@@ -178,7 +184,7 @@ const PatientDashboard = () => {
             icon={PlusCircle}
             size="md"
             onClick={() => setIsBookModalOpen(true)}
-            className="self-start md:self-center bg-white text-ios-blue hover:bg-blue-50 shadow-sm"
+            className="self-start md:self-center bg-white text-[#E06D53] hover:bg-[#FDF2F0] shadow-sm font-bold border-none"
           >
             Book Appointment
           </Button>
@@ -192,34 +198,34 @@ const PatientDashboard = () => {
           value={upcomingCount}
           subtitle="Pending and confirmed visits"
           icon={Calendar}
-          tint="blue"
+          tint="terracotta"
         />
         <StatCard
           title="Consultations"
           value={completedCount}
           subtitle="Past doctor consultations"
           icon={CalendarCheck}
-          tint="green"
+          tint="sage"
         />
         <StatCard
           title="S3 Documents"
           value={documentsCount}
           subtitle="Encrypted medical PDFs"
           icon={FileText}
-          tint="purple"
+          tint="amber"
         />
       </div>
 
       {/* Next Appointment Spotlight Card */}
       {nextAppointment && (
-        <Card className="bg-gradient-to-br from-blue-50/70 to-indigo-50/50 border-blue-100/80">
+        <Card className="bg-gradient-to-br from-[#FDF2F0]/80 via-white to-[#F5F0E6] border-[#FAD8D2]">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-[16px] bg-ios-blue text-white flex items-center justify-center shrink-0 shadow-sm">
+              <div className="w-12 h-12 rounded-[16px] bg-[#E06D53] text-white flex items-center justify-center shrink-0 shadow-sm shadow-[#E06D53]/25">
                 <Stethoscope className="w-6 h-6" />
               </div>
               <div>
-                <span className="text-[11px] font-bold uppercase tracking-wider text-ios-blue">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#E06D53]">
                   Next Scheduled Visit
                 </span>
                 <h3 className="text-lg font-bold text-ios-gray-900 mt-0.5">
@@ -296,7 +302,7 @@ const PatientDashboard = () => {
               <Card key={appt.id} padding="p-4 sm:p-5" hoverable>
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="flex items-start gap-3.5">
-                    <div className="w-10 h-10 rounded-full bg-ios-gray-100 flex items-center justify-center text-ios-blue shrink-0">
+                    <div className="w-10 h-10 rounded-full bg-[#F5F0E6] flex items-center justify-center text-[#E06D53] shrink-0 border border-[#E8E0D5]">
                       <Stethoscope className="w-5 h-5" />
                     </div>
                     <div>
@@ -360,9 +366,9 @@ const PatientDashboard = () => {
           ) : (
             <div className="space-y-3">
               {prescriptions.map((p) => (
-                <Card key={p.id} padding="p-4" className="border-l-4 border-l-ios-blue">
+                <Card key={p.id} padding="p-4" className="border-l-4 border-l-[#E06D53]">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-bold text-ios-blue">
+                    <span className="text-xs font-bold text-[#E06D53]">
                       {p.doctorName || 'Attending Physician'}
                     </span>
                     <span className="text-[11px] text-ios-gray-400 font-medium">
@@ -506,8 +512,8 @@ const PatientDashboard = () => {
                         py-2 text-xs font-bold rounded-[12px] transition-all ios-press-action border
                         ${
                           slot === s
-                            ? 'bg-ios-blue text-white border-ios-blue shadow-sm'
-                            : 'bg-ios-gray-50 text-ios-gray-700 border-gray-200 hover:bg-gray-100'
+                            ? 'bg-[#E06D53] text-white border-[#E06D53] shadow-xs'
+                            : 'bg-[#F5F0E6] text-[#231F20] border-[#E8E0D5] hover:bg-[#EFEAE1]'
                         }
                       `}
                     >

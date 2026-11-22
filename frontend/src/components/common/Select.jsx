@@ -18,14 +18,14 @@ const Select = ({
       {label && (
         <label
           htmlFor={selectId}
-          className="block text-xs font-semibold uppercase tracking-wider text-ios-gray-600 mb-1.5 ml-1"
+          className="block text-xs font-semibold uppercase tracking-wider text-[#7A7267] mb-1.5 ml-1"
         >
-          {label} {required && <span className="text-ios-red">*</span>}
+          {label} {required && <span className="text-[#D34538]">*</span>}
         </label>
       )}
-      <div className="relative rounded-[14px] bg-white transition-all duration-150">
+      <div className="relative rounded-2xl bg-[#F5F1E8] transition-all duration-150">
         {Icon && (
-          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-ios-gray-400">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-[#7A7267]">
             <Icon className="w-5 h-5" />
           </div>
         )}
@@ -33,32 +33,32 @@ const Select = ({
           id={selectId}
           required={required}
           className={`
-            w-full appearance-none rounded-[14px] bg-ios-gray-50/80 border text-ios-gray-900 text-sm py-2.5 transition-all duration-150
-            focus:bg-white focus:outline-none focus:ring-4 cursor-pointer
-            ${Icon ? 'pl-11' : 'pl-3.5'} pr-10
+            w-full h-12 appearance-none rounded-2xl bg-[#F5F1E8] border text-[#231F20] text-sm transition-all duration-150
+            focus:bg-white focus:outline-none focus:ring-2 cursor-pointer
+            ${Icon ? 'pl-11' : 'pl-4'} pr-10
             ${
               error
-                ? 'border-ios-red focus:border-ios-red focus:ring-red-100'
-                : 'border-ios-gray-200/90 focus:border-ios-blue focus:ring-ios-blue/15 hover:border-ios-gray-300'
+                ? 'border-[#D34538] focus:border-[#D34538] focus:ring-[#D34538]/20'
+                : 'border-[#E8E0D5] focus:border-[#E06D53] focus:ring-[#E06D53]/30 hover:border-[#D5CBC0]'
             }
           `}
           {...props}
         >
           {children}
         </select>
-        <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-ios-gray-500">
+        <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-[#7A7267]">
           <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
             <path
+              fillRule="evenodd"
               d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
               clipRule="evenodd"
-              fillRule="evenodd"
             />
           </svg>
         </div>
       </div>
-      {error && <p className="mt-1 text-xs text-ios-red font-medium ml-1">{error}</p>}
+      {error && <p className="mt-1 text-xs text-[#D34538] font-medium ml-1">{error}</p>}
       {!error && helperText && (
-        <p className="mt-1 text-xs text-ios-gray-500 ml-1">{helperText}</p>
+        <p className="mt-1 text-xs text-[#7A7267] ml-1">{helperText}</p>
       )}
     </div>
   );

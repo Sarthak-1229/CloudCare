@@ -46,7 +46,7 @@ const Register = () => {
       subtitle="Create your CloudCare health account"
     >
       {error && (
-        <div className="mb-4 p-3 rounded-[14px] bg-ios-red-tint border border-ios-red/20 flex items-center gap-2 text-xs font-semibold text-ios-red">
+        <div className="mb-4 p-3.5 rounded-2xl bg-[#FDF2F0] border border-[#FAD8D2] flex items-center gap-2 text-xs font-semibold text-[#D34538]">
           <AlertCircle className="w-4 h-4 shrink-0" />
           <span>{error}</span>
         </div>
@@ -65,7 +65,7 @@ const Register = () => {
         <Input
           label="Email Address"
           type="email"
-          placeholder="patient@example.com"
+          placeholder="patient@cloudcare.test"
           icon={Mail}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -92,32 +92,34 @@ const Register = () => {
           required
         />
 
-        <div className="p-3 rounded-[14px] bg-ios-blue-tint/60 text-xs text-ios-blue flex items-start gap-2">
+        {/* Informative Grouped Inset Box in Warm Sage */}
+        <div className="p-3.5 rounded-2xl bg-[#EDF4F0] border border-[#C4DDD0] text-xs text-[#5B8A72] flex items-start gap-2.5">
           <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
-          <span>
-            Patients receive access to book appointments, review doctors, and securely download diagnostic reports.
+          <span className="leading-relaxed">
+            Registered patients can book doctor consultations across 5 specialties and securely download diagnostic ECG & clinical records.
           </span>
         </div>
 
         <Button
           type="submit"
           variant="primary"
+          size="lg"
           fullWidth
           loading={isLoading}
-          size="lg"
-          className="mt-2"
+          className="mt-3 h-12 rounded-2xl font-bold tracking-tight text-white shadow-md shadow-[#E06D53]/25"
         >
           Create Patient Account
         </Button>
       </form>
 
-      <div className="mt-5 pt-4 border-t border-gray-100 text-center">
-        <p className="text-xs text-ios-gray-500">
-          Already registered?{' '}
-          <Link to="/login" className="font-semibold text-ios-blue hover:underline">
-            Sign In
-          </Link>
-        </p>
+      <div className="mt-5 text-center text-xs text-[#7A7267]">
+        <span>Already have an account? </span>
+        <Link
+          to="/login"
+          className="font-bold text-[#E06D53] hover:text-[#C85A40] transition-colors"
+        >
+          Sign In
+        </Link>
       </div>
     </AuthLayout>
   );

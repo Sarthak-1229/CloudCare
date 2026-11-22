@@ -5,7 +5,7 @@ import AuthLayout from '../layouts/AuthLayout';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import SegmentedControl from '../components/common/SegmentedControl';
-import { Mail, Lock, UserCheck, AlertCircle, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Mail, Lock, UserCheck, AlertCircle, Sparkles } from 'lucide-react';
 
 const Login = () => {
   const { login, isLoading } = useAuth();
@@ -55,7 +55,7 @@ const Login = () => {
       title="Welcome to CloudCare"
       subtitle="Sign in to your clinical or patient workspace"
     >
-      {/* Role Picker Segmented Control */}
+      {/* Role Picker Native iOS Segmented Control */}
       <div className="flex justify-center mb-5">
         <SegmentedControl
           options={[
@@ -68,10 +68,10 @@ const Login = () => {
         />
       </div>
 
-      {/* Demo Quick Select Pills */}
-      <div className="mb-5 p-3.5 rounded-2xl bg-gradient-to-br from-indigo-50/60 via-blue-50/40 to-slate-50 border border-indigo-100/70 shadow-xs">
-        <div className="flex items-center gap-1.5 text-xs font-bold text-slate-700 mb-2">
-          <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
+      {/* Demo Persona Selector Box — iOS Grouped Inset Section (#F7F3EB, rounded-2xl) */}
+      <div className="mb-5 p-3.5 rounded-2xl bg-[#F7F3EB] border border-[#E8E0D5] shadow-xs">
+        <div className="flex items-center gap-1.5 text-xs font-bold text-[#231F20] mb-2.5">
+          <Sparkles className="w-3.5 h-3.5 text-[#E06D53]" />
           <span>One-Click Demonstration Personas:</span>
         </div>
         <div className="flex flex-wrap gap-1.5">
@@ -83,10 +83,10 @@ const Login = () => {
                   setEmail('aarav@cloudcare.test');
                   setPassword('Patient@123');
                 }}
-                className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border transition-all ${
+                className={`text-[11px] font-semibold px-3 py-1 rounded-full border transition-all duration-150 ios-press-action ${
                   email === 'aarav@cloudcare.test'
-                    ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
-                    : 'bg-white hover:bg-blue-50 text-slate-700 border-slate-200'
+                    ? 'bg-[#E06D53] text-white border-[#E06D53] shadow-xs'
+                    : 'bg-white/90 hover:bg-white text-[#231F20] border-[#E8E0D5]'
                 }`}
               >
                 Aarav Patil
@@ -97,10 +97,10 @@ const Login = () => {
                   setEmail('sneha@cloudcare.test');
                   setPassword('Patient@123');
                 }}
-                className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border transition-all ${
+                className={`text-[11px] font-semibold px-3 py-1 rounded-full border transition-all duration-150 ios-press-action ${
                   email === 'sneha@cloudcare.test'
-                    ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
-                    : 'bg-white hover:bg-blue-50 text-slate-700 border-slate-200'
+                    ? 'bg-[#E06D53] text-white border-[#E06D53] shadow-xs'
+                    : 'bg-white/90 hover:bg-white text-[#231F20] border-[#E8E0D5]'
                 }`}
               >
                 Sneha Joshi
@@ -111,10 +111,10 @@ const Login = () => {
                   setEmail('vikram@cloudcare.test');
                   setPassword('Patient@123');
                 }}
-                className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border transition-all ${
+                className={`text-[11px] font-semibold px-3 py-1 rounded-full border transition-all duration-150 ios-press-action ${
                   email === 'vikram@cloudcare.test'
-                    ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
-                    : 'bg-white hover:bg-blue-50 text-slate-700 border-slate-200'
+                    ? 'bg-[#E06D53] text-white border-[#E06D53] shadow-xs'
+                    : 'bg-white/90 hover:bg-white text-[#231F20] border-[#E8E0D5]'
                 }`}
               >
                 Vikram Malhotra
@@ -130,10 +130,10 @@ const Login = () => {
                   setEmail('rahul@cloudcare.test');
                   setPassword('Doctor@123');
                 }}
-                className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border transition-all ${
+                className={`text-[11px] font-semibold px-3 py-1 rounded-full border transition-all duration-150 ios-press-action ${
                   email === 'rahul@cloudcare.test'
-                    ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
-                    : 'bg-white hover:bg-emerald-50 text-slate-700 border-slate-200'
+                    ? 'bg-[#E06D53] text-white border-[#E06D53] shadow-xs'
+                    : 'bg-white/90 hover:bg-white text-[#231F20] border-[#E8E0D5]'
                 }`}
               >
                 Dr. Rahul (Cardiology)
@@ -144,10 +144,10 @@ const Login = () => {
                   setEmail('priya@cloudcare.test');
                   setPassword('Doctor@123');
                 }}
-                className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border transition-all ${
+                className={`text-[11px] font-semibold px-3 py-1 rounded-full border transition-all duration-150 ios-press-action ${
                   email === 'priya@cloudcare.test'
-                    ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
-                    : 'bg-white hover:bg-emerald-50 text-slate-700 border-slate-200'
+                    ? 'bg-[#E06D53] text-white border-[#E06D53] shadow-xs'
+                    : 'bg-white/90 hover:bg-white text-[#231F20] border-[#E8E0D5]'
                 }`}
               >
                 Dr. Priya (Dermatology)
@@ -158,10 +158,10 @@ const Login = () => {
                   setEmail('arjun@cloudcare.test');
                   setPassword('Doctor@123');
                 }}
-                className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border transition-all ${
+                className={`text-[11px] font-semibold px-3 py-1 rounded-full border transition-all duration-150 ios-press-action ${
                   email === 'arjun@cloudcare.test'
-                    ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
-                    : 'bg-white hover:bg-emerald-50 text-slate-700 border-slate-200'
+                    ? 'bg-[#E06D53] text-white border-[#E06D53] shadow-xs'
+                    : 'bg-white/90 hover:bg-white text-[#231F20] border-[#E8E0D5]'
                 }`}
               >
                 Dr. Arjun (Orthopedics)
@@ -176,7 +176,7 @@ const Login = () => {
                 setEmail('admin@cloudcare.test');
                 setPassword('Admin@123');
               }}
-              className="text-[11px] font-semibold px-3 py-1 rounded-full bg-purple-600 text-white border border-purple-600 shadow-xs"
+              className="text-[11px] font-semibold px-3.5 py-1 rounded-full bg-[#E06D53] text-white border border-[#E06D53] shadow-xs ios-press-action"
             >
               System Administrator
             </button>
@@ -185,13 +185,13 @@ const Login = () => {
       </div>
 
       {error && (
-        <div className="mb-4 p-3 rounded-2xl bg-rose-50 border border-rose-200/80 flex items-start gap-2.5 text-xs text-rose-700 animate-shake">
+        <div className="mb-4 p-3.5 rounded-2xl bg-[#FDF2F0] border border-[#FAD8D2] flex items-start gap-2.5 text-xs text-[#D34538]">
           <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
           <span>{error}</span>
         </div>
       )}
 
-      {/* Form */}
+      {/* Form with spacious tactile h-12 inputs and warm focus states */}
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
           label="Email Address"
@@ -220,7 +220,7 @@ const Login = () => {
           fullWidth
           loading={isLoading}
           icon={UserCheck}
-          className="mt-2"
+          className="mt-2 h-12 rounded-2xl font-bold tracking-tight text-white shadow-md shadow-[#E06D53]/25"
         >
           Sign In as {roleTab.charAt(0) + roleTab.slice(1).toLowerCase()}
         </Button>
@@ -228,11 +228,11 @@ const Login = () => {
 
       {/* Footer link for patient registration */}
       {roleTab === 'PATIENT' && (
-        <div className="mt-5 text-center text-xs text-slate-500">
+        <div className="mt-5 text-center text-xs text-[#7A7267]">
           <span>New patient? </span>
           <Link
             to="/register"
-            className="font-bold text-blue-600 hover:text-indigo-600 transition-colors"
+            className="font-bold text-[#E06D53] hover:text-[#C85A40] transition-colors"
           >
             Create an Account
           </Link>

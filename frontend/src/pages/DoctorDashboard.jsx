@@ -199,28 +199,28 @@ const DoctorDashboard = () => {
           value={pendingCount}
           subtitle="Awaiting doctor review"
           icon={Clock}
-          tint="orange"
+          tint="amber"
         />
         <StatCard
           title="Confirmed"
           value={confirmedCount}
           subtitle="Scheduled visits"
           icon={CheckCircle}
-          tint="blue"
+          tint="sage"
         />
         <StatCard
           title="Completed"
           value={completedCount}
           subtitle="Discharged consultations"
           icon={Check}
-          tint="green"
+          tint="terracotta"
         />
         <StatCard
           title="Total Assigned"
           value={totalCount}
           subtitle="All patient encounters"
           icon={Calendar}
-          tint="purple"
+          tint="espresso"
         />
       </div>
 
@@ -402,12 +402,12 @@ const DoctorDashboard = () => {
                 placeholder="e.g. Patient presents with Stage 1 hypertension. Normal heart sounds. Advised low salt diet."
                 value={clinicalNotes}
                 onChange={(e) => setClinicalNotes(e.target.value)}
-                className="w-full rounded-[14px] bg-ios-gray-50/80 border border-ios-gray-200/90 text-sm p-3 focus:bg-white focus:outline-none focus:ring-4 focus:ring-ios-blue/15"
+                className="w-full rounded-2xl bg-[#F5F1E8] border border-[#E8E0D5] text-sm p-3.5 text-[#231F20] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#E06D53]/30 focus:border-[#E06D53] transition-all"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-ios-gray-600 mb-1.5 ml-1">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-[#7A7267] mb-1.5 ml-1">
                 Medications & Dosages (Optional)
               </label>
               <textarea
@@ -415,7 +415,7 @@ const DoctorDashboard = () => {
                 placeholder="e.g. Tab Amlodipine 5mg - 1 tab daily morning after breakfast (30 days)"
                 value={medicines}
                 onChange={(e) => setMedicines(e.target.value)}
-                className="w-full rounded-[14px] bg-ios-gray-50/80 border border-ios-gray-200/90 text-sm p-3 focus:bg-white focus:outline-none focus:ring-4 focus:ring-ios-blue/15"
+                className="w-full rounded-2xl bg-[#F5F1E8] border border-[#E8E0D5] text-sm p-3.5 text-[#231F20] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#E06D53]/30 focus:border-[#E06D53] transition-all"
               />
             </div>
 
@@ -469,15 +469,15 @@ const DoctorDashboard = () => {
               <label className="block text-xs font-semibold uppercase tracking-wider text-ios-gray-600 mb-1.5 ml-1">
                 Synthetic PDF File
               </label>
-              <div className="border-2 border-dashed border-ios-gray-300 rounded-[16px] p-6 text-center hover:bg-ios-gray-50 transition-colors">
-                <FileText className="w-8 h-8 text-ios-gray-400 mx-auto mb-2" />
+              <div className="border-2 border-dashed border-[#E8E0D5] rounded-2xl p-6 text-center hover:bg-[#F5F0E6]/50 transition-colors">
+                <FileText className="w-8 h-8 text-[#E06D53] mx-auto mb-2" />
                 <input
                   type="file"
                   accept="application/pdf"
                   onChange={(e) => setSelectedFile(e.target.files[0])}
-                  className="text-xs text-ios-gray-600 file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-ios-blue-tint file:text-ios-blue hover:file:bg-blue-100 cursor-pointer"
+                  className="text-xs text-[#7A7267] file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-[#FDF2F0] file:text-[#E06D53] hover:file:bg-[#FAD8D2] cursor-pointer"
                 />
-                <p className="text-[11px] text-ios-gray-400 mt-2">
+                <p className="text-[11px] text-[#7A7267] mt-2">
                   Synthetic test PDF only (max 5 MiB). Stored in private S3 bucket via EC2 IAM role.
                 </p>
               </div>

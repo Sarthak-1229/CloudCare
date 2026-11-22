@@ -108,23 +108,29 @@ const AdminDashboard = () => {
   return (
     <div className="space-y-6">
       {/* Admin Hero Header */}
-      <div className="relative overflow-hidden rounded-[24px] bg-gradient-to-r from-purple-700 via-indigo-700 to-slate-900 text-white p-6 sm:p-8 shadow-ios-md">
+      <div
+        className="relative overflow-hidden rounded-[28px] text-white p-6 sm:p-8"
+        style={{
+          background: 'linear-gradient(135deg, #231F20 0%, #38322C 50%, #524B43 100%)',
+          boxShadow: '0 12px 32px -8px rgba(35, 31, 32, 0.35)',
+        }}
+      >
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-semibold mb-2">
-              <Shield className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-xs font-semibold mb-2">
+              <Shield className="w-3.5 h-3.5 text-[#E06D53]" />
               <span>Administrative Operations Console</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
               Hospital Operations Overview
             </h1>
-            <p className="text-purple-200 text-xs sm:text-sm mt-1 max-w-xl">
+            <p className="text-[#F3ECE1] text-xs sm:text-sm mt-1 max-w-xl">
               CloudCare Simplified TY CCF v3.0 • Monitor appointments, clinical staff allocations, and AWS infrastructure health.
             </p>
           </div>
 
           <Button
-            variant="secondary"
+            variant="primary"
             icon={RefreshCw}
             size="md"
             loading={healthLoading}
@@ -132,7 +138,7 @@ const AdminDashboard = () => {
               loadData();
               checkHealth();
             }}
-            className="self-start md:self-center bg-white/90 text-purple-900 hover:bg-white shadow-sm"
+            className="self-start md:self-center bg-[#E06D53] hover:bg-[#C85A40] text-white shadow-sm font-bold border-none"
           >
             Refresh System
           </Button>
@@ -143,24 +149,24 @@ const AdminDashboard = () => {
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
         <StatCard
           title="Total Patients"
-          value={summary.patients || 24}
+          value={summary.patients || 7}
           subtitle="Registered synthetic accounts"
           icon={Users}
-          tint="blue"
+          tint="terracotta"
         />
         <StatCard
           title="Medical Specialists"
-          value={doctors.length || summary.doctors || 3}
+          value={doctors.length || summary.doctors || 5}
           subtitle="Seeded active doctors"
           icon={Stethoscope}
-          tint="green"
+          tint="sage"
         />
         <StatCard
           title="Total Consultations"
-          value={appointments.length || summary.appointments || 5}
+          value={appointments.length || summary.appointments || 12}
           subtitle="All-time bookings"
           icon={Calendar}
-          tint="purple"
+          tint="amber"
         />
         <StatCard
           title="Backend Liveness"
@@ -171,51 +177,51 @@ const AdminDashboard = () => {
               : 'Checking /api/health...'
           }
           icon={Activity}
-          tint={healthStatus?.status === 'ok' ? 'green' : 'orange'}
+          tint={healthStatus?.status === 'ok' ? 'sage' : 'amber'}
           badgeText={healthStatus?.status === 'ok' ? 'HTTP 200' : 'Offline'}
         />
       </div>
 
       {/* AWS Architecture & CCF Mini-Project Foundation */}
-      <Card className="border border-purple-100 bg-gradient-to-br from-white to-purple-50/30">
-        <div className="flex items-center justify-between pb-4 border-b border-gray-100 mb-4">
+      <Card className="border border-[#E8E0D5] bg-white/85">
+        <div className="flex items-center justify-between pb-4 border-b border-[#E8E0D5] mb-4">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-[12px] bg-purple-100 text-purple-700 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-[14px] bg-[#FDF2F0] text-[#E06D53] flex items-center justify-center">
               <Cloud className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-ios-gray-900">
+              <h3 className="text-base font-bold text-[#231F20]">
                 AWS Architecture & Security Baseline
               </h3>
-              <p className="text-xs text-ios-gray-500">
+              <p className="text-xs text-[#7A7267]">
                 Verified Simplified TY CCF v3.0 Deployment Specifications
               </p>
             </div>
           </div>
-          <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-emerald-100 text-emerald-800">
+          <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-[#EDF4F0] text-[#5B8A72] border border-[#C4DDD0]">
             Phase 1 Foundation
           </span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
           {/* EC2 & VPC Box */}
-          <div className="p-3.5 rounded-[16px] bg-white border border-gray-100 shadow-sm space-y-1.5">
-            <div className="flex items-center gap-2 font-bold text-ios-gray-900">
-              <Server className="w-4 h-4 text-ios-blue" />
+          <div className="p-3.5 rounded-2xl bg-[#F5F0E6] border border-[#E8E0D5] shadow-xs space-y-1.5">
+            <div className="flex items-center gap-2 font-bold text-[#231F20]">
+              <Server className="w-4 h-4 text-[#E06D53]" />
               <span>Public EC2 & Custom VPC</span>
             </div>
-            <p className="text-ios-gray-600 leading-relaxed text-[11px]">
+            <p className="text-[#7A7267] leading-relaxed text-[11px]">
               • Amazon Linux 2023 (t3.micro)<br />
               • React build served on Port 3000<br />
-              • Custom VPC: <code className="bg-gray-100 px-1 rounded">10.20.0.0/16</code><br />
-              • Public Subnet: <code className="bg-gray-100 px-1 rounded">10.20.1.0/24</code> (AZ A)
+              • Custom VPC: <code className="bg-white/90 px-1 py-0.5 rounded border border-[#E8E0D5]">10.20.0.0/16</code><br />
+              • Public Subnet: <code className="bg-white/90 px-1 py-0.5 rounded border border-[#E8E0D5]">10.20.1.0/24</code> (AZ A)
             </p>
           </div>
 
           {/* RDS Box */}
-          <div className="p-3.5 rounded-[16px] bg-white border border-gray-100 shadow-sm space-y-1.5">
-            <div className="flex items-center gap-2 font-bold text-ios-gray-900">
-              <Database className="w-4 h-4 text-purple-600" />
+          <div className="p-3.5 rounded-2xl bg-[#F5F0E6] border border-[#E8E0D5] shadow-xs space-y-1.5">
+            <div className="flex items-center gap-2 font-bold text-[#231F20]">
+              <Database className="w-4 h-4 text-[#5B8A72]" />
               <span>Private MySQL RDS</span>
             </div>
             <p className="text-ios-gray-600 leading-relaxed text-[11px]">
@@ -267,7 +273,7 @@ const AdminDashboard = () => {
                 {doctors.map((dr) => (
                   <tr key={dr.id} className="hover:bg-ios-gray-50/80 transition-colors">
                     <td className="py-3.5 px-4 font-bold text-ios-gray-900 flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-full bg-ios-blue-tint text-ios-blue flex items-center justify-center font-bold">
+                      <div className="w-7 h-7 rounded-full bg-[#FDF2F0] text-[#E06D53] border border-[#FAD8D2] flex items-center justify-center font-bold text-xs">
                         {dr.name[4] || 'D'}
                       </div>
                       <span>{dr.name}</span>

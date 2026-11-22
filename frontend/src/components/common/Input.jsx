@@ -18,14 +18,14 @@ const Input = ({
       {label && (
         <label
           htmlFor={inputId}
-          className="block text-xs font-semibold uppercase tracking-wider text-ios-gray-600 mb-1.5 ml-1"
+          className="block text-xs font-semibold text-[#7A7267] uppercase tracking-wider mb-1.5 ml-1"
         >
-          {label} {required && <span className="text-ios-red">*</span>}
+          {label} {required && <span className="text-[#D34538]">*</span>}
         </label>
       )}
-      <div className="relative rounded-[14px] bg-white transition-all duration-150">
+      <div className="relative rounded-2xl bg-[#F5F1E8] transition-all duration-150">
         {Icon && (
-          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-ios-gray-400">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-[#7A7267]">
             <Icon className="w-5 h-5" />
           </div>
         )}
@@ -34,21 +34,21 @@ const Input = ({
           type={type}
           required={required}
           className={`
-            w-full rounded-[14px] bg-ios-gray-50/80 border text-ios-gray-900 text-sm py-2.5 transition-all duration-150
-            placeholder:text-ios-gray-400 focus:bg-white focus:outline-none focus:ring-4
-            ${Icon ? 'pl-11' : 'pl-3.5'} pr-3.5
+            w-full h-12 rounded-2xl bg-[#F5F1E8] border text-[#231F20] text-sm transition-all duration-150
+            placeholder:text-[#7A7267]/60 focus:bg-white focus:outline-none focus:ring-2
+            ${Icon ? 'pl-11' : 'pl-4'} pr-4
             ${
               error
-                ? 'border-ios-red focus:border-ios-red focus:ring-red-100'
-                : 'border-ios-gray-200/90 focus:border-ios-blue focus:ring-ios-blue/15 hover:border-ios-gray-300'
+                ? 'border-[#D34538] focus:border-[#D34538] focus:ring-[#D34538]/20'
+                : 'border-[#E8E0D5] focus:border-[#E06D53] focus:ring-[#E06D53]/30 hover:border-[#D5CBC0]'
             }
           `}
           {...props}
         />
       </div>
-      {error && <p className="mt-1 text-xs text-ios-red font-medium ml-1">{error}</p>}
+      {error && <p className="mt-1 text-xs text-[#D34538] font-medium ml-1">{error}</p>}
       {!error && helperText && (
-        <p className="mt-1 text-xs text-ios-gray-500 ml-1">{helperText}</p>
+        <p className="mt-1 text-xs text-[#7A7267] ml-1">{helperText}</p>
       )}
     </div>
   );
