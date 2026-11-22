@@ -5,43 +5,48 @@ const StatusBadge = ({ status, className = '' }) => {
 
   const styles = {
     CONFIRMED: {
-      bg: 'bg-ios-blue-tint',
-      text: 'text-ios-blue',
-      dot: 'bg-ios-blue',
+      bg: 'bg-emerald-50/90 text-emerald-800 border-emerald-200/80',
+      dot: 'bg-emerald-500',
+      pulse: false,
       label: 'Confirmed',
     },
     PENDING: {
-      bg: 'bg-ios-orange-tint',
-      text: 'text-ios-orange',
-      dot: 'bg-ios-orange',
-      label: 'Pending',
+      bg: 'bg-amber-50/90 text-amber-800 border-amber-200/80',
+      dot: 'bg-amber-500',
+      pulse: true,
+      label: 'Pending Review',
     },
     COMPLETED: {
-      bg: 'bg-ios-green-tint',
-      text: 'text-ios-green',
-      dot: 'bg-ios-green',
+      bg: 'bg-indigo-50/90 text-indigo-800 border-indigo-200/80',
+      dot: 'bg-indigo-500',
+      pulse: false,
       label: 'Completed',
     },
     CANCELLED: {
-      bg: 'bg-ios-red-tint',
-      text: 'text-ios-red',
-      dot: 'bg-ios-red',
+      bg: 'bg-rose-50/90 text-rose-800 border-rose-200/80',
+      dot: 'bg-rose-500',
+      pulse: false,
       label: 'Cancelled',
     },
   };
 
   const current = styles[norm] || {
-    bg: 'bg-gray-100',
-    text: 'text-gray-600',
-    dot: 'bg-gray-400',
+    bg: 'bg-slate-100 text-slate-700 border-slate-200',
+    dot: 'bg-slate-400',
+    pulse: false,
     label: status || 'Unknown',
   };
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wide ${current.bg} ${current.text} ${className}`}
+      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wide border shadow-2xs ${current.bg} ${className}`}
     >
-      <span className={`w-1.5 h-1.5 rounded-full ${current.dot}`} />
+      <span className="relative flex h-2 w-2">
+        {current.pulse && (
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
+        )}
+        <span className={`relative inline-flex rounded-full h-2 w-2 ${current.dot}`} />
+      </span>
       {current.label}
     </span>
   );

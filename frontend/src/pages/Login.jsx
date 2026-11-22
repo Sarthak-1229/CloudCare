@@ -5,15 +5,15 @@ import AuthLayout from '../layouts/AuthLayout';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import SegmentedControl from '../components/common/SegmentedControl';
-import { Mail, Lock, UserCheck, AlertCircle, Sparkles } from 'lucide-react';
+import { Mail, Lock, UserCheck, AlertCircle, Sparkles, CheckCircle2 } from 'lucide-react';
 
 const Login = () => {
   const { login, isLoading } = useAuth();
   const navigate = useNavigate();
 
   const [roleTab, setRoleTab] = useState('PATIENT');
-  const [email, setEmail] = useState('patient@cloudcare.local');
-  const [password, setPassword] = useState('Patient123!');
+  const [email, setEmail] = useState('aarav@cloudcare.test');
+  const [password, setPassword] = useState('Patient@123');
   const [error, setError] = useState('');
 
   // Quick switch between roles and prefill demo accounts
@@ -21,14 +21,14 @@ const Login = () => {
     setRoleTab(newRole);
     setError('');
     if (newRole === 'PATIENT') {
-      setEmail('patient@cloudcare.local');
-      setPassword('Patient123!');
+      setEmail('aarav@cloudcare.test');
+      setPassword('Patient@123');
     } else if (newRole === 'DOCTOR') {
-      setEmail('doctor.aakash@cloudcare.local');
-      setPassword('Doctor123!');
+      setEmail('rahul@cloudcare.test');
+      setPassword('Doctor@123');
     } else if (newRole === 'ADMIN') {
-      setEmail('admin@cloudcare.local');
-      setPassword('Admin123!');
+      setEmail('admin@cloudcare.test');
+      setPassword('Admin@123');
     }
   };
 
@@ -69,23 +69,57 @@ const Login = () => {
       </div>
 
       {/* Demo Quick Select Pills */}
-      <div className="mb-5 p-3 rounded-[16px] bg-ios-gray-100/80 border border-gray-200/50">
-        <div className="flex items-center gap-1.5 text-xs font-semibold text-ios-gray-600 mb-2">
-          <Sparkles className="w-3.5 h-3.5 text-ios-blue" />
-          <span>One-Click Demo Credentials:</span>
+      <div className="mb-5 p-3.5 rounded-2xl bg-gradient-to-br from-indigo-50/60 via-blue-50/40 to-slate-50 border border-indigo-100/70 shadow-xs">
+        <div className="flex items-center gap-1.5 text-xs font-bold text-slate-700 mb-2">
+          <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
+          <span>One-Click Demonstration Personas:</span>
         </div>
         <div className="flex flex-wrap gap-1.5">
           {roleTab === 'PATIENT' && (
-            <button
-              type="button"
-              onClick={() => {
-                setEmail('patient@cloudcare.local');
-                setPassword('Patient123!');
-              }}
-              className="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-white hover:bg-ios-blue hover:text-white border border-gray-200 text-ios-gray-700 transition-all"
-            >
-              Rahul Sharma (Patient)
-            </button>
+            <>
+              <button
+                type="button"
+                onClick={() => {
+                  setEmail('aarav@cloudcare.test');
+                  setPassword('Patient@123');
+                }}
+                className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border transition-all ${
+                  email === 'aarav@cloudcare.test'
+                    ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                    : 'bg-white hover:bg-blue-50 text-slate-700 border-slate-200'
+                }`}
+              >
+                Aarav Patil
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setEmail('sneha@cloudcare.test');
+                  setPassword('Patient@123');
+                }}
+                className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border transition-all ${
+                  email === 'sneha@cloudcare.test'
+                    ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                    : 'bg-white hover:bg-blue-50 text-slate-700 border-slate-200'
+                }`}
+              >
+                Sneha Joshi
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setEmail('vikram@cloudcare.test');
+                  setPassword('Patient@123');
+                }}
+                className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border transition-all ${
+                  email === 'vikram@cloudcare.test'
+                    ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                    : 'bg-white hover:bg-blue-50 text-slate-700 border-slate-200'
+                }`}
+              >
+                Vikram Malhotra
+              </button>
+            </>
           )}
 
           {roleTab === 'DOCTOR' && (
@@ -93,22 +127,44 @@ const Login = () => {
               <button
                 type="button"
                 onClick={() => {
-                  setEmail('doctor.aakash@cloudcare.local');
-                  setPassword('Doctor123!');
+                  setEmail('rahul@cloudcare.test');
+                  setPassword('Doctor@123');
                 }}
-                className="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-white hover:bg-ios-blue hover:text-white border border-gray-200 text-ios-gray-700 transition-all"
+                className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border transition-all ${
+                  email === 'rahul@cloudcare.test'
+                    ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
+                    : 'bg-white hover:bg-emerald-50 text-slate-700 border-slate-200'
+                }`}
               >
-                Dr. Aakash (Cardiology)
+                Dr. Rahul (Cardiology)
               </button>
               <button
                 type="button"
                 onClick={() => {
-                  setEmail('doctor.neha@cloudcare.local');
-                  setPassword('Doctor123!');
+                  setEmail('priya@cloudcare.test');
+                  setPassword('Doctor@123');
                 }}
-                className="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-white hover:bg-ios-blue hover:text-white border border-gray-200 text-ios-gray-700 transition-all"
+                className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border transition-all ${
+                  email === 'priya@cloudcare.test'
+                    ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
+                    : 'bg-white hover:bg-emerald-50 text-slate-700 border-slate-200'
+                }`}
               >
-                Dr. Neha (Neurology)
+                Dr. Priya (Dermatology)
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setEmail('arjun@cloudcare.test');
+                  setPassword('Doctor@123');
+                }}
+                className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border transition-all ${
+                  email === 'arjun@cloudcare.test'
+                    ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
+                    : 'bg-white hover:bg-emerald-50 text-slate-700 border-slate-200'
+                }`}
+              >
+                Dr. Arjun (Orthopedics)
               </button>
             </>
           )}
@@ -117,20 +173,20 @@ const Login = () => {
             <button
               type="button"
               onClick={() => {
-                setEmail('admin@cloudcare.local');
-                setPassword('Admin123!');
+                setEmail('admin@cloudcare.test');
+                setPassword('Admin@123');
               }}
-              className="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-white hover:bg-ios-blue hover:text-white border border-gray-200 text-ios-gray-700 transition-all"
+              className="text-[11px] font-semibold px-3 py-1 rounded-full bg-purple-600 text-white border border-purple-600 shadow-xs"
             >
-              CloudCare Admin
+              System Administrator
             </button>
           )}
         </div>
       </div>
 
       {error && (
-        <div className="mb-4 p-3 rounded-[14px] bg-ios-red-tint border border-ios-red/20 flex items-center gap-2 text-xs font-semibold text-ios-red">
-          <AlertCircle className="w-4 h-4 shrink-0" />
+        <div className="mb-4 p-3 rounded-2xl bg-rose-50 border border-rose-200/80 flex items-start gap-2.5 text-xs text-rose-700 animate-shake">
+          <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
           <span>{error}</span>
         </div>
       )}
@@ -140,51 +196,48 @@ const Login = () => {
         <Input
           label="Email Address"
           type="email"
-          placeholder="user@cloudcare.local"
+          required
           icon={Mail}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          required
+          placeholder="name@cloudcare.test"
         />
 
         <Input
           label="Password"
           type="password"
-          placeholder="••••••••"
+          required
           icon={Lock}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
+          placeholder="••••••••"
         />
 
         <Button
           type="submit"
           variant="primary"
+          size="lg"
           fullWidth
           loading={isLoading}
           icon={UserCheck}
-          size="lg"
           className="mt-2"
         >
-          Sign In as {roleTab === 'PATIENT' ? 'Patient' : roleTab === 'DOCTOR' ? 'Doctor' : 'Administrator'}
+          Sign In as {roleTab.charAt(0) + roleTab.slice(1).toLowerCase()}
         </Button>
       </form>
 
-      {/* Footer Links */}
-      <div className="mt-5 pt-4 border-t border-gray-100 text-center">
-        {roleTab === 'PATIENT' ? (
-          <p className="text-xs text-ios-gray-500">
-            First time booking with us?{' '}
-            <Link to="/register" className="font-semibold text-ios-blue hover:underline">
-              Register as Patient
-            </Link>
-          </p>
-        ) : (
-          <p className="text-[11px] text-ios-gray-400">
-            Doctor & Admin accounts are securely pre-seeded in RDS. Self-registration is restricted.
-          </p>
-        )}
-      </div>
+      {/* Footer link for patient registration */}
+      {roleTab === 'PATIENT' && (
+        <div className="mt-5 text-center text-xs text-slate-500">
+          <span>New patient? </span>
+          <Link
+            to="/register"
+            className="font-bold text-blue-600 hover:text-indigo-600 transition-colors"
+          >
+            Create an Account
+          </Link>
+        </div>
+      )}
     </AuthLayout>
   );
 };

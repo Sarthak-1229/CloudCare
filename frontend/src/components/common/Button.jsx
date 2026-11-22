@@ -2,7 +2,7 @@ import React from 'react';
 
 const Button = ({
   children,
-  variant = 'primary', // 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive' | 'tint'
+  variant = 'primary', // 'primary' | 'secondary' | 'emerald' | 'purple' | 'outline' | 'ghost' | 'destructive' | 'tint'
   size = 'md', // 'sm' | 'md' | 'lg'
   icon: Icon,
   iconPosition = 'left',
@@ -14,22 +14,34 @@ const Button = ({
   type = 'button',
   ...props
 }) => {
-  const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-150 ios-press-action select-none disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none';
+  const baseStyles =
+    'inline-flex items-center justify-center font-semibold transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none active:scale-[0.98]';
 
   const sizeStyles = {
-    sm: 'text-xs px-3 py-1.5 rounded-full gap-1.5',
-    md: 'text-sm px-4 py-2.5 rounded-full gap-2 font-semibold',
-    lg: 'text-base px-6 py-3 rounded-full gap-2.5 font-semibold',
+    sm: 'text-xs px-3.5 py-1.5 rounded-full gap-1.5',
+    md: 'text-sm px-4.5 py-2.5 rounded-full gap-2',
+    lg: 'text-base px-6 py-3 rounded-full gap-2.5',
   };
 
   const variantStyles = {
-    primary: 'bg-ios-blue text-white shadow-sm hover:bg-ios-blue-hover active:bg-ios-blue-hover',
-    secondary: 'bg-ios-gray-200/80 text-ios-gray-900 hover:bg-ios-gray-300 active:bg-ios-gray-400',
-    tint: 'bg-ios-blue-tint text-ios-blue hover:bg-blue-100/70',
-    outline: 'border border-ios-gray-300 bg-white text-ios-gray-800 hover:bg-ios-gray-100',
-    ghost: 'text-ios-blue hover:bg-ios-blue-tint bg-transparent',
-    destructive: 'bg-ios-red text-white hover:bg-red-600 active:bg-red-700 shadow-sm',
-    destructiveTint: 'bg-ios-red-tint text-ios-red hover:bg-red-100/80',
+    primary:
+      'bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-700 hover:to-indigo-800 text-white shadow-sm shadow-indigo-500/25 ring-1 ring-white/20',
+    emerald:
+      'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white shadow-sm shadow-emerald-500/25 ring-1 ring-white/20',
+    purple:
+      'bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white shadow-sm shadow-purple-500/25 ring-1 ring-white/20',
+    secondary:
+      'bg-slate-100/90 hover:bg-slate-200/90 text-slate-800 border border-slate-200/70 shadow-xs',
+    tint:
+      'bg-blue-50 text-blue-700 hover:bg-blue-100/80 border border-blue-200/60',
+    outline:
+      'border border-slate-300 bg-white/80 hover:bg-white text-slate-800 shadow-xs',
+    ghost:
+      'text-blue-600 hover:bg-blue-50/70 bg-transparent',
+    destructive:
+      'bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-700 hover:to-red-700 text-white shadow-sm shadow-rose-500/25',
+    destructiveTint:
+      'bg-rose-50 text-rose-700 hover:bg-rose-100/80 border border-rose-200/60',
   };
 
   return (

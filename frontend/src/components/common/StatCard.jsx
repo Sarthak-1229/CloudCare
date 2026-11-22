@@ -6,34 +6,40 @@ const StatCard = ({
   value,
   subtitle,
   icon: Icon,
-  tint = 'blue', // 'blue' | 'green' | 'orange' | 'purple' | 'indigo' | 'red'
+  tint = 'blue', // 'blue' | 'green' | 'orange' | 'purple' | 'indigo' | 'rose'
   badgeText,
   onClick,
 }) => {
   const tintClasses = {
     blue: {
-      bg: 'bg-ios-blue-tint',
-      text: 'text-ios-blue',
+      bg: 'bg-gradient-to-br from-blue-500 to-indigo-600',
+      badge: 'bg-blue-50 text-blue-700 border-blue-200/60',
+      glow: 'shadow-blue-500/20',
     },
     green: {
-      bg: 'bg-ios-green-tint',
-      text: 'text-ios-green',
+      bg: 'bg-gradient-to-br from-emerald-500 to-teal-600',
+      badge: 'bg-emerald-50 text-emerald-700 border-emerald-200/60',
+      glow: 'shadow-emerald-500/20',
     },
     orange: {
-      bg: 'bg-ios-orange-tint',
-      text: 'text-ios-orange',
+      bg: 'bg-gradient-to-br from-amber-500 to-orange-600',
+      badge: 'bg-amber-50 text-amber-700 border-amber-200/60',
+      glow: 'shadow-amber-500/20',
     },
     purple: {
-      bg: 'bg-ios-purple-tint',
-      text: 'text-ios-purple',
+      bg: 'bg-gradient-to-br from-purple-500 to-violet-600',
+      badge: 'bg-purple-50 text-purple-700 border-purple-200/60',
+      glow: 'shadow-purple-500/20',
     },
     indigo: {
-      bg: 'bg-ios-indigo-tint',
-      text: 'text-ios-indigo',
+      bg: 'bg-gradient-to-br from-indigo-500 to-blue-600',
+      badge: 'bg-indigo-50 text-indigo-700 border-indigo-200/60',
+      glow: 'shadow-indigo-500/20',
     },
-    red: {
-      bg: 'bg-ios-red-tint',
-      text: 'text-ios-red',
+    rose: {
+      bg: 'bg-gradient-to-br from-rose-500 to-pink-600',
+      badge: 'bg-rose-50 text-rose-700 border-rose-200/60',
+      glow: 'shadow-rose-500/20',
     },
   };
 
@@ -43,33 +49,37 @@ const StatCard = ({
     <Card
       hoverable={!!onClick}
       onClick={onClick}
-      className="flex flex-col justify-between"
-      padding="p-5"
+      className="flex flex-col justify-between relative overflow-hidden group border border-slate-200/70 bg-white/85 backdrop-blur-xl"
+      padding="p-5 md:p-6"
     >
       <div className="flex items-center justify-between">
-        <span className="text-xs font-semibold uppercase tracking-wider text-ios-gray-500">
+        <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
           {title}
         </span>
         {Icon && (
-          <div className={`w-9 h-9 rounded-full flex items-center justify-center ${currentTint.bg} ${currentTint.text}`}>
+          <div
+            className={`w-10 h-10 rounded-2xl flex items-center justify-center text-white shadow-md ${currentTint.bg} ${currentTint.glow} ring-1 ring-white/30 transition-transform duration-200 group-hover:scale-105`}
+          >
             <Icon className="w-5 h-5" />
           </div>
         )}
       </div>
 
-      <div className="mt-3">
-        <div className="flex items-baseline gap-2">
-          <span className="text-2xl md:text-3xl font-bold tracking-tight text-ios-gray-900">
+      <div className="mt-4">
+        <div className="flex items-baseline gap-2.5">
+          <span className="text-2xl md:text-3xl font-extrabold tracking-tight text-slate-900">
             {value}
           </span>
           {badgeText && (
-            <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full ${currentTint.bg} ${currentTint.text}`}>
+            <span
+              className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full border shadow-2xs ${currentTint.badge}`}
+            >
               {badgeText}
             </span>
           )}
         </div>
         {subtitle && (
-          <p className="text-xs text-ios-gray-500 mt-1 line-clamp-1">{subtitle}</p>
+          <p className="text-xs text-slate-500 font-medium mt-1.5 line-clamp-1">{subtitle}</p>
         )}
       </div>
     </Card>
