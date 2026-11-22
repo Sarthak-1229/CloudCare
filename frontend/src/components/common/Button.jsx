@@ -2,7 +2,7 @@ import React from 'react';
 
 const Button = ({
   children,
-  variant = 'primary', // 'primary' | 'secondary' | 'sage' | 'amber' | 'outline' | 'ghost' | 'destructive' | 'tint'
+  variant = 'primary', // 'primary' | 'secondary' | 'copper' | 'outline' | 'ghost' | 'destructive' | 'tint'
   size = 'md', // 'sm' | 'md' | 'lg'
   icon: Icon,
   iconPosition = 'left',
@@ -15,33 +15,31 @@ const Button = ({
   ...props
 }) => {
   const baseStyles =
-    'inline-flex items-center justify-center font-semibold transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none active:scale-[0.98]';
+    'inline-flex items-center justify-center font-semibold transition-all duration-150 select-none disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none active:scale-[0.98] tracking-[-0.01em]';
 
   const sizeStyles = {
-    sm: 'text-xs px-3.5 py-1.5 rounded-xl gap-1.5',
-    md: 'text-sm px-4.5 py-2.5 rounded-2xl gap-2',
-    lg: 'text-base px-6 h-12 rounded-2xl gap-2.5',
+    sm: 'text-xs px-3 py-1.5 rounded-lg gap-1.5',
+    md: 'text-sm px-4 py-2.5 rounded-xl gap-2',
+    lg: 'text-sm sm:text-base px-5 h-11 sm:h-12 rounded-xl gap-2.5',
   };
 
   const variantStyles = {
     primary:
-      'bg-[#E06D53] hover:bg-[#C85A40] text-white shadow-md shadow-[#E06D53]/25 ring-1 ring-white/20 relative overflow-hidden',
-    sage:
-      'bg-[#5B8A72] hover:bg-[#4D7761] text-white shadow-md shadow-[#5B8A72]/25 ring-1 ring-white/20',
-    amber:
-      'bg-[#D98A3C] hover:bg-[#C0772E] text-white shadow-md shadow-[#D98A3C]/25 ring-1 ring-white/20',
+      'bg-[#1C1917] hover:bg-[#292524] text-white shadow-sm ring-1 ring-white/10 active:bg-black',
+    copper:
+      'bg-[#C85A32] hover:bg-[#B34E2A] text-white shadow-sm shadow-[#C85A32]/20',
     secondary:
-      'bg-[#F5F0E6] hover:bg-[#EFEAE1] text-[#231F20] border border-[#E8E0D5] shadow-xs',
+      'bg-white hover:bg-[#F3F1ED] text-[#18181B] border border-[#ECE9E2] shadow-2xs',
     tint:
-      'bg-[#FDF2F0] text-[#E06D53] hover:bg-[#FAD8D2]/60 border border-[#FAD8D2]',
+      'bg-[#FBF4EE] text-[#C85A32] hover:bg-[#F3DEC7]/60 border border-[#F3DEC7]',
     outline:
-      'border border-[#E8E0D5] bg-white/90 hover:bg-white text-[#231F20] shadow-xs',
+      'border border-[#ECE9E2] bg-transparent hover:bg-white text-[#18181B]',
     ghost:
-      'text-[#E06D53] hover:bg-[#FDF2F0] bg-transparent',
+      'text-[#18181B] hover:bg-[#F3F1ED] bg-transparent',
     destructive:
-      'bg-[#D34538] hover:bg-[#B9382C] text-white shadow-md shadow-[#D34538]/25 ring-1 ring-white/20',
+      'bg-[#DC2626] hover:bg-[#B91C1C] text-white shadow-sm',
     destructiveTint:
-      'bg-[#FDF2F0] text-[#D34538] hover:bg-[#FAD8D2] border border-[#FAD8D2]',
+      'bg-red-50 text-red-700 hover:bg-red-100/80 border border-red-200/60',
   };
 
   return (

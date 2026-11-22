@@ -107,30 +107,32 @@ const AdminDashboard = () => {
 
   return (
     <div className="space-y-6">
-      {/* Admin Hero Header */}
+      {/* Admin Hero Header: Sleek Warm Obsidian Card */}
       <div
-        className="relative overflow-hidden rounded-[28px] text-white p-6 sm:p-8"
+        className="relative overflow-hidden rounded-[24px] bg-[#1C1917] text-white p-6 sm:p-8 border border-[rgba(255,255,255,0.08)]"
         style={{
-          background: 'linear-gradient(135deg, #231F20 0%, #38322C 50%, #524B43 100%)',
-          boxShadow: '0 12px 32px -8px rgba(35, 31, 32, 0.35)',
+          boxShadow: '0 1px 2px rgba(0,0,0,0.04), 0 24px 48px -12px rgba(28, 25, 23, 0.18)',
         }}
       >
+        {/* Subtle metallic copper accent bar at top */}
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#C85A32] to-transparent opacity-60" />
+
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-xs font-semibold mb-2">
-              <Shield className="w-3.5 h-3.5 text-[#E06D53]" />
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/10 text-[11px] font-mono tracking-wider uppercase mb-2 text-[#ECE9E2]">
+              <Shield className="w-3.5 h-3.5 text-[#C85A32]" />
               <span>Administrative Operations Console</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-[-0.03em] text-white">
               Hospital Operations Overview
             </h1>
-            <p className="text-[#F3ECE1] text-xs sm:text-sm mt-1 max-w-xl">
-              CloudCare Simplified TY CCF v3.0 • Monitor appointments, clinical staff allocations, and AWS infrastructure health.
+            <p className="text-[#9C968E] text-xs sm:text-sm mt-1 max-w-xl font-normal leading-relaxed">
+              CloudCare Simplified Architecture • Monitor appointments, clinical staff allocations, and AWS infrastructure health.
             </p>
           </div>
 
           <Button
-            variant="primary"
+            variant="secondary"
             icon={RefreshCw}
             size="md"
             loading={healthLoading}
@@ -138,9 +140,9 @@ const AdminDashboard = () => {
               loadData();
               checkHealth();
             }}
-            className="self-start md:self-center bg-[#E06D53] hover:bg-[#C85A40] text-white shadow-sm font-bold border-none"
+            className="self-start md:self-center font-bold"
           >
-            Refresh System
+            Refresh Telemetry
           </Button>
         </div>
       </div>
@@ -152,21 +154,18 @@ const AdminDashboard = () => {
           value={summary.patients || 7}
           subtitle="Registered synthetic accounts"
           icon={Users}
-          tint="terracotta"
         />
         <StatCard
           title="Medical Specialists"
           value={doctors.length || summary.doctors || 5}
           subtitle="Seeded active doctors"
           icon={Stethoscope}
-          tint="sage"
         />
         <StatCard
           title="Total Consultations"
           value={appointments.length || summary.appointments || 12}
           subtitle="All-time bookings"
           icon={Calendar}
-          tint="amber"
         />
         <StatCard
           title="Backend Liveness"
@@ -177,51 +176,50 @@ const AdminDashboard = () => {
               : 'Checking /api/health...'
           }
           icon={Activity}
-          tint={healthStatus?.status === 'ok' ? 'sage' : 'amber'}
           badgeText={healthStatus?.status === 'ok' ? 'HTTP 200' : 'Offline'}
         />
       </div>
 
-      {/* AWS Architecture & CCF Mini-Project Foundation */}
-      <Card className="border border-[#E8E0D5] bg-white/85">
-        <div className="flex items-center justify-between pb-4 border-b border-[#E8E0D5] mb-4">
+      {/* AWS Architecture Foundation Card */}
+      <Card className="border border-[rgba(28,25,23,0.08)] bg-white">
+        <div className="flex items-center justify-between pb-4 border-b border-[#ECE9E2] mb-4">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-[14px] bg-[#FDF2F0] text-[#E06D53] flex items-center justify-center">
-              <Cloud className="w-5 h-5" />
+            <div className="w-8 h-8 rounded-lg bg-[#F3F1ED] text-[#1C1917] flex items-center justify-center border border-[#ECE9E2]">
+              <Cloud className="w-4 h-4 text-[#C85A32]" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-[#231F20]">
+              <h3 className="text-base font-bold text-[#18181B] tracking-[-0.02em]">
                 AWS Architecture & Security Baseline
               </h3>
-              <p className="text-xs text-[#7A7267]">
-                Verified Simplified TY CCF v3.0 Deployment Specifications
+              <p className="text-xs text-[#6E6A63]">
+                Verified Cloud Infrastructure Specifications
               </p>
             </div>
           </div>
-          <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-[#EDF4F0] text-[#5B8A72] border border-[#C4DDD0]">
-            Phase 1 Foundation
+          <span className="font-mono text-[10px] uppercase tracking-wider font-semibold px-2.5 py-0.5 rounded-full bg-[#ECFDF5] text-[#065F46] border border-[#A7F3D0]">
+            VERIFIED SECURE
           </span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
           {/* EC2 & VPC Box */}
-          <div className="p-3.5 rounded-2xl bg-[#F5F0E6] border border-[#E8E0D5] shadow-xs space-y-1.5">
-            <div className="flex items-center gap-2 font-bold text-[#231F20]">
-              <Server className="w-4 h-4 text-[#E06D53]" />
+          <div className="p-3.5 rounded-xl bg-[#F3F1ED] border border-[#ECE9E2] space-y-1.5">
+            <div className="flex items-center gap-2 font-bold text-[#18181B]">
+              <Server className="w-4 h-4 text-[#1C1917]" />
               <span>Public EC2 & Custom VPC</span>
             </div>
-            <p className="text-[#7A7267] leading-relaxed text-[11px]">
-              • Amazon Linux 2023 (t3.micro)<br />
-              • React build served on Port 3000<br />
-              • Custom VPC: <code className="bg-white/90 px-1 py-0.5 rounded border border-[#E8E0D5]">10.20.0.0/16</code><br />
-              • Public Subnet: <code className="bg-white/90 px-1 py-0.5 rounded border border-[#E8E0D5]">10.20.1.0/24</code> (AZ A)
+            <p className="font-mono text-[#6E6A63] leading-relaxed text-[11px]">
+              • Host: Amazon Linux 2023 (t3.micro)<br />
+              • Port: 3000 (React + Express API)<br />
+              • VPC: 10.20.0.0/16 (ap-south-1)<br />
+              • Subnet: 10.20.1.0/24 (AZ A)
             </p>
           </div>
 
           {/* RDS Box */}
-          <div className="p-3.5 rounded-2xl bg-[#F5F0E6] border border-[#E8E0D5] shadow-xs space-y-1.5">
-            <div className="flex items-center gap-2 font-bold text-[#231F20]">
-              <Database className="w-4 h-4 text-[#5B8A72]" />
+          <div className="p-3.5 rounded-xl bg-[#F3F1ED] border border-[#ECE9E2] space-y-1.5">
+            <div className="flex items-center gap-2 font-bold text-[#18181B]">
+              <Database className="w-4 h-4 text-[#1C1917]" />
               <span>Private MySQL RDS</span>
             </div>
             <p className="text-ios-gray-600 leading-relaxed text-[11px]">
@@ -258,10 +256,10 @@ const AdminDashboard = () => {
           </span>
         </div>
 
-        <div className="bg-white rounded-[20px] shadow-ios border border-gray-100 overflow-hidden">
+        <div className="bg-white rounded-2xl border border-[rgba(28,25,23,0.08)] overflow-hidden shadow-sm">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-ios-gray-50 border-b border-gray-100 text-ios-gray-500 uppercase tracking-wider font-semibold">
+              <thead className="bg-[#F3F1ED] border-b border-[#ECE9E2] text-[#6E6A63] font-mono uppercase tracking-wider font-semibold text-[11px]">
                 <tr>
                   <th className="py-3 px-4">Doctor Name</th>
                   <th className="py-3 px-4">Department / Specialty</th>
@@ -269,24 +267,24 @@ const AdminDashboard = () => {
                   <th className="py-3 px-4">Account Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-[#ECE9E2]">
                 {doctors.map((dr) => (
-                  <tr key={dr.id} className="hover:bg-ios-gray-50/80 transition-colors">
-                    <td className="py-3.5 px-4 font-bold text-ios-gray-900 flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-full bg-[#FDF2F0] text-[#E06D53] border border-[#FAD8D2] flex items-center justify-center font-bold text-xs">
+                  <tr key={dr.id} className="hover:bg-[#F3F1ED]/50 transition-colors">
+                    <td className="py-3.5 px-4 font-bold text-[#18181B] flex items-center gap-2">
+                      <div className="w-7 h-7 rounded-lg bg-[#F3F1ED] text-[#18181B] border border-[#ECE9E2] flex items-center justify-center font-bold text-xs font-mono">
                         {dr.name[4] || 'D'}
                       </div>
                       <span>{dr.name}</span>
                     </td>
-                    <td className="py-3.5 px-4 font-semibold text-ios-gray-700">
+                    <td className="py-3.5 px-4 font-medium text-[#6E6A63]">
                       {dr.specialization}
                     </td>
-                    <td className="py-3.5 px-4 text-ios-gray-600">
-                      <div className="flex flex-wrap gap-1">
+                    <td className="py-3.5 px-4 text-[#6E6A63]">
+                      <div className="flex flex-wrap gap-1 font-mono text-[10px]">
                         {(dr.availableSlots || []).map((s) => (
                           <span
                             key={s}
-                            className="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full text-[10px] font-medium"
+                            className="bg-[#F3F1ED] text-[#18181B] border border-[#ECE9E2] px-2 py-0.5 rounded"
                           >
                             {s}
                           </span>
@@ -294,8 +292,8 @@ const AdminDashboard = () => {
                       </div>
                     </td>
                     <td className="py-3.5 px-4">
-                      <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-ios-green bg-ios-green-tint px-2.5 py-0.5 rounded-full">
-                        <CheckCircle2 className="w-3 h-3" />
+                      <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#065F46] bg-[#ECFDF5] border border-[#A7F3D0] px-2.5 py-0.5 rounded-full">
+                        <CheckCircle2 className="w-3 h-3 text-[#10B981]" />
                         Active Seeded
                       </span>
                     </td>

@@ -42,12 +42,12 @@ const Register = () => {
 
   return (
     <AuthLayout
-      title="Patient Registration"
-      subtitle="Create your CloudCare health account"
+      title="Create Patient Account"
+      subtitle="Register to book clinical consultations and access records"
     >
       {error && (
-        <div className="mb-4 p-3.5 rounded-2xl bg-[#FDF2F0] border border-[#FAD8D2] flex items-center gap-2 text-xs font-semibold text-[#D34538]">
-          <AlertCircle className="w-4 h-4 shrink-0" />
+        <div className="mb-4 p-3 rounded-xl bg-red-50/70 border border-red-200/80 flex items-center gap-2 text-xs font-semibold text-red-700">
+          <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
           <span>{error}</span>
         </div>
       )}
@@ -92,11 +92,11 @@ const Register = () => {
           required
         />
 
-        {/* Informative Grouped Inset Box in Warm Sage */}
-        <div className="p-3.5 rounded-2xl bg-[#EDF4F0] border border-[#C4DDD0] text-xs text-[#5B8A72] flex items-start gap-2.5">
-          <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
+        {/* Informative Box */}
+        <div className="p-3.5 rounded-xl bg-[#F3F1ED] border border-[#ECE9E2] text-xs text-[#6E6A63] flex items-start gap-2.5">
+          <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5 text-[#C85A32]" />
           <span className="leading-relaxed">
-            Registered patients can book doctor consultations across 5 specialties and securely download diagnostic ECG & clinical records.
+            Registered patients can book doctor consultations across 5 specialties and securely download diagnostic clinical records from AWS S3.
           </span>
         </div>
 
@@ -106,17 +106,17 @@ const Register = () => {
           size="lg"
           fullWidth
           loading={isLoading}
-          className="mt-3 h-12 rounded-2xl font-bold tracking-tight text-white shadow-md shadow-[#E06D53]/25"
+          className="mt-3"
         >
           Create Patient Account
         </Button>
       </form>
 
-      <div className="mt-5 text-center text-xs text-[#7A7267]">
+      <div className="mt-6 text-center text-xs text-[#6E6A63]">
         <span>Already have an account? </span>
         <Link
           to="/login"
-          className="font-bold text-[#E06D53] hover:text-[#C85A40] transition-colors"
+          className="font-semibold text-[#18181B] hover:text-[#C85A32] underline underline-offset-4 transition-colors"
         >
           Sign In
         </Link>

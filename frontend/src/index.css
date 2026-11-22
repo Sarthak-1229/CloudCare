@@ -4,23 +4,26 @@
 
 @layer base {
   body {
-    background-color: #FAF7F2;
-    color: #231F20;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif;
+    background-color: #F9F8F6;
+    background-image: radial-gradient(circle at 50% 0%, #EFECE6 0%, #F9F8F6 70%);
+    background-attachment: fixed;
+    color: #18181B;
+    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    letter-spacing: -0.02em;
-    color: #231F20;
+    letter-spacing: -0.03em;
+    color: #18181B;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 }
 
-/* Custom warm iOS smooth scrolling and scrollbar */
+/* Minimalist precision scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -28,50 +31,30 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(122, 114, 103, 0.2);
+  background: rgba(28, 25, 23, 0.15);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(122, 114, 103, 0.35);
+  background: rgba(28, 25, 23, 0.28);
 }
 
-/* Warm iOS 16 Glassmorphism helpers */
-.warm-glass {
-  background: rgba(255, 255, 255, 0.80);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(232, 224, 213, 0.8);
+/* Editorial luxury surface classes */
+.card-luxury {
+  background: #FFFFFF;
+  border: 1px solid rgba(28, 25, 23, 0.08);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 24px 48px -12px rgba(28, 25, 23, 0.06);
 }
 
-.warm-glass-card {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(232, 224, 213, 0.85);
-  box-shadow: 0 20px 40px -15px rgba(60, 45, 30, 0.08);
+.hairline-divider {
+  border-color: #ECE9E2;
 }
 
-.ios-glass {
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(232, 224, 213, 0.7);
+/* Subtle micro-press action */
+.btn-press {
+  transition: transform 0.12s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.12s ease;
 }
-
-.ios-glass-card {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(232, 224, 213, 0.85);
-  box-shadow: 0 20px 40px -15px rgba(60, 45, 30, 0.08);
-}
-
-/* iOS active tap animation */
-.ios-press-action {
-  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.15s ease;
-}
-.ios-press-action:active {
+.btn-press:active {
   transform: scale(0.98);
-  opacity: 0.92;
+  opacity: 0.94;
 }

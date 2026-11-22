@@ -2,69 +2,65 @@ import React from 'react';
 
 export const ClinicLogo = ({ size = 'md', className = '', showText = false }) => {
   const sizeMap = {
-    sm: { box: 'w-8 h-8', icon: 18, radius: 'rounded-[22%]' },
-    md: { box: 'w-10 h-10', icon: 22, radius: 'rounded-[22%]' },
-    lg: { box: 'w-14 h-14', icon: 30, radius: 'rounded-[22%]' },
-    xl: { box: 'w-16 h-16', icon: 36, radius: 'rounded-[22%]' },
+    sm: { box: 'w-8 h-8', icon: 16, radius: 'rounded-[10px]' },
+    md: { box: 'w-10 h-10', icon: 20, radius: 'rounded-xl' },
+    lg: { box: 'w-11 h-11', icon: 22, radius: 'rounded-xl' },
+    xl: { box: 'w-11 h-11 sm:w-12 sm:h-12', icon: 24, radius: 'rounded-xl' },
   };
 
   const current = sizeMap[size] || sizeMap.md;
 
   return (
     <div className={`flex items-center gap-3 ${className}`}>
-      {/* iOS 16 Squircle App Icon (22% radius) with warm Coral-to-Amber gradient */}
+      {/* Sleek Minimal Squircle (44px x 44px) in Warm Obsidian (#1C1917) with thin metallic/copper inner border */}
       <div
-        className={`relative ${current.box} ${current.radius} flex items-center justify-center overflow-hidden flex-shrink-0 group`}
+        className={`relative ${current.box} ${current.radius} bg-[#1C1917] flex items-center justify-center overflow-hidden flex-shrink-0 group shadow-sm`}
         style={{
-          background: 'linear-gradient(135deg, #F28B66 0%, #D95D43 100%)',
-          boxShadow: '0 8px 20px -4px rgba(224, 109, 83, 0.35)',
+          boxShadow: '0 4px 12px -2px rgba(28, 25, 23, 0.25)',
         }}
       >
-        {/* Subtle glass reflection highlight */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/35 via-white/10 to-transparent pointer-events-none" />
+        {/* Thin metallic copper inner ring */}
+        <div className="absolute inset-0 rounded-[inherit] border border-[#C85A32]/35 pointer-events-none" />
 
-        {/* Ambient radial glow in warm peach */}
-        <div className="absolute -top-2 -right-2 w-8 h-8 bg-[#FDE8D7]/40 rounded-full blur-sm pointer-events-none" />
-
-        {/* Custom Clinical Cross + Vital Pulse Vector */}
+        {/* Crisp White ECG Pulse Line with Copper Spark Accent */}
         <svg
           width={current.icon}
           height={current.icon}
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="relative text-white drop-shadow-xs transition-transform duration-300 group-hover:scale-105"
+          className="relative text-white transition-transform duration-200 group-hover:scale-105"
         >
-          {/* Medical Cross Stem with subtle translucency */}
-          <rect x="9.5" y="3" width="5" height="18" rx="2.5" fill="currentColor" opacity="0.32" />
-          <rect x="3" y="9.5" width="18" height="5" rx="2.5" fill="currentColor" opacity="0.32" />
+          {/* Subtle clinical cross backdrop */}
+          <rect x="10.5" y="4" width="3" height="16" rx="1.5" fill="white" fillOpacity="0.18" />
+          <rect x="4" y="10.5" width="16" height="3" rx="1.5" fill="white" fillOpacity="0.18" />
 
-          {/* Dynamic Vital Pulse Line in crisp white */}
+          {/* Crisp ECG Pulse Vector */}
           <path
-            d="M3 12.5H7.5L9.5 8L13 16.5L15 11.5L16.5 12.5H21"
-            stroke="white"
-            strokeWidth="2.3"
+            d="M3 12H7L9 7.5L13 16.5L15 11L16.5 12H21"
+            stroke="#FFFFFF"
+            strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
 
-          {/* Health Spark / Leaf Accent in Warm Sage Green */}
-          <circle cx="17.5" cy="6.5" r="2" fill="#5B8A72" stroke="white" strokeWidth="0.8" />
+          {/* Precision Signature Copper Spark */}
+          <circle cx="17" cy="7" r="1.6" fill="#C85A32" />
         </svg>
       </div>
 
       {showText && (
         <div className="flex flex-col">
-          <div className="flex items-center gap-1.5">
-            <span className="font-extrabold text-lg sm:text-xl tracking-tight text-[#231F20]">
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-lg sm:text-xl tracking-[-0.03em] text-[#18181B]">
               CloudCare
             </span>
-            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-[#EDF4F0] text-[#5B8A72] border border-[#C4DDD0]">
-              v3.0
+            <span className="font-mono text-[10px] tracking-wider uppercase font-semibold px-1.5 py-0.5 rounded bg-[#F3F1ED] text-[#6E6A63] border border-[#ECE9E2]">
+              PRO
             </span>
           </div>
-          <span className="text-[10px] text-[#7A7267] font-medium tracking-normal -mt-0.5">
-            Hospital Management
+          <span className="font-mono text-[10px] uppercase tracking-wider text-[#9C968E] -mt-0.5">
+            CLINICAL SUITE
           </span>
         </div>
       )}

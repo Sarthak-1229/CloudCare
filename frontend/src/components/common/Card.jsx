@@ -3,21 +3,16 @@ import React from 'react';
 const Card = ({
   children,
   className = '',
-  glass = false,
   hoverable = false,
-  padding = 'p-5 md:p-6',
+  padding = 'p-6 sm:p-7',
   ...props
 }) => {
   return (
     <div
       className={`
-        rounded-[24px] transition-all duration-200
-        ${
-          glass
-            ? 'warm-glass-card'
-            : 'bg-white/85 backdrop-blur-xl shadow-[0_4px_20px_-4px_rgba(60,45,30,0.05)] border border-[#E8E0D5]/80'
-        }
-        ${hoverable ? 'hover:shadow-[0_12px_28px_-6px_rgba(60,45,30,0.10)] hover:-translate-y-0.5 cursor-pointer' : ''}
+        bg-white rounded-[20px] sm:rounded-[24px] border border-[rgba(28,25,23,0.08)] transition-all duration-200
+        shadow-[0_1px_2px_rgba(0,0,0,0.03),0_24px_48px_-12px_rgba(28,25,23,0.06)]
+        ${hoverable ? 'hover:border-[rgba(28,25,23,0.18)] hover:-translate-y-0.5 cursor-pointer' : ''}
         ${padding}
         ${className}
       `}

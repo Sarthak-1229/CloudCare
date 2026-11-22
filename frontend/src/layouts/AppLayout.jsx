@@ -61,23 +61,17 @@ const AppLayout = ({ children }) => {
         return {
           label: 'System Admin',
           icon: Shield,
-          badge: 'bg-[#F9F3F6] border-[#EADBE3] text-[#8C657A]',
-          dot: 'bg-[#8C657A]',
         };
       case 'DOCTOR':
         return {
-          label: 'Doctor',
+          label: 'Specialist Physician',
           icon: Stethoscope,
-          badge: 'bg-[#EDF4F0] border-[#C4DDD0] text-[#5B8A72]',
-          dot: 'bg-[#5B8A72]',
         };
       case 'PATIENT':
       default:
         return {
           label: 'Patient',
           icon: User,
-          badge: 'bg-[#FDF2F0] border-[#FAD8D2] text-[#E06D53]',
-          dot: 'bg-[#E06D53]',
         };
     }
   };
@@ -86,44 +80,42 @@ const AppLayout = ({ children }) => {
   const RoleIcon = roleMeta.icon;
 
   return (
-    <div className="min-h-screen bg-[#FAF7F2] text-[#231F20] flex flex-col font-sans relative overflow-x-hidden selection:bg-[#E06D53] selection:text-white">
-      {/* Ambient Apple Health-style warm radial blooms */}
-      <div className="fixed -top-40 -left-40 w-[520px] h-[520px] bg-[#FDE8D7]/50 rounded-full blur-3xl pointer-events-none" />
-      <div className="fixed top-1/3 -right-40 w-[480px] h-[480px] bg-[#F3ECE1]/60 rounded-full blur-3xl pointer-events-none" />
-      <div className="fixed -bottom-40 left-1/3 w-[500px] h-[500px] bg-[#FDE8D7]/35 rounded-full blur-3xl pointer-events-none" />
-
-      {/* Top Frosted Glass Navigation Bar */}
-      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-2xl border-b border-[#E8E0D5] px-4 sm:px-6 py-2.5 transition-all duration-200 shadow-[0_1px_12px_rgba(60,45,30,0.03)]">
+    <div className="min-h-screen bg-[#F9F8F6] text-[#18181B] flex flex-col font-sans relative overflow-x-hidden selection:bg-[#1C1917] selection:text-white">
+      {/* Top Precision Bar */}
+      <header className="sticky top-0 z-40 bg-white border-b border-[rgba(28,25,23,0.08)] px-4 sm:px-6 py-3 transition-all duration-200 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          {/* Clinic Brand & Live Service Telemetry */}
-          <div className="flex items-center gap-4">
+          {/* Clinic Brand & Live Telemetry */}
+          <div className="flex items-center gap-5">
             <ClinicLogo size="md" showText={true} />
 
-            <div className="hidden lg:flex items-center gap-2 pl-4 border-l border-[#E8E0D5]">
-              {/* Region Pill in Warm Sand/Linen */}
-              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F5F0E6] text-[11px] font-semibold text-[#7A7267] border border-[#E8E0D5] shadow-xs">
-                <Cloud className="w-3.5 h-3.5 text-[#E06D53]" />
-                <span>ap-south-1 (Mumbai)</span>
+            <div className="hidden lg:flex items-center gap-2 pl-5 border-l border-[#ECE9E2]">
+              {/* Region Pill */}
+              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#F3F1ED] border border-[#ECE9E2] text-[11px] font-mono text-[#18181B]">
+                <Cloud className="w-3.5 h-3.5 text-[#C85A32]" />
+                <span className="text-[#6E6A63]">AWS:</span>
+                <span className="font-semibold">ap-south-1</span>
               </div>
 
-              {/* API Health Pill in Warm Sage Green */}
-              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EDF4F0] text-[11px] font-semibold text-[#5B8A72] border border-[#C4DDD0] shadow-xs">
+              {/* API Health Pill with glowing Emerald dot */}
+              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#ECE9E2] text-[11px] font-mono text-[#18181B] shadow-2xs">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#5B8A72] opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#5B8A72]" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10B981]" />
                 </span>
-                <span>API & DB Live (200 OK)</span>
+                <span className="font-semibold">200 OK</span>
+                <span className="text-[#9C968E]">|</span>
+                <span className="text-[#6E6A63]">RDS LIVE</span>
               </div>
             </div>
           </div>
 
           {/* User Profile, Role Badge & Logout */}
-          <div className="flex items-center gap-2.5 sm:gap-3">
-            <div className={`flex items-center gap-2 py-1.5 px-3 rounded-full border shadow-xs ${roleMeta.badge}`}>
-              <RoleIcon className="w-3.5 h-3.5" />
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5 py-1 px-3 rounded-full bg-[#F3F1ED] border border-[#ECE9E2]">
+              <RoleIcon className="w-3.5 h-3.5 text-[#18181B]" />
               <div className="text-left leading-tight">
-                <span className="text-xs font-bold block text-[#231F20]">{user?.name || 'Authorized User'}</span>
-                <span className="text-[10px] font-medium text-[#7A7267] block">
+                <span className="text-xs font-bold block text-[#18181B]">{user?.name || 'Authorized User'}</span>
+                <span className="font-mono text-[10px] text-[#9C968E] block uppercase tracking-wider">
                   {roleMeta.label} {user?.specialization ? `• ${user.specialization}` : ''}
                 </span>
               </div>
@@ -133,7 +125,7 @@ const AppLayout = ({ children }) => {
               type="button"
               onClick={handleLogout}
               title="Sign Out"
-              className="p-2 sm:p-2.5 rounded-full bg-[#F5F0E6] hover:bg-[#FDF2F0] text-[#7A7267] hover:text-[#D34538] border border-[#E8E0D5] hover:border-[#FAD8D2] transition-all duration-150 ios-press-action shadow-xs"
+              className="p-2 rounded-xl bg-white hover:bg-[#F3F1ED] text-[#6E6A63] hover:text-[#18181B] border border-[#ECE9E2] transition-colors btn-press"
             >
               <LogOut className="w-4 h-4" />
             </button>
@@ -143,13 +135,13 @@ const AppLayout = ({ children }) => {
 
       {/* Main Workspace Layout */}
       <div className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 pb-24 md:pb-8 flex flex-col md:flex-row gap-6 relative z-10">
-        {/* Desktop Sidebar with Glass Aesthetic */}
+        {/* Desktop Sidebar: Clean Luxury Minimalist */}
         <aside className="hidden md:block w-64 shrink-0">
-          <div className="sticky top-20 bg-white/80 backdrop-blur-2xl rounded-3xl p-3.5 shadow-[0_4px_24px_-4px_rgba(60,45,30,0.05)] border border-[#E8E0D5]">
-            <div className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-[#7A7267]">
+          <div className="sticky top-20 bg-white rounded-2xl p-3.5 border border-[rgba(28,25,23,0.08)] shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
+            <div className="px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-wider text-[#9C968E]">
               Navigation
             </div>
-            <nav className="space-y-1.5 mt-1">
+            <nav className="space-y-1 mt-1.5">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 return (
@@ -158,11 +150,11 @@ const AppLayout = ({ children }) => {
                     to={item.path}
                     end={item.path === '/patient' || item.path === '/doctor' || item.path === '/admin'}
                     className={({ isActive }) => `
-                      flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all duration-200 ios-press-action
+                      flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-150 btn-press
                       ${
                         isActive
-                          ? 'bg-[#E06D53] text-white shadow-md shadow-[#E06D53]/25 ring-1 ring-white/20'
-                          : 'text-[#7A7267] hover:bg-[#F5F0E6] hover:text-[#231F20]'
+                          ? 'bg-[#1C1917] text-white shadow-xs'
+                          : 'text-[#6E6A63] hover:bg-[#F3F1ED] hover:text-[#18181B]'
                       }
                     `}
                   >
@@ -174,29 +166,29 @@ const AppLayout = ({ children }) => {
             </nav>
 
             {/* Quick System Architecture Info Pill */}
-            <div className="mt-6 p-4 rounded-2xl bg-[#F5F0E6] border border-[#E8E0D5] shadow-xs">
-              <div className="flex items-center gap-2 text-[#231F20] font-bold text-xs mb-1.5">
-                <div className="w-5 h-5 rounded-lg bg-[#E06D53] flex items-center justify-center text-white shadow-xs">
-                  <Server className="w-3 h-3" />
+            <div className="mt-6 p-4 rounded-xl bg-[#F3F1ED] border border-[#ECE9E2]">
+              <div className="flex items-center gap-2 text-[#18181B] font-bold text-xs mb-1.5">
+                <div className="w-4 h-4 rounded bg-[#1C1917] flex items-center justify-center text-white">
+                  <Server className="w-2.5 h-2.5" />
                 </div>
-                <span>AWS CloudCare Stack</span>
+                <span className="font-mono text-[11px] uppercase tracking-wider">AWS ARCHITECTURE</span>
               </div>
-              <ul className="text-[11px] text-[#7A7267] space-y-1 font-medium mt-2">
-                <li className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#E06D53]" />
-                  <span>VPC: <code>10.20.0.0/16</code></span>
+              <ul className="font-mono text-[10px] text-[#6E6A63] space-y-1.5 mt-2">
+                <li className="flex items-center justify-between">
+                  <span>VPC</span>
+                  <span className="font-semibold text-[#18181B]">10.20.0.0/16</span>
                 </li>
-                <li className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#D98A3C]" />
-                  <span>Public EC2 App (Port 3000)</span>
+                <li className="flex items-center justify-between">
+                  <span>PUBLIC EC2</span>
+                  <span className="font-semibold text-[#18181B]">:3000</span>
                 </li>
-                <li className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#5B8A72]" />
-                  <span>Private RDS MySQL (Port 3306)</span>
+                <li className="flex items-center justify-between">
+                  <span>PRIVATE RDS</span>
+                  <span className="font-semibold text-[#18181B]">:3306</span>
                 </li>
-                <li className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#8C657A]" />
-                  <span>Private S3 Bucket (BPA ON)</span>
+                <li className="flex items-center justify-between">
+                  <span>STORAGE</span>
+                  <span className="font-semibold text-[#10B981]">S3 PRIVATE</span>
                 </li>
               </ul>
             </div>
@@ -209,8 +201,8 @@ const AppLayout = ({ children }) => {
         </main>
       </div>
 
-      {/* Mobile iOS Floating Bottom Tab Bar */}
-      <nav className="md:hidden fixed bottom-3 left-4 right-4 z-40 bg-white/90 backdrop-blur-2xl border border-[#E8E0D5] rounded-3xl p-1.5 flex items-center justify-around shadow-lg shadow-[#231F20]/10">
+      {/* Mobile Floating Bottom Bar */}
+      <nav className="md:hidden fixed bottom-3 left-4 right-4 z-40 bg-white/95 backdrop-blur-md border border-[rgba(28,25,23,0.08)] rounded-2xl p-1.5 flex items-center justify-around shadow-lg">
         {navItems.map((item) => {
           const Icon = item.icon;
           return (
@@ -219,11 +211,11 @@ const AppLayout = ({ children }) => {
               to={item.path}
               end={item.path === '/patient' || item.path === '/doctor' || item.path === '/admin'}
               className={({ isActive }) => `
-                flex flex-col items-center justify-center py-2 px-3 rounded-2xl text-[10px] font-bold transition-all duration-150 ios-press-action flex-1
+                flex flex-col items-center justify-center py-2 px-3 rounded-xl text-[10px] font-bold transition-all duration-150 btn-press flex-1
                 ${
                   isActive
-                    ? 'bg-[#E06D53] text-white shadow-sm'
-                    : 'text-[#7A7267] hover:text-[#231F20]'
+                    ? 'bg-[#1C1917] text-white shadow-xs'
+                    : 'text-[#6E6A63] hover:text-[#18181B]'
                 }
               `}
             >

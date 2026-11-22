@@ -4,58 +4,57 @@ import { ShieldCheck, Cloud, Server } from 'lucide-react';
 
 const AuthLayout = ({ children, title, subtitle }) => {
   return (
-    <div className="min-h-screen bg-[#FAF7F2] flex flex-col justify-center items-center p-4 sm:p-6 relative overflow-hidden font-sans selection:bg-[#E06D53] selection:text-white">
-      {/* Ambient Apple Health-style warm radial blooms in warm peach and soft sand */}
-      <div className="absolute -top-36 -left-36 w-[520px] h-[520px] rounded-full bg-[#FDE8D7]/60 blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-36 -right-36 w-[520px] h-[520px] rounded-full bg-[#F3ECE1]/70 blur-3xl pointer-events-none" />
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-80 h-80 rounded-full bg-[#FDE8D7]/30 blur-3xl pointer-events-none" />
-
-      {/* CloudCare Header Branding */}
-      <div className="mb-6 flex flex-col items-center text-center z-10">
-        <ClinicLogo size="xl" showText={false} className="mb-3.5" />
-        <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#231F20]">
+    <div className="min-h-screen bg-[#F9F8F6] flex flex-col justify-center items-center p-4 sm:p-6 relative font-sans selection:bg-[#1C1917] selection:text-white">
+      {/* Brand Header */}
+      <div className="mb-8 flex flex-col items-center text-center z-10">
+        <ClinicLogo size="xl" showText={false} className="mb-4" />
+        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-[-0.03em] text-[#18181B]">
           CloudCare
         </h1>
-        <p className="text-xs text-[#7A7267] font-medium tracking-wide mt-1">
-          Cloud-Native Hospital Management System
+        <p className="text-xs font-normal text-[#6E6A63] tracking-normal mt-1">
+          Hospital Information & Clinical Management Suite
         </p>
 
-        {/* Live Cloud Badge in Warm Sage Green */}
-        <div className="mt-2.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EDF4F0] border border-[#C4DDD0] text-[11px] font-semibold text-[#5B8A72] shadow-xs">
-          <span className="w-2 h-2 rounded-full bg-[#5B8A72] animate-pulse" />
-          <span>AWS Region: <code>ap-south-1</code> (Mumbai)</span>
+        {/* Minimalist Monochrome AWS Region Status Pill */}
+        <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[rgba(28,25,23,0.08)] shadow-2xs text-[11px] font-mono text-[#18181B]">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10B981]" />
+          </span>
+          <span className="text-[#6E6A63]">REGION:</span>
+          <span className="font-semibold">ap-south-1</span>
         </div>
       </div>
 
-      {/* Main iOS 16 Warm Glass Card with rounded-[28px], delicate sand border, and diffused warm shadow */}
+      {/* Main Architectural Card: Crisp Ivory White with hair-thin border and multi-layer ambient shadow */}
       <div
-        className="w-full max-w-md bg-white/85 backdrop-blur-2xl rounded-[28px] border border-[#E8E0D5]/80 p-6 sm:p-8 z-10 relative"
+        className="w-full max-w-[440px] bg-white rounded-[24px] border border-[rgba(28,25,23,0.08)] p-7 sm:p-9 z-10 relative"
         style={{
-          boxShadow: '0 20px 40px -15px rgba(60, 45, 30, 0.08)',
+          boxShadow: '0 1px 2px rgba(0,0,0,0.03), 0 24px 48px -12px rgba(28, 25, 23, 0.06)',
         }}
       >
-        <div className="mb-5 text-center">
-          <h2 className="text-xl font-bold text-[#231F20] tracking-tight">{title}</h2>
-          {subtitle && <p className="text-xs text-[#7A7267] mt-1">{subtitle}</p>}
+        <div className="mb-6 text-center">
+          <h2 className="text-xl font-bold text-[#18181B] tracking-[-0.02em]">{title}</h2>
+          {subtitle && <p className="text-xs text-[#6E6A63] mt-1">{subtitle}</p>}
         </div>
         {children}
       </div>
 
-      {/* Architecture Footnote in Warm Taupe */}
-      <div className="mt-6 flex flex-wrap justify-center items-center gap-3 text-[11px] text-[#7A7267] font-medium z-10">
+      {/* Minimal Architectural Footnote */}
+      <div className="mt-8 flex flex-wrap justify-center items-center gap-3 font-mono text-[11px] text-[#9C968E] z-10">
         <div className="flex items-center gap-1.5">
-          <Server className="w-3.5 h-3.5 text-[#E06D53]" />
-          <span>Public EC2 App</span>
+          <Server className="w-3.5 h-3.5 text-[#18181B]" />
+          <span>EC2 HOST :3000</span>
         </div>
-        <span>•</span>
+        <span>/</span>
         <div className="flex items-center gap-1.5">
-          <ShieldCheck className="w-3.5 h-3.5 text-[#5B8A72]" />
-          <span>Private RDS MySQL</span>
+          <ShieldCheck className="w-3.5 h-3.5 text-[#10B981]" />
+          <span>RDS MYSQL :3306</span>
         </div>
-        <span>•</span>
+        <span>/</span>
         <div className="flex items-center gap-1.5">
-          <Cloud className="w-3.5 h-3.5 text-[#D98A3C]" />
-          <span>Private S3 Bucket</span>
+          <Cloud className="w-3.5 h-3.5 text-[#C85A32]" />
+          <span>S3 PRIVATE</span>
         </div>
       </div>
     </div>

@@ -163,31 +163,41 @@ const DoctorDashboard = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-[24px] bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white p-6 sm:p-8 shadow-ios-md">
+      {/* Header Banner: Sleek Warm Obsidian Card */}
+      <div
+        className="relative overflow-hidden rounded-[24px] bg-[#1C1917] text-white p-6 sm:p-8 border border-[rgba(255,255,255,0.08)]"
+        style={{
+          boxShadow: '0 1px 2px rgba(0,0,0,0.04), 0 24px 48px -12px rgba(28, 25, 23, 0.18)',
+        }}
+      >
+        {/* Subtle metallic copper accent line at top */}
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#C85A32] to-transparent opacity-60" />
+
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-semibold mb-2">
-              <Stethoscope className="w-3.5 h-3.5" />
-              <span>Attending Physician Workspace</span>
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/10 text-[11px] font-mono tracking-wider uppercase mb-2 text-[#ECE9E2]">
+              <Stethoscope className="w-3.5 h-3.5 text-[#C85A32]" />
+              <span>Specialist Physician Workspace</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-              {user?.name || 'Dr. Aakash Sharma'}
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-[-0.03em] text-white">
+              {user?.name || 'Dr. Rahul Sharma'}
             </h1>
-            <p className="text-emerald-100 text-xs sm:text-sm mt-1 max-w-xl">
+            <p className="text-[#9C968E] text-xs sm:text-sm mt-1 max-w-xl font-normal leading-relaxed">
               Specialization:{' '}
               <span className="font-semibold text-white">
                 {user?.specialization || 'Cardiology & Internal Medicine'}
               </span>{' '}
-              • Review your scheduled patient consultations and provide clinical diagnosis.
+              • Review scheduled patient consultations, record clinical notes, and manage prescriptions.
             </p>
           </div>
 
-          <div className="bg-white/15 backdrop-blur-md px-4 py-2.5 rounded-[18px] text-center border border-white/20 shrink-0">
-            <span className="text-[11px] font-semibold text-emerald-100 uppercase tracking-wider block">
+          <div className="bg-white/10 px-4 py-2.5 rounded-xl text-center border border-white/10 shrink-0">
+            <span className="font-mono text-[10px] font-semibold text-[#9C968E] uppercase tracking-wider block">
               Today's Queue
             </span>
-            <span className="text-2xl font-black">{pendingCount + confirmedCount} Visits</span>
+            <span className="text-2xl font-extrabold text-white tracking-[-0.02em] tabular-nums">
+              {pendingCount + confirmedCount} Visits
+            </span>
           </div>
         </div>
       </div>

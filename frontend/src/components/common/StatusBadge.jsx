@@ -5,47 +5,47 @@ const StatusBadge = ({ status, className = '' }) => {
 
   const styles = {
     CONFIRMED: {
-      bg: 'bg-[#EDF4F0] text-[#5B8A72] border-[#C4DDD0]',
-      dot: 'bg-[#5B8A72]',
+      bg: 'bg-[#ECFDF5] text-[#065F46] border-[#A7F3D0]',
+      dot: 'bg-[#10B981]',
       pulse: false,
       label: 'Confirmed',
     },
     PENDING: {
-      bg: 'bg-[#FDF6ED] text-[#D98A3C] border-[#F5DDC0]',
-      dot: 'bg-[#D98A3C]',
+      bg: 'bg-[#FEF3C7] text-[#92400E] border-[#FDE68A]',
+      dot: 'bg-[#D97706]',
       pulse: true,
       label: 'Pending Review',
     },
     COMPLETED: {
-      bg: 'bg-[#FDF2F0] text-[#E06D53] border-[#FAD8D2]',
-      dot: 'bg-[#E06D53]',
+      bg: 'bg-[#F3F1ED] text-[#18181B] border-[#ECE9E2]',
+      dot: 'bg-[#1C1917]',
       pulse: false,
       label: 'Completed',
     },
     CANCELLED: {
-      bg: 'bg-[#F5F0E6] text-[#7A7267] border-[#E8E0D5]',
-      dot: 'bg-[#7A7267]',
+      bg: 'bg-[#F3F1ED] text-[#9C968E] border-[#ECE9E2]',
+      dot: 'bg-[#9C968E]',
       pulse: false,
       label: 'Cancelled',
     },
   };
 
   const current = styles[norm] || {
-    bg: 'bg-[#F5F0E6] text-[#7A7267] border-[#E8E0D5]',
-    dot: 'bg-[#7A7267]',
+    bg: 'bg-[#F3F1ED] text-[#6E6A63] border-[#ECE9E2]',
+    dot: 'bg-[#9C968E]',
     pulse: false,
     label: status || 'Unknown',
   };
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wide border shadow-2xs ${current.bg} ${className}`}
+      className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-[-0.01em] border ${current.bg} ${className}`}
     >
-      <span className="relative flex h-2 w-2">
+      <span className="relative flex h-1.5 w-1.5">
         {current.pulse && (
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D98A3C] opacity-75" />
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D97706] opacity-75" />
         )}
-        <span className={`relative inline-flex rounded-full h-2 w-2 ${current.dot}`} />
+        <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${current.dot}`} />
       </span>
       {current.label}
     </span>

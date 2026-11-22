@@ -157,25 +157,27 @@ const PatientDashboard = () => {
 
   return (
     <div className="space-y-6">
-      {/* Welcome Banner in Warm Terracotta */}
+      {/* Welcome Banner: Sleek Warm Obsidian Executive Card */}
       <div
-        className="relative overflow-hidden rounded-[28px] text-white p-6 sm:p-8"
+        className="relative overflow-hidden rounded-[24px] bg-[#1C1917] text-white p-6 sm:p-8 border border-[rgba(255,255,255,0.08)]"
         style={{
-          background: 'linear-gradient(135deg, #E06D53 0%, #D95D43 50%, #C85A40 100%)',
-          boxShadow: '0 12px 32px -8px rgba(224, 109, 83, 0.35)',
+          boxShadow: '0 1px 2px rgba(0,0,0,0.04), 0 24px 48px -12px rgba(28, 25, 23, 0.18)',
         }}
       >
+        {/* Subtle metallic copper accent bar at top */}
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#C85A32] to-transparent opacity-60" />
+
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-semibold mb-2">
-              <Sparkles className="w-3.5 h-3.5 text-white" />
-              <span>Patient Health Portal</span>
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/10 text-[11px] font-mono tracking-wider uppercase mb-2 text-[#ECE9E2]">
+              <Sparkles className="w-3.5 h-3.5 text-[#C85A32]" />
+              <span>Patient Clinical Portal</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-[-0.03em] text-white">
               Hello, {user?.name || 'Aarav Patil'}
             </h1>
-            <p className="text-[#FDE8D7] text-xs sm:text-sm mt-1 max-w-xl">
-              Manage your clinical consultations, view assigned specialist schedules, and securely download diagnostic records from AWS S3.
+            <p className="text-[#9C968E] text-xs sm:text-sm mt-1 max-w-xl font-normal leading-relaxed">
+              Manage clinical consultations, view attending specialist schedules, and securely download diagnostic records from AWS S3.
             </p>
           </div>
 
@@ -184,7 +186,7 @@ const PatientDashboard = () => {
             icon={PlusCircle}
             size="md"
             onClick={() => setIsBookModalOpen(true)}
-            className="self-start md:self-center bg-white text-[#E06D53] hover:bg-[#FDF2F0] shadow-sm font-bold border-none"
+            className="self-start md:self-center font-bold"
           >
             Book Appointment
           </Button>
@@ -198,37 +200,34 @@ const PatientDashboard = () => {
           value={upcomingCount}
           subtitle="Pending and confirmed visits"
           icon={Calendar}
-          tint="terracotta"
         />
         <StatCard
           title="Consultations"
           value={completedCount}
           subtitle="Past doctor consultations"
           icon={CalendarCheck}
-          tint="sage"
         />
         <StatCard
           title="S3 Documents"
           value={documentsCount}
           subtitle="Encrypted medical PDFs"
           icon={FileText}
-          tint="amber"
         />
       </div>
 
       {/* Next Appointment Spotlight Card */}
       {nextAppointment && (
-        <Card className="bg-gradient-to-br from-[#FDF2F0]/80 via-white to-[#F5F0E6] border-[#FAD8D2]">
+        <Card className="bg-white border border-[rgba(28,25,23,0.08)]">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-[16px] bg-[#E06D53] text-white flex items-center justify-center shrink-0 shadow-sm shadow-[#E06D53]/25">
-                <Stethoscope className="w-6 h-6" />
+              <div className="w-11 h-11 rounded-xl bg-[#1C1917] text-white flex items-center justify-center shrink-0 shadow-sm border border-[#C85A32]/30">
+                <Stethoscope className="w-5 h-5 text-white" />
               </div>
               <div>
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#E06D53]">
+                <span className="font-mono text-[10px] uppercase tracking-wider text-[#C85A32] font-semibold">
                   Next Scheduled Visit
                 </span>
-                <h3 className="text-lg font-bold text-ios-gray-900 mt-0.5">
+                <h3 className="text-base sm:text-lg font-bold text-[#18181B] mt-0.5 tracking-[-0.02em]">
                   {nextAppointment.doctorName}
                 </h3>
                 <div className="flex flex-wrap items-center gap-3 mt-1 text-xs text-ios-gray-600">
@@ -302,8 +301,8 @@ const PatientDashboard = () => {
               <Card key={appt.id} padding="p-4 sm:p-5" hoverable>
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="flex items-start gap-3.5">
-                    <div className="w-10 h-10 rounded-full bg-[#F5F0E6] flex items-center justify-center text-[#E06D53] shrink-0 border border-[#E8E0D5]">
-                      <Stethoscope className="w-5 h-5" />
+                    <div className="w-9 h-9 rounded-lg bg-[#F3F1ED] flex items-center justify-center text-[#1C1917] shrink-0 border border-[#ECE9E2]">
+                      <Stethoscope className="w-4 h-4" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
@@ -366,9 +365,9 @@ const PatientDashboard = () => {
           ) : (
             <div className="space-y-3">
               {prescriptions.map((p) => (
-                <Card key={p.id} padding="p-4" className="border-l-4 border-l-[#E06D53]">
+                <Card key={p.id} padding="p-4" className="border-l-2 border-l-[#C85A32]">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-bold text-[#E06D53]">
+                    <span className="text-xs font-bold text-[#C85A32]">
                       {p.doctorName || 'Attending Physician'}
                     </span>
                     <span className="text-[11px] text-ios-gray-400 font-medium">
@@ -512,8 +511,8 @@ const PatientDashboard = () => {
                         py-2 text-xs font-bold rounded-[12px] transition-all ios-press-action border
                         ${
                           slot === s
-                            ? 'bg-[#E06D53] text-white border-[#E06D53] shadow-xs'
-                            : 'bg-[#F5F0E6] text-[#231F20] border-[#E8E0D5] hover:bg-[#EFEAE1]'
+                            ? 'bg-[#1C1917] text-white border-[#1C1917] shadow-xs'
+                            : 'bg-[#F3F1ED] text-[#18181B] border-[#ECE9E2] hover:bg-[#ECE9E2]'
                         }
                       `}
                     >
