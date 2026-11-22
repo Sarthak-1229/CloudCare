@@ -1,52 +1,30 @@
 import React from 'react';
+import logoImg from '../../assets/logo.png';
 
 export const ClinicLogo = ({ size = 'md', className = '', showText = false }) => {
   const sizeMap = {
-    sm: { box: 'w-8 h-8', icon: 16, radius: 'rounded-[10px]' },
-    md: { box: 'w-10 h-10', icon: 20, radius: 'rounded-xl' },
-    lg: { box: 'w-11 h-11', icon: 22, radius: 'rounded-xl' },
-    xl: { box: 'w-11 h-11 sm:w-12 sm:h-12', icon: 24, radius: 'rounded-xl' },
+    sm: { box: 'w-8 h-8', radius: 'rounded-[10px]' },
+    md: { box: 'w-10 h-10', radius: 'rounded-xl' },
+    lg: { box: 'w-12 h-12', radius: 'rounded-xl' },
+    xl: { box: 'w-16 h-16 sm:w-20 sm:h-20', radius: 'rounded-2xl' },
   };
 
   const current = sizeMap[size] || sizeMap.md;
 
   return (
     <div className={`flex items-center gap-3 ${className}`}>
-      {/* Sleek Minimal Squircle (44px x 44px) in Warm Obsidian (#1C1917) with thin metallic/copper inner border */}
+      {/* Authentic Clinic Logo Container */}
       <div
-        className={`relative ${current.box} ${current.radius} bg-[#1C1917] flex items-center justify-center overflow-hidden flex-shrink-0 group shadow-sm`}
+        className={`relative ${current.box} ${current.radius} bg-white flex items-center justify-center overflow-hidden flex-shrink-0 group shadow-sm border border-[rgba(28,25,23,0.08)] p-1`}
         style={{
-          boxShadow: '0 4px 12px -2px rgba(28, 25, 23, 0.25)',
+          boxShadow: '0 4px 12px -2px rgba(28, 25, 23, 0.08)',
         }}
       >
-        {/* Thin metallic copper inner ring */}
-        <div className="absolute inset-0 rounded-[inherit] border border-[#C85A32]/35 pointer-events-none" />
-
-        {/* Crisp White ECG Pulse Line with Copper Spark Accent */}
-        <svg
-          width={current.icon}
-          height={current.icon}
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="relative text-white transition-transform duration-200 group-hover:scale-105"
-        >
-          {/* Subtle clinical cross backdrop */}
-          <rect x="10.5" y="4" width="3" height="16" rx="1.5" fill="white" fillOpacity="0.18" />
-          <rect x="4" y="10.5" width="16" height="3" rx="1.5" fill="white" fillOpacity="0.18" />
-
-          {/* Crisp ECG Pulse Vector */}
-          <path
-            d="M3 12H7L9 7.5L13 16.5L15 11L16.5 12H21"
-            stroke="#FFFFFF"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-
-          {/* Precision Signature Copper Spark */}
-          <circle cx="17" cy="7" r="1.6" fill="#C85A32" />
-        </svg>
+        <img
+          src={logoImg}
+          alt="CloudCare Clinic Logo"
+          className="w-full h-full object-contain transition-transform duration-200 group-hover:scale-105"
+        />
       </div>
 
       {showText && (
