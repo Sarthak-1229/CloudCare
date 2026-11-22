@@ -137,11 +137,11 @@ A systematic audit of repository files was conducted to identify active runtime 
 - `tests/`: Automated unit and integration test suites (`foundation.test.js`, `api.test.js`, `TEST_CASES.md`).
 - `deployment/aws/`: Systemd service unit (`cloudcare.service`) and release deployment scripts.
 
-### Redundant / Legacy Artifacts Identified
-- `frontend/src/assets/hero.png`: Unused static placeholder image from template initialization.
-- Legacy workflow `.md` notes from early planning iterations: Consolidated and superseded by `docs/SYSTEM_DOCUMENTATION.md` and `docs/API_CONTRACT.md`.
+### Redundant / Legacy Artifacts Identified & Cleaned Up
+- `frontend/src/assets/hero.png`, `react.svg`, `vite.svg`: Unused boilerplate placeholder assets from Vite template initialization — deleted and purged from Git repository.
+- Legacy planning scratch notes from early iterations: Consolidated and superseded by `docs/SYSTEM_DOCUMENTATION.md` and `docs/API_CONTRACT.md`.
 - Uncommitted temporary logs (`.log`, `.tmp`): Safely excluded via `.gitignore`.
-- Root `.env.example`: Retained as reference; verified that **zero active `.env` or credential files are tracked in Git**.
+- Root `.env.example`: Retained as reference template; verified that **zero active `.env` or credential files are tracked in Git**.
 
 ---
 
@@ -160,6 +160,8 @@ The database is initialized with active, salted bcrypt hashes for all roles. Eva
 | **Patient 1** | Aarav Patil | `aarav@cloudcare.test` | `Patient@123` | Booking appointments, viewing prescriptions, downloading own ECG PDF. |
 | **Patient 2** | Sneha Joshi | `sneha@cloudcare.test` | `Patient@123` | Eczema review booking, verified access denial against Patient 1's records. |
 | **Patient 3** | Vikram Malhotra | `vikram@cloudcare.test` | `Patient@123` | Orthopedic post-op recovery consultations. |
+| **Patient 4** | Ananya Deshmukh | `ananya@cloudcare.test` | `Patient@123` | Pediatric consultations and wellness appointments. |
+| **Patient 5** | Rohan Kulkarni | `rohan@cloudcare.test` | `Patient@123` | Neurology follow-ups and cognitive consultations. |
 
 ---
 
