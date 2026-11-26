@@ -39,13 +39,13 @@ router.post('/upload', authenticate, requireRole('DOCTOR'), (req, res, next) => 
 
       if (!appointmentId || !file) {
         return res.status(400).json({
-          error: { code: 'VALIDATION_ERROR', message: 'Appointment ID and file are required.' }
+          error: { code: 'VALIDATION_ERROR', message: 'Appointment ID and PDF file are required.' }
         });
       }
 
       if (!validatePdfHeader(file.buffer)) {
         return res.status(415).json({
-          error: { code: 'UNSUPPORTED_FILE_TYPE', message: 'Only PDF documents are supported.' }
+          error: { code: 'UNSUPPORTED_FILE_TYPE', message: 'Only valid PDF documents (%PDF) are supported.' }
         });
       }
 
@@ -66,7 +66,8 @@ router.post('/upload', authenticate, requireRole('DOCTOR'), (req, res, next) => 
         }
         patientId = appts[0].patient_id;
 
-        const s3Key = `reports/report-${Date.now()}-${file.originalname.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
+        const safeName = file.originalname.replace(/[^a-zA-Z0-9._-]/g, '_');
+        const s3Key = `reports/report-${Date.now()}-${safeName}`;
         await uploadPdf(s3Key, file.buffer, 'application/pdf');
 
         const [docResult] = await pool.query(
@@ -77,7 +78,9 @@ router.post('/upload', authenticate, requireRole('DOCTOR'), (req, res, next) => 
         return res.status(201).json({
           data: {
             id: docResult.insertId,
-            filename: file.originalname
+            filename: file.originalname,
+            uploadedBy: req.user.name,
+            uploadedAt: new Date().toISOString().slice(0, 10)
           }
         });
       }
@@ -111,7 +114,9 @@ router.post('/upload', authenticate, requireRole('DOCTOR'), (req, res, next) => 
       return res.status(201).json({
         data: {
           id: docId,
-          filename: file.originalname
+          filename: file.originalname,
+          uploadedBy: req.user.name,
+          uploadedAt: new Date().toISOString().slice(0, 10)
         }
       });
     } catch (error) {
@@ -128,7 +133,14 @@ router.get('/', authenticate, requireRole('PATIENT'), async (req, res, next) => 
 
     if (pool) {
       const [rows] = await pool.query(
-        'SELECT id, filename FROM documents WHERE patient_id = ? ORDER BY id DESC',
+        `SELECT d.id,
+                d.filename,
+                u.name AS uploadedBy,
+                DATE_FORMAT(d.created_at, '%Y-%m-%d') AS uploadedAt
+         FROM documents d
+         LEFT JOIN users u ON d.uploaded_by = u.id
+         WHERE d.patient_id = ?
+         ORDER BY d.id DESC`,
         [patientId]
       );
       return res.status(200).json({ data: rows });
@@ -137,7 +149,15 @@ router.get('/', authenticate, requireRole('PATIENT'), async (req, res, next) => 
     // In-memory fallback
     const reports = memoryDb.documents
       .filter((d) => d.patient_id === patientId)
-      .map((d) => ({ id: d.id, filename: d.filename }));
+      .map((d) => {
+        const uploader = memoryDb.users.find((u) => u.id === d.uploaded_by);
+        return {
+          id: d.id,
+          filename: d.filename,
+          uploadedBy: uploader?.name || 'Attending Physician',
+          uploadedAt: new Date().toISOString().slice(0, 10)
+        };
+      });
 
     return res.status(200).json({ data: reports });
   } catch (error) {
@@ -182,6 +202,14 @@ router.get('/:id/download', authenticate, requireRole('PATIENT'), async (req, re
       'Content-Type': contentType || 'application/pdf',
       'Content-Disposition': `attachment; filename="${encodeURIComponent(doc.filename)}"`,
       'Cache-Control': 'no-store'
+    });
+
+    stream.on('error', (streamErr) => {
+      if (!res.headersSent) {
+        next(streamErr);
+      } else {
+        res.end();
+      }
     });
 
     stream.pipe(res);

@@ -6,6 +6,9 @@ import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import { User, Mail, Lock, CheckCircle2, AlertCircle } from 'lucide-react';
 
+const stripRogueChars = (val) =>
+  typeof val === 'string' ? val.replace(/[\s"'`<>]+/g, '') : '';
+
 const Register = () => {
   const { register, isLoading } = useAuth();
   const navigate = useNavigate();
@@ -21,22 +24,27 @@ const Register = () => {
     setError('');
 
     const cleanName = (name || '').trim();
-    const cleanEmail = (email || '').trim().replace(/\s+/g, '').toLowerCase();
+    const cleanEmail = stripRogueChars(email).toLowerCase();
     const cleanPassword = (password || '').trim();
     const cleanConfirm = (confirmPassword || '').trim();
 
     if (!cleanName || !cleanEmail || !cleanPassword) {
-      setError('Please fill in all required fields');
+      setError('Please fill in all required fields.');
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
+      setError('Please enter a valid email address.');
       return;
     }
 
     if (cleanPassword !== cleanConfirm) {
-      setError('Passwords do not match');
+      setError('Passwords do not match.');
       return;
     }
 
     if (cleanPassword.length < 6) {
-      setError('Password must be at least 6 characters');
+      setError('Password must be at least 6 characters.');
       return;
     }
 
@@ -46,7 +54,7 @@ const Register = () => {
         navigate('/patient');
       }
     } catch (err) {
-      setError(err.message || 'Registration failed');
+      setError(err.message || 'Registration failed.');
     }
   };
 
@@ -56,7 +64,7 @@ const Register = () => {
       subtitle="Register to book clinical consultations and access records"
     >
       {error && (
-        <div className="mb-4 p-3 rounded-xl bg-red-50/70 border border-red-200/80 flex items-center gap-2 text-xs font-semibold text-red-700">
+        <div className="mb-4 p-3 rounded-xl bg-red-50/80 border border-red-200/80 flex items-center gap-2 text-xs font-medium text-red-700">
           <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
           <span>{error}</span>
         </div>
@@ -77,18 +85,19 @@ const Register = () => {
           type="text"
           inputMode="email"
           autoComplete="email"
-          placeholder="patient@cloudcare.test"
+          placeholder="name@example.com"
           icon={Mail}
           value={email}
-          onChange={(e) => setEmail(e.target.value.replace(/\s+/g, ''))}
-          onBlur={() => setEmail((prev) => prev.trim().toLowerCase())}
+          onChange={(e) => setEmail(stripRogueChars(e.target.value))}
+          onBlur={() => setEmail((prev) => stripRogueChars(prev).toLowerCase())}
           required
         />
 
         <Input
           label="Password"
           type="password"
-          placeholder="Minimum 6 characters"
+          autoComplete="new-password"
+          placeholder="At least 6 characters"
           icon={Lock}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -98,6 +107,7 @@ const Register = () => {
         <Input
           label="Confirm Password"
           type="password"
+          autoComplete="new-password"
           placeholder="Re-enter password"
           icon={Lock}
           value={confirmPassword}
@@ -126,12 +136,9 @@ const Register = () => {
       </form>
 
       <div className="mt-6 text-center text-xs text-[#6E6A63]">
-        <span>Already have an account? </span>
-        <Link
-          to="/login"
-          className="font-semibold text-[#18181B] hover:text-[#C85A32] underline underline-offset-4 transition-colors"
-        >
-          Sign In
+        <span>Already registered? </span>
+        <Link to="/login" className="font-semibold text-[#18181B] hover:text-[#C85A32] underline underline-offset-4 transition-colors">
+          Sign In Here
         </Link>
       </div>
     </AuthLayout>

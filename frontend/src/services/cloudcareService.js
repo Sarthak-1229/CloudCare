@@ -6,13 +6,24 @@ import {
   MOCK_DOCTORS,
 } from './mockData.js';
 
-// Local storage keys for persistent mock store during interactive review
+// Local storage keys used solely for offline mock fallback
 const APPT_KEY = 'cloudcare_mock_appointments';
 const PRES_KEY = 'cloudcare_mock_prescriptions';
 const DOCS_KEY = 'cloudcare_mock_documents';
 
+const isMockSession = () => {
+  try {
+    if (typeof localStorage === 'undefined') return true;
+    const token = localStorage.getItem('cloudcare_token');
+    return !token || token.startsWith('mock-jwt-token');
+  } catch {
+    return true;
+  }
+};
+
 const getStored = (key, fallback) => {
   try {
+    if (typeof localStorage === 'undefined') return fallback;
     const raw = localStorage.getItem(key);
     return raw ? JSON.parse(raw) : fallback;
   } catch {
@@ -22,11 +33,18 @@ const getStored = (key, fallback) => {
 
 const setStored = (key, val) => {
   try {
+    if (typeof localStorage === 'undefined') return;
     localStorage.setItem(key, JSON.stringify(val));
   } catch {
     // Ignore storage errors
   }
 };
+
+const extractErrorMessage = (err, fallbackMsg) =>
+  err?.response?.data?.error?.message || err?.message || fallbackMsg;
+
+const shouldUseFallback = (err) =>
+  isMockSession() || !err?.response || err?.response?.status === 503;
 
 export const cloudcareService = {
   // Fetch doctors list
@@ -34,24 +52,27 @@ export const cloudcareService = {
     try {
       const res = await api.get('/doctors');
       if (res.data?.data) return res.data.data;
-    } catch {
-      // Fallback
+    } catch (err) {
+      if (!shouldUseFallback(err)) {
+        throw new Error(extractErrorMessage(err, 'Failed to fetch specialists.'));
+      }
     }
     return MOCK_DOCTORS;
   },
 
-  // Fetch appointments (filtered by caller role)
+  // Fetch appointments (filtered server-side by caller role)
   async getAppointments(user) {
     try {
       const res = await api.get('/appointments');
       if (res.data?.data) return res.data.data;
-    } catch {
-      // Fallback
+    } catch (err) {
+      if (!shouldUseFallback(err)) {
+        throw new Error(extractErrorMessage(err, 'Failed to load appointments.'));
+      }
     }
 
     const appts = getStored(APPT_KEY, INITIAL_APPOINTMENTS);
-    if (!user) return appts;
-    if (user.role === 'ADMIN') return appts;
+    if (!user || user.role === 'ADMIN') return appts;
     if (user.role === 'DOCTOR') {
       return appts.filter((a) => a.doctorId === (user.doctorId || user.id));
     }
@@ -61,10 +82,16 @@ export const cloudcareService = {
   // Book an appointment (Patient)
   async bookAppointment({ doctorId, visitDate, slot, notes, user }) {
     try {
-      const res = await api.post('/appointments', { doctorId, visitDate, slot });
+      const res = await api.post('/appointments', {
+        doctorId: Number(doctorId),
+        visitDate,
+        slot,
+      });
       if (res.data?.data) return res.data.data;
-    } catch {
-      // Fallback
+    } catch (err) {
+      if (!shouldUseFallback(err)) {
+        throw new Error(extractErrorMessage(err, 'Could not complete booking.'));
+      }
     }
 
     const appts = getStored(APPT_KEY, INITIAL_APPOINTMENTS);
@@ -73,7 +100,6 @@ export const cloudcareService = {
       name: 'Dr. Assigned Specialist',
     };
 
-    // Check slot collision
     const collision = appts.some(
       (a) => a.doctorId === Number(doctorId) && a.visitDate === visitDate && a.slot === slot
     );
@@ -98,13 +124,15 @@ export const cloudcareService = {
     return newAppt;
   },
 
-  // Update appointment status (Doctor)
+  // Update appointment status (Doctor or Admin)
   async updateAppointmentStatus(appointmentId, status) {
     try {
       const res = await api.patch(`/appointments/${appointmentId}/status`, { status });
       if (res.data?.data) return res.data.data;
-    } catch {
-      // Fallback
+    } catch (err) {
+      if (!shouldUseFallback(err)) {
+        throw new Error(extractErrorMessage(err, 'Failed to update appointment status.'));
+      }
     }
 
     const appts = getStored(APPT_KEY, INITIAL_APPOINTMENTS);
@@ -116,10 +144,15 @@ export const cloudcareService = {
   // Add prescription / clinical notes (Doctor)
   async addPrescription({ appointmentId, notes, medicines, patientId, doctorName }) {
     try {
-      const res = await api.post('/prescriptions', { appointmentId, notes, medicines });
+      const res = await api.post(`/appointments/${appointmentId}/prescription`, {
+        notes,
+        medicines: medicines || '',
+      });
       if (res.data?.data) return res.data.data;
-    } catch {
-      // Fallback
+    } catch (err) {
+      if (!shouldUseFallback(err)) {
+        throw new Error(extractErrorMessage(err, 'Failed to save prescription.'));
+      }
     }
 
     const list = getStored(PRES_KEY, INITIAL_PRESCRIPTIONS);
@@ -137,13 +170,15 @@ export const cloudcareService = {
     return newPrescription;
   },
 
-  // Get prescriptions
+  // Get prescriptions (Patient or Doctor)
   async getPrescriptions(user) {
     try {
       const res = await api.get('/prescriptions');
       if (res.data?.data) return res.data.data;
-    } catch {
-      // Fallback
+    } catch (err) {
+      if (!shouldUseFallback(err)) {
+        throw new Error(extractErrorMessage(err, 'Failed to load prescriptions.'));
+      }
     }
 
     const list = getStored(PRES_KEY, INITIAL_PRESCRIPTIONS);
@@ -152,13 +187,15 @@ export const cloudcareService = {
     return list.filter((p) => p.patientId === (user.patientId || user.id));
   },
 
-  // Get documents (Patient)
+  // Get diagnostic reports (Patient)
   async getDocuments(user) {
     try {
-      const res = await api.get('/documents');
+      const res = await api.get('/reports');
       if (res.data?.data) return res.data.data;
-    } catch {
-      // Fallback
+    } catch (err) {
+      if (!shouldUseFallback(err)) {
+        throw new Error(extractErrorMessage(err, 'Failed to load diagnostic reports.'));
+      }
     }
 
     const list = getStored(DOCS_KEY, INITIAL_DOCUMENTS);
@@ -166,18 +203,24 @@ export const cloudcareService = {
     return list.filter((d) => d.patientId === (user.patientId || user.id));
   },
 
-  // Upload synthetic report document (Doctor)
+  // Upload synthetic PDF report document (Doctor)
   async uploadDocument({ appointmentId, patientId, filename, file, doctorName }) {
+    if (!isMockSession() && !file) {
+      throw new Error('Please choose a valid PDF file to upload.');
+    }
+
     try {
       const formData = new FormData();
-      formData.append('appointmentId', appointmentId);
-      if (file) formData.append('file', file);
-      const res = await api.post('/documents', formData, {
+      formData.append('appointmentId', String(appointmentId));
+      if (file) formData.append('file', file, filename || file.name);
+      const res = await api.post('/reports/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       if (res.data?.data) return res.data.data;
-    } catch {
-      // Fallback
+    } catch (err) {
+      if (!shouldUseFallback(err)) {
+        throw new Error(extractErrorMessage(err, 'Failed to upload diagnostic report.'));
+      }
     }
 
     const list = getStored(DOCS_KEY, INITIAL_DOCUMENTS);
@@ -195,10 +238,10 @@ export const cloudcareService = {
     return newDoc;
   },
 
-  // Download document (Patient only)
+  // Download PDF report document (Patient only)
   async downloadDocument(docId, filename) {
     try {
-      const res = await api.get(`/documents/${docId}/download`, {
+      const res = await api.get(`/reports/${docId}/download`, {
         responseType: 'blob',
       });
       const blob = new Blob([res.data], { type: 'application/pdf' });
@@ -209,8 +252,12 @@ export const cloudcareService = {
       a.click();
       window.URL.revokeObjectURL(url);
       return true;
-    } catch {
-      // In mock/offline mode, generate a lightweight valid synthetic PDF blob
+    } catch (err) {
+      if (!shouldUseFallback(err)) {
+        throw new Error(extractErrorMessage(err, 'Unable to download report.'));
+      }
+
+      // Offline mock synthetic PDF
       const dummyPdfContent = `%PDF-1.4
 1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj
 2 0 obj << /Type /Pages /Kids [3 0 R] /Count 1 >> endobj
@@ -255,15 +302,17 @@ startxref
   // Admin dashboard summary counts
   async getDashboardSummary() {
     try {
-      const res = await api.get('/dashboard');
+      const res = await api.get('/admin/summary');
       if (res.data?.data) return res.data.data;
-    } catch {
-      // Fallback
+    } catch (err) {
+      if (!shouldUseFallback(err)) {
+        throw new Error(extractErrorMessage(err, 'Failed to fetch admin summary.'));
+      }
     }
 
     const appts = getStored(APPT_KEY, INITIAL_APPOINTMENTS);
     return {
-      patients: 24,
+      patients: 12,
       doctors: MOCK_DOCTORS.length,
       appointments: appts.length,
     };

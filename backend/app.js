@@ -41,12 +41,25 @@ function createApp() {
   app.use('/api/reports', reportsRouter);
   app.use('/api/admin', adminRouter);
 
-  // Serve static frontend build if it exists
+  // Serve static frontend build with optimized asset caching
   const distPath = path.join(__dirname, '../frontend/dist');
   if (fs.existsSync(distPath)) {
-    app.use(express.static(distPath));
+    app.use('/assets', express.static(path.join(distPath, 'assets'), {
+      maxAge: '7d',
+      immutable: true,
+    }));
+
+    app.use(express.static(distPath, {
+      setHeaders: (res, filePath) => {
+        if (filePath.endsWith('.html')) {
+          res.setHeader('Cache-Control', 'no-cache');
+        }
+      },
+    }));
+
     app.use((req, res, next) => {
       if (req.method === 'GET' && !req.path.startsWith('/api/')) {
+        res.set('Cache-Control', 'no-cache');
         return res.sendFile(path.join(distPath, 'index.html'));
       }
       next();

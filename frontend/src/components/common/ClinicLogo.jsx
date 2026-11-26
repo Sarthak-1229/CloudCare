@@ -13,11 +13,11 @@ export const ClinicLogo = ({ size = 'md', className = '', showText = false }) =>
 
   return (
     <div className={`flex items-center gap-3 ${className}`}>
-      {/* Authentic Clinic Logo Container */}
+      {/* Authentic Clinic Logo Container — matched to dark charcoal background */}
       <div
-        className={`relative ${current.box} ${current.radius} bg-white flex items-center justify-center overflow-hidden flex-shrink-0 group shadow-sm border border-[rgba(28,25,23,0.08)] p-1`}
+        className={`relative ${current.box} ${current.radius} bg-[#1A1A18] flex items-center justify-center overflow-hidden flex-shrink-0 group border border-[#C85A32]/25 p-1`}
         style={{
-          boxShadow: '0 4px 12px -2px rgba(28, 25, 23, 0.08)',
+          boxShadow: '0 6px 16px -4px rgba(28, 25, 23, 0.28)',
         }}
       >
         <img

@@ -4,6 +4,13 @@ const { authenticate, requireRole } = require('../middleware/auth');
 
 const router = express.Router();
 
+function formatDateValue(val) {
+  if (!val) return '';
+  if (typeof val === 'string') return val.slice(0, 10);
+  if (val instanceof Date) return val.toISOString().slice(0, 10);
+  return String(val).slice(0, 10);
+}
+
 // GET /api/appointments
 router.get('/', authenticate, async (req, res, next) => {
   try {
@@ -14,14 +21,19 @@ router.get('/', authenticate, async (req, res, next) => {
       let query = `
         SELECT a.id, a.patient_id AS patientId, pu.name AS patientName,
                a.doctor_id AS doctorId, du.name AS doctorName,
+               d.specialization,
                DATE_FORMAT(a.visit_date, '%Y-%m-%d') AS visitDate,
                TIME_FORMAT(a.slot, '%H:%i') AS slot,
-               a.status
+               a.status,
+               pr.notes AS prescriptionNotes,
+               pr.medicines AS prescriptionMedicines,
+               IF(pr.id IS NOT NULL, 1, 0) AS hasPrescription
         FROM appointments a
         JOIN patients p ON a.patient_id = p.id
         JOIN users pu ON p.user_id = pu.id
         JOIN doctors d ON a.doctor_id = d.id
         JOIN users du ON d.user_id = du.id
+        LEFT JOIN prescriptions pr ON pr.appointment_id = a.id
       `;
       const params = [];
 
@@ -51,6 +63,7 @@ router.get('/', authenticate, async (req, res, next) => {
       const patientUser = patient ? memoryDb.users.find((u) => u.id === patient.user_id) : null;
       const doctor = memoryDb.doctors.find((d) => d.id === a.doctor_id);
       const doctorUser = doctor ? memoryDb.users.find((u) => u.id === doctor.user_id) : null;
+      const pres = memoryDb.prescriptions.find((pr) => pr.appointment_id === a.id);
 
       return {
         id: a.id,
@@ -58,9 +71,13 @@ router.get('/', authenticate, async (req, res, next) => {
         patientName: patientUser ? patientUser.name : `Patient ${a.patient_id}`,
         doctorId: a.doctor_id,
         doctorName: doctorUser ? doctorUser.name : `Doctor ${a.doctor_id}`,
-        visitDate: a.visit_date,
+        specialization: doctor ? doctor.specialization : '',
+        visitDate: formatDateValue(a.visit_date),
         slot: a.slot.substring(0, 5),
-        status: a.status
+        status: a.status,
+        prescriptionNotes: pres ? pres.notes : null,
+        prescriptionMedicines: pres ? pres.medicines : null,
+        hasPrescription: pres ? 1 : 0
       };
     });
 
@@ -96,7 +113,7 @@ router.post('/', authenticate, requireRole('PATIENT'), async (req, res, next) =>
 
       if (existing.length > 0) {
         return res.status(409).json({
-          error: { code: 'SLOT_CONFLICT', message: 'The requested slot is already booked.' }
+          error: { code: 'SLOT_CONFLICT', message: `Time slot ${shortSlot} on ${visitDate} is already booked for this specialist.` }
         });
       }
 
@@ -106,9 +123,9 @@ router.post('/', authenticate, requireRole('PATIENT'), async (req, res, next) =>
       );
       const insertId = result.insertId;
 
-      // Fetch patient and doctor names
+      // Fetch doctor name and specialization
       const [docUser] = await pool.query(
-        'SELECT u.name FROM doctors d JOIN users u ON d.user_id = u.id WHERE d.id = ?',
+        'SELECT u.name, d.specialization FROM doctors d JOIN users u ON d.user_id = u.id WHERE d.id = ?',
         [doctorId]
       );
 
@@ -119,6 +136,7 @@ router.post('/', authenticate, requireRole('PATIENT'), async (req, res, next) =>
           patientName: req.user.name,
           doctorId: Number(doctorId),
           doctorName: docUser[0]?.name || 'Doctor',
+          specialization: docUser[0]?.specialization || '',
           visitDate,
           slot: shortSlot,
           status: 'PENDING'
@@ -132,7 +150,7 @@ router.post('/', authenticate, requireRole('PATIENT'), async (req, res, next) =>
     );
     if (collision) {
       return res.status(409).json({
-        error: { code: 'SLOT_CONFLICT', message: 'The requested slot is already booked.' }
+        error: { code: 'SLOT_CONFLICT', message: `Time slot ${shortSlot} on ${visitDate} is already booked.` }
       });
     }
 
@@ -157,6 +175,7 @@ router.post('/', authenticate, requireRole('PATIENT'), async (req, res, next) =>
         patientName: req.user.name,
         doctorId: Number(doctorId),
         doctorName: doctorUser ? doctorUser.name : 'Doctor',
+        specialization: doctor ? doctor.specialization : '',
         visitDate,
         slot: shortSlot,
         status: 'PENDING'
@@ -210,8 +229,8 @@ router.patch('/:id/status', authenticate, requireRole('DOCTOR', 'ADMIN'), async 
           id: appointmentId,
           patientId: currentAppt.patient_id,
           doctorId: currentAppt.doctor_id,
-          visitDate: currentAppt.visit_date,
-          slot: currentAppt.slot.substring(0, 5),
+          visitDate: formatDateValue(currentAppt.visit_date),
+          slot: String(currentAppt.slot).substring(0, 5),
           status: targetStatus
         }
       });
@@ -249,8 +268,8 @@ router.patch('/:id/status', authenticate, requireRole('DOCTOR', 'ADMIN'), async 
         id: appointmentId,
         patientId: currentAppt.patient_id,
         doctorId: currentAppt.doctor_id,
-        visitDate: currentAppt.visit_date,
-        slot: currentAppt.slot.substring(0, 5),
+        visitDate: formatDateValue(currentAppt.visit_date),
+        slot: String(currentAppt.slot).substring(0, 5),
         status: targetStatus
       }
     });

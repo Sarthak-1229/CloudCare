@@ -5,7 +5,10 @@ import AuthLayout from '../layouts/AuthLayout';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import SegmentedControl from '../components/common/SegmentedControl';
-import { Mail, Lock, UserCheck, AlertCircle, Shield, Sparkles } from 'lucide-react';
+import { Mail, Lock, UserCheck, AlertCircle, Shield } from 'lucide-react';
+
+const stripRogueChars = (val) =>
+  typeof val === 'string' ? val.replace(/[\s"'`<>]+/g, '') : '';
 
 const Login = () => {
   const { login, isLoading } = useAuth();
@@ -16,15 +19,8 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  // Switch between portal roles
   const handleRoleTabChange = (newRole) => {
     setRoleTab(newRole);
-    setError('');
-  };
-
-  const handleQuickFill = (demoEmail, demoPassword) => {
-    setEmail(demoEmail);
-    setPassword(demoPassword);
     setError('');
   };
 
@@ -32,12 +28,16 @@ const Login = () => {
     e.preventDefault();
     setError('');
 
-    // Sanitize input: strip leading/trailing and rogue whitespace from copy-paste
-    const cleanEmail = (email || '').trim().replace(/\s+/g, '').toLowerCase();
+    const cleanEmail = stripRogueChars(email).toLowerCase();
     const cleanPassword = (password || '').trim();
 
     if (!cleanEmail || !cleanPassword) {
-      setError('Please enter both email address and password.');
+      setError('Please enter both your email address and password.');
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
+      setError('Please enter a valid email address.');
       return;
     }
 
@@ -51,17 +51,17 @@ const Login = () => {
         else navigate('/');
       }
     } catch (err) {
-      setError(err.message || 'Authentication failed. Please verify credentials.');
+      setError(err.message || 'Authentication failed. Please verify your credentials.');
     }
   };
 
   return (
     <AuthLayout
       title="Clinical Portal Sign In"
-      subtitle="Sign in or use one-click demo credentials to explore"
+      subtitle="Enter your verified credentials to access your clinical dashboard"
     >
       {/* Role Picker Segmented Control */}
-      <div className="flex justify-center mb-5">
+      <div className="flex justify-center mb-6">
         <SegmentedControl
           options={[
             { label: 'Patient', value: 'PATIENT' },
@@ -73,108 +73,14 @@ const Login = () => {
         />
       </div>
 
-      {/* Quick Demonstration Fill Pills — Prevents Copy-Paste Errors */}
-      <div className="mb-5 pb-4 border-b border-[#ECE9E2]">
-        <div className="flex items-center justify-between mb-2">
-          <span className="font-mono text-[10px] uppercase tracking-wider text-[#9C968E] font-medium flex items-center gap-1">
-            <Sparkles className="w-3 h-3 text-[#C85A32]" />
-            Quick Demo Fill
-          </span>
-          <span className="font-mono text-[9px] uppercase tracking-wider text-[#9C968E] px-1.5 py-0.5 rounded bg-[#F3F1ED]">
-            ONE-CLICK
-          </span>
-        </div>
-
-        <div className="flex flex-wrap gap-1.5">
-          {roleTab === 'PATIENT' && (
-            <>
-              <button
-                type="button"
-                onClick={() => handleQuickFill('aarav@cloudcare.test', 'Patient@123')}
-                className={`text-xs font-semibold px-2.5 py-1 rounded-lg border transition-all btn-press ${
-                  email === 'aarav@cloudcare.test'
-                    ? 'bg-[#1C1917] text-white border-[#1C1917] shadow-xs'
-                    : 'bg-white hover:bg-[#F3F1ED] text-[#18181B] border-[#ECE9E2]'
-                }`}
-              >
-                Aarav Patil
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickFill('neha.sharma@cloudcare.test', 'Patient@123')}
-                className={`text-xs font-semibold px-2.5 py-1 rounded-lg border transition-all btn-press ${
-                  email === 'neha.sharma@cloudcare.test'
-                    ? 'bg-[#1C1917] text-white border-[#1C1917] shadow-xs'
-                    : 'bg-white hover:bg-[#F3F1ED] text-[#18181B] border-[#ECE9E2]'
-                }`}
-              >
-                Neha Sharma
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickFill('sneha@cloudcare.test', 'Patient@123')}
-                className={`text-xs font-semibold px-2.5 py-1 rounded-lg border transition-all btn-press ${
-                  email === 'sneha@cloudcare.test'
-                    ? 'bg-[#1C1917] text-white border-[#1C1917] shadow-xs'
-                    : 'bg-white hover:bg-[#F3F1ED] text-[#18181B] border-[#ECE9E2]'
-                }`}
-              >
-                Sneha Joshi
-              </button>
-            </>
-          )}
-
-          {roleTab === 'DOCTOR' && (
-            <>
-              <button
-                type="button"
-                onClick={() => handleQuickFill('rahul@cloudcare.test', 'Doctor@123')}
-                className={`text-xs font-semibold px-2.5 py-1 rounded-lg border transition-all btn-press ${
-                  email === 'rahul@cloudcare.test'
-                    ? 'bg-[#1C1917] text-white border-[#1C1917] shadow-xs'
-                    : 'bg-white hover:bg-[#F3F1ED] text-[#18181B] border-[#ECE9E2]'
-                }`}
-              >
-                Dr. Rahul (Cardiology)
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickFill('sanjay@cloudcare.test', 'Doctor@123')}
-                className={`text-xs font-semibold px-2.5 py-1 rounded-lg border transition-all btn-press ${
-                  email === 'sanjay@cloudcare.test'
-                    ? 'bg-[#1C1917] text-white border-[#1C1917] shadow-xs'
-                    : 'bg-white hover:bg-[#F3F1ED] text-[#18181B] border-[#ECE9E2]'
-                }`}
-              >
-                Dr. Sanjay (Neurology)
-              </button>
-            </>
-          )}
-
-          {roleTab === 'ADMIN' && (
-            <button
-              type="button"
-              onClick={() => handleQuickFill('admin@cloudcare.test', 'Admin@123')}
-              className={`text-xs font-semibold px-3 py-1 rounded-lg border transition-all btn-press ${
-                email === 'admin@cloudcare.test'
-                  ? 'bg-[#1C1917] text-white border-[#1C1917] shadow-xs'
-                  : 'bg-white hover:bg-[#F3F1ED] text-[#18181B] border-[#ECE9E2]'
-              }`}
-            >
-              System Administrator
-            </button>
-          )}
-        </div>
-      </div>
-
       {error && (
-        <div className="mb-5 p-3 rounded-xl bg-red-50/70 border border-red-200/80 flex items-start gap-2.5 text-xs text-red-700">
+        <div className="mb-5 p-3 rounded-xl bg-red-50/80 border border-red-200/80 flex items-start gap-2.5 text-xs text-red-700 font-medium">
           <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-red-600" />
           <span>{error}</span>
         </div>
       )}
 
-      {/* Form with Soft Stone Inputs and Obsidian CTA — noValidate prevents browser popup blocks */}
+      {/* Clean Login Form — noValidate disables native browser popup bubbles; input auto-strips quotes/spaces */}
       <form onSubmit={handleSubmit} noValidate className="space-y-4">
         <Input
           label="Email Address"
@@ -184,15 +90,9 @@ const Login = () => {
           required
           icon={Mail}
           value={email}
-          onChange={(e) => setEmail(e.target.value.replace(/\s+/g, ''))}
-          onBlur={() => setEmail((prev) => prev.trim().toLowerCase())}
-          placeholder={
-            roleTab === 'ADMIN'
-              ? 'admin@cloudcare.test'
-              : roleTab === 'DOCTOR'
-              ? 'rahul@cloudcare.test'
-              : 'aarav@cloudcare.test'
-          }
+          onChange={(e) => setEmail(stripRogueChars(e.target.value))}
+          onBlur={() => setEmail((prev) => stripRogueChars(prev).toLowerCase())}
+          placeholder="name@example.com"
         />
 
         <Input
