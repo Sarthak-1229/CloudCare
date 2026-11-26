@@ -43,7 +43,7 @@ const DEMO_CREDENTIALS = [
     role: 'DOCTOR',
     specialty: 'Cardiology',
     portal: '/doctor',
-    details: 'Attending Cardiologist • Slots: 09:00 - 11:30',
+    details: 'Attending Cardiologist • Slots: 09:00 - 14:00',
   },
   {
     name: 'Dr. Priya Mehta',
@@ -52,7 +52,7 @@ const DEMO_CREDENTIALS = [
     role: 'DOCTOR',
     specialty: 'Dermatology',
     portal: '/doctor',
-    details: 'Attending Dermatologist • Slots: 10:00 - 14:00',
+    details: 'Attending Dermatologist • Slots: 10:00 - 16:00',
   },
   {
     name: 'Dr. Arjun Reddy',
@@ -61,7 +61,7 @@ const DEMO_CREDENTIALS = [
     role: 'DOCTOR',
     specialty: 'Orthopedics',
     portal: '/doctor',
-    details: 'Attending Orthopedic Specialist • Slots: 11:00 - 16:30',
+    details: 'Attending Orthopedic Specialist • Slots: 09:30 - 17:00',
   },
   {
     name: 'Dr. Kavita Rao',
@@ -70,16 +70,16 @@ const DEMO_CREDENTIALS = [
     role: 'DOCTOR',
     specialty: 'Pediatrics',
     portal: '/doctor',
-    details: 'Pediatric Specialist • Slots: 09:30 - 13:00',
+    details: 'Pediatric Specialist • Slots: 09:00 - 17:00',
   },
   {
-    name: 'Dr. Sanjay Gupta',
+    name: 'Dr. Sanjay Verma',
     email: 'sanjay@cloudcare.test',
     password: 'Doctor@123',
     role: 'DOCTOR',
     specialty: 'Neurology',
     portal: '/doctor',
-    details: 'Neurology Consultant • Slots: 14:00 - 18:00',
+    details: 'Neurology Consultant • Slots: 10:00 - 16:30',
   },
   {
     name: 'Aarav Patil',
@@ -87,7 +87,7 @@ const DEMO_CREDENTIALS = [
     password: 'Patient@123',
     role: 'PATIENT',
     portal: '/patient',
-    details: 'Synthetic patient record • Consultations with Cardiology & Dermatology',
+    details: 'Synthetic patient record • Consultations with Cardiology & Orthopedics',
   },
   {
     name: 'Sneha Joshi',
@@ -95,7 +95,7 @@ const DEMO_CREDENTIALS = [
     password: 'Patient@123',
     role: 'PATIENT',
     portal: '/patient',
-    details: 'Synthetic patient record • Consultations with Orthopedics',
+    details: 'Synthetic patient record • Consultations with Dermatology & Pediatrics',
   },
   {
     name: 'Vikram Malhotra',
@@ -103,7 +103,7 @@ const DEMO_CREDENTIALS = [
     password: 'Patient@123',
     role: 'PATIENT',
     portal: '/patient',
-    details: 'Synthetic patient record • Consultations with Pediatrics',
+    details: 'Synthetic patient record • Consultations with Orthopedics & Dermatology',
   },
   {
     name: 'Ananya Deshmukh',
@@ -111,15 +111,71 @@ const DEMO_CREDENTIALS = [
     password: 'Patient@123',
     role: 'PATIENT',
     portal: '/patient',
-    details: 'Synthetic patient record • General clinical consultations',
+    details: 'Synthetic patient record • Routine pediatric booster vaccination',
   },
   {
-    name: 'Rohan Verma',
+    name: 'Rohan Kulkarni',
     email: 'rohan@cloudcare.test',
     password: 'Patient@123',
     role: 'PATIENT',
     portal: '/patient',
-    details: 'Synthetic patient record • Diagnostic reports and follow-ups',
+    details: 'Synthetic patient record • Tension headache & sleep posture assessment',
+  },
+  {
+    name: 'Neha Sharma',
+    email: 'neha.sharma@cloudcare.test',
+    password: 'Patient@123',
+    role: 'PATIENT',
+    portal: '/patient',
+    details: 'Synthetic patient record • Vestibular migraine evaluation & audiometry',
+  },
+  {
+    name: 'Aditya Nair',
+    email: 'aditya.nair@cloudcare.test',
+    password: 'Patient@123',
+    role: 'PATIENT',
+    portal: '/patient',
+    details: 'Synthetic patient record • Cardiology stress test & Achilles tendon strain',
+  },
+  {
+    name: 'Pooja Iyer',
+    email: 'pooja.iyer@cloudcare.test',
+    password: 'Patient@123',
+    role: 'PATIENT',
+    portal: '/patient',
+    details: 'Synthetic patient record • Clinical cosmetology & facial sensory review',
+  },
+  {
+    name: 'Karan Singhania',
+    email: 'karan.s@cloudcare.test',
+    password: 'Patient@123',
+    role: 'PATIENT',
+    portal: '/patient',
+    details: 'Synthetic patient record • Bilateral knee joint assessment & lipid panel',
+  },
+  {
+    name: 'Meera Patel',
+    email: 'meera.patel@cloudcare.test',
+    password: 'Patient@123',
+    role: 'PATIENT',
+    portal: '/patient',
+    details: 'Synthetic patient record • Pediatric allergy profile & barrier cream review',
+  },
+  {
+    name: 'Devendra Rao',
+    email: 'devendra.rao@cloudcare.test',
+    password: 'Patient@123',
+    role: 'PATIENT',
+    portal: '/patient',
+    details: 'Synthetic patient record • Motor function review & physical therapy',
+  },
+  {
+    name: 'Ishaan Kapoor',
+    email: 'ishaan.kapoor@cloudcare.test',
+    password: 'Patient@123',
+    role: 'PATIENT',
+    portal: '/patient',
+    details: 'Synthetic patient record • Executive preventative cardiovascular screening',
   },
 ];
 
@@ -337,10 +393,10 @@ const AdminDashboard = () => {
         {/* Role Filter Tabs */}
         <div className="flex flex-wrap items-center gap-1.5 mb-3">
           {[
-            { id: 'ALL', label: 'All Accounts (11)' },
+            { id: 'ALL', label: 'All Accounts (18)' },
             { id: 'ADMIN', label: 'Administrators (1)' },
             { id: 'DOCTOR', label: 'Medical Specialists (5)' },
-            { id: 'PATIENT', label: 'Synthetic Patients (5)' },
+            { id: 'PATIENT', label: 'Synthetic Patients (12)' },
           ].map((tab) => (
             <button
               key={tab.id}
