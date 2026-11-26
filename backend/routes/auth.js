@@ -8,7 +8,11 @@ const router = express.Router();
 // POST /api/auth/register (Patient only)
 router.post('/register', async (req, res, next) => {
   try {
-    const { name, email, password } = req.body || {};
+    let { name, email, password } = req.body || {};
+    name = typeof name === 'string' ? name.trim() : '';
+    email = typeof email === 'string' ? email.trim().replace(/\s+/g, '').toLowerCase() : '';
+    password = typeof password === 'string' ? password.trim() : '';
+
     if (!name || !email || !password) {
       return res.status(400).json({
         error: { code: 'VALIDATION_ERROR', message: 'Name, email, and password are required.' }
@@ -66,7 +70,10 @@ router.post('/register', async (req, res, next) => {
 // POST /api/auth/login
 router.post('/login', async (req, res, next) => {
   try {
-    const { email, password } = req.body || {};
+    let { email, password } = req.body || {};
+    email = typeof email === 'string' ? email.trim().replace(/\s+/g, '').toLowerCase() : '';
+    password = typeof password === 'string' ? password.trim() : '';
+
     if (!email || !password) {
       return res.status(401).json({
         error: { code: 'INVALID_CREDENTIALS', message: 'Email and password are required.' }

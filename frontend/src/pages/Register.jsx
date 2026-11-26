@@ -20,18 +20,28 @@ const Register = () => {
     e.preventDefault();
     setError('');
 
-    if (password !== confirmPassword) {
+    const cleanName = (name || '').trim();
+    const cleanEmail = (email || '').trim().replace(/\s+/g, '').toLowerCase();
+    const cleanPassword = (password || '').trim();
+    const cleanConfirm = (confirmPassword || '').trim();
+
+    if (!cleanName || !cleanEmail || !cleanPassword) {
+      setError('Please fill in all required fields');
+      return;
+    }
+
+    if (cleanPassword !== cleanConfirm) {
       setError('Passwords do not match');
       return;
     }
 
-    if (password.length < 6) {
+    if (cleanPassword.length < 6) {
       setError('Password must be at least 6 characters');
       return;
     }
 
     try {
-      const res = await register(name, email, password);
+      const res = await register(cleanName, cleanEmail, cleanPassword);
       if (res.success) {
         navigate('/patient');
       }
@@ -52,7 +62,7 @@ const Register = () => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-3.5">
+      <form onSubmit={handleSubmit} noValidate className="space-y-3.5">
         <Input
           label="Full Legal Name"
           placeholder="e.g. Rahul Sharma"
@@ -64,11 +74,14 @@ const Register = () => {
 
         <Input
           label="Email Address"
-          type="email"
+          type="text"
+          inputMode="email"
+          autoComplete="email"
           placeholder="patient@cloudcare.test"
           icon={Mail}
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value.replace(/\s+/g, ''))}
+          onBlur={() => setEmail((prev) => prev.trim().toLowerCase())}
           required
         />
 
