@@ -28,36 +28,32 @@
 
 ### 2.2 Medical Specialists & Physicians (5 Clinical Specialties)
 
-Password for all doctors: Doctor@123
-
-| User ID | Doc ID | Physician Name | Login Email | Specialty & Department | Consultation Hours (IST) |
-| :---: | :---: | :--- | :--- | :--- | :--- |
-| 2 | 1 | Dr. Rahul Sharma | rahul@cloudcare.test | Cardiology & Vascular Medicine | 09:00, 10:00, 11:00, 12:00, 14:00 |
-| 3 | 2 | Dr. Priya Mehta | priya@cloudcare.test | Dermatology & Clinical Cosmetology | 10:00, 11:30, 13:00, 15:00, 16:00 |
-| 4 | 3 | Dr. Arjun Reddy | arjun@cloudcare.test | Orthopedic & Joint Replacement | 09:30, 11:00, 14:30, 16:00, 17:00 |
-| 5 | 4 | Dr. Kavita Rao | kavita@cloudcare.test | Pediatrics & Child Wellness | 09:00, 10:30, 12:00, 15:30, 17:00 |
-| 6 | 5 | Dr. Sanjay Verma | sanjay@cloudcare.test | Neurology & Cognitive Health | 10:00, 11:00, 14:00, 15:30, 16:30 |
+| User ID | Doc ID | Physician Name | Login Email | Password | Specialty & Department | Consultation Hours (IST) |
+| :---: | :---: | :--- | :--- | :--- | :--- | :--- |
+| 2 | 1 | Dr. Rahul Sharma | rahul@cloudcare.test | Doctor@123 | Cardiology & Vascular Medicine | 09:00, 10:00, 11:00, 12:00, 14:00 |
+| 3 | 2 | Dr. Priya Mehta | priya@cloudcare.test | Doctor@123 | Dermatology & Clinical Cosmetology | 10:00, 11:30, 13:00, 15:00, 16:00 |
+| 4 | 3 | Dr. Arjun Reddy | arjun@cloudcare.test | Doctor@123 | Orthopedic & Joint Replacement | 09:30, 11:00, 14:30, 16:00, 17:00 |
+| 5 | 4 | Dr. Kavita Rao | kavita@cloudcare.test | Doctor@123 | Pediatrics & Child Wellness | 09:00, 10:30, 12:00, 15:30, 17:00 |
+| 6 | 5 | Dr. Sanjay Verma | sanjay@cloudcare.test | Doctor@123 | Neurology & Cognitive Health | 10:00, 11:00, 14:00, 15:30, 16:30 |
 
 ---
 
 ### 2.3 Synthetic Patient Personas (12 Clinical Profiles)
 
-Password for all patients: Patient@123
-
-| User ID | Pt ID | Patient Name | Login Email | Age & Gender | Primary Clinical Profile |
-| :---: | :---: | :--- | :--- | :---: | :--- |
-| 7 | 1 | Aarav Patil | aarav@cloudcare.test | 38 M | Essential hypertension monitoring; post-work lumbar spine strain |
-| 8 | 2 | Sneha Joshi | sneha@cloudcare.test | 32 F | Seasonal contact dermatitis on left forearm; family pediatric consultation |
-| 9 | 3 | Vikram Malhotra | vikram@cloudcare.test | 45 M | Post-arthroscopic knee ACL reconstruction recovery; keloid care |
-| 10 | 4 | Ananya Deshmukh | ananya@cloudcare.test | 7 F | Pediatric booster vaccination; mild seasonal allergic rhinitis |
-| 11 | 5 | Rohan Kulkarni | rohan@cloudcare.test | 41 M | Chronic tension-type cephalalgia; sleep hygiene & ergonomic review |
-| 12 | 6 | Neha Sharma | neha.sharma@cloudcare.test | 29 F | Vestibular migraine workup with episodic vertigo and audiometry |
-| 13 | 7 | Aditya Nair | aditya.nair@cloudcare.test | 36 M | Pre-marathon cardiovascular stress test; acute Achilles tendon strain |
-| 14 | 8 | Pooja Iyer | pooja.iyer@cloudcare.test | 34 F | Adult acne vulgaris follow-up; trigeminal facial sensory review |
-| 15 | 9 | Karan Singhania | karan.s@cloudcare.test | 55 M | Grade II bilateral knee osteoarthritis; hyperlipidemia management |
-| 16 | 10 | Meera Patel | meera.patel@cloudcare.test | 5 F | Pediatric atopic eczema and dietary allergen reintroduction |
-| 17 | 11 | Devendra Rao | devendra.rao@cloudcare.test | 62 M | Post-stroke motor rehabilitation follow-up and physiotherapy review |
-| 18 | 12 | Ishaan Kapoor | ishaan.kapoor@cloudcare.test | 48 M | Executive preventative cardiovascular screening and ambulatory BP check |
+| User ID | Pt ID | Patient Name | Login Email | Password | Age & Gender | Primary Clinical Profile |
+| :---: | :---: | :--- | :--- | :--- | :---: | :--- |
+| 7 | 1 | Aarav Patil | aarav@cloudcare.test | Patient@123 | 38 M | Essential hypertension monitoring; post-work lumbar spine strain |
+| 8 | 2 | Sneha Joshi | sneha@cloudcare.test | Patient@123 | 32 F | Seasonal contact dermatitis on left forearm; family pediatric consultation |
+| 9 | 3 | Vikram Malhotra | vikram@cloudcare.test | Patient@123 | 45 M | Post-arthroscopic knee ACL reconstruction recovery; keloid care |
+| 10 | 4 | Ananya Deshmukh | ananya@cloudcare.test | Patient@123 | 7 F | Pediatric booster vaccination; mild seasonal allergic rhinitis |
+| 11 | 5 | Rohan Kulkarni | rohan@cloudcare.test | Patient@123 | 41 M | Chronic tension-type cephalalgia; sleep hygiene & ergonomic review |
+| 12 | 6 | Neha Sharma | neha.sharma@cloudcare.test | Patient@123 | 29 F | Vestibular migraine workup with episodic vertigo and audiometry |
+| 13 | 7 | Aditya Nair | aditya.nair@cloudcare.test | Patient@123 | 36 M | Pre-marathon cardiovascular stress test; acute Achilles tendon strain |
+| 14 | 8 | Pooja Iyer | pooja.iyer@cloudcare.test | Patient@123 | 34 F | Adult acne vulgaris follow-up; trigeminal facial sensory review |
+| 15 | 9 | Karan Singhania | karan.s@cloudcare.test | Patient@123 | 55 M | Grade II bilateral knee osteoarthritis; hyperlipidemia management |
+| 16 | 10 | Meera Patel | meera.patel@cloudcare.test | Patient@123 | 5 F | Pediatric atopic eczema and dietary allergen reintroduction |
+| 17 | 11 | Devendra Rao | devendra.rao@cloudcare.test | Patient@123 | 62 M | Post-stroke motor rehabilitation follow-up and physiotherapy review |
+| 18 | 12 | Ishaan Kapoor | ishaan.kapoor@cloudcare.test | Patient@123 | 48 M | Executive preventative cardiovascular screening and ambulatory BP check |
 
 ---
 
